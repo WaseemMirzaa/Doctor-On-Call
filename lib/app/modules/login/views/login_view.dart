@@ -40,7 +40,7 @@ class LoginView extends GetView<LoginController> {
                 child: Padding(
                   padding: const EdgeInsets.only(bottom: 20.0),
                   child: LoginBottomText(onSignUpTap: () {
-                    Get.offNamed(Routes.SIGNUP);
+                    Get.offAndToNamed(Routes.SIGNUP);
                   }),
                 ),
               ),

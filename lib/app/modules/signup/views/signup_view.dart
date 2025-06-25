@@ -37,7 +37,7 @@ class SignupView extends GetView<SignupController> {
                   padding: const EdgeInsets.only(bottom: 20.0),
                   child: SignupBottomText(
                     onLogInTap: () {
-                      Get.offNamed(Routes.LOGIN);
+                      Get.offAndToNamed(Routes.LOGIN);
                     },
                   ),
                 ),
