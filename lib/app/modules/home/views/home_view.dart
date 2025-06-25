@@ -50,7 +50,8 @@ class HomeView extends GetView<HomeController> {
                     children: [
                       // First row
                       Padding(
-                        padding: const EdgeInsets.all(20.0),
+                        padding: const EdgeInsets.only(
+                            top: 20.0, right: 7.0, left: 7.0, bottom: 20),
                         child: Row(
                           children: [
                             Expanded(
@@ -60,7 +61,7 @@ class HomeView extends GetView<HomeController> {
                                 onTap: controller.onClinicalPresentationsTap,
                               ),
                             ),
-                            const SizedBox(width: 16),
+                            const SizedBox(width: 20),
                             Expanded(
                               child: FeatureCard(
                                 iconPath: AppIcons.test,
@@ -76,20 +77,20 @@ class HomeView extends GetView<HomeController> {
 
                       // Second row
                       Padding(
-                        padding: const EdgeInsets.only(right: 20.0, left: 20.0),
+                        padding: const EdgeInsets.only(right: 7.0, left: 7.0),
                         child: Row(
                           children: [
                             Expanded(
                               child: FeatureCard(
-                                iconPath: AppIcons.checkUp,
+                                iconPath: AppIcons.report,
                                 title: AppText.clinicalDiagnosis,
                                 onTap: controller.onClinicalDiagnosisTap,
                               ),
                             ),
-                            const SizedBox(width: 16),
+                            const SizedBox(width: 20),
                             Expanded(
                               child: FeatureCard(
-                                iconPath: AppIcons.report,
+                                iconPath: AppIcons.checkUp,
                                 title: AppText.news2Score,
                                 onTap: controller.onNews2ScoreTap,
                               ),

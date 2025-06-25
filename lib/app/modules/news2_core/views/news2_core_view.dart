@@ -18,7 +18,7 @@ class News2CoreView extends GetView<News2CoreController> {
             children: [
               News2Header(),
               SizedBox(
-                height: 50,
+                height: 30,
               ),
               News2List(),
             ],

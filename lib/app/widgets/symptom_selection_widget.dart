@@ -116,98 +116,106 @@ class _SymptomSelectionWidgetState extends State<SymptomSelectionWidget> {
             ...filteredSymptoms.map((symptom) {
               final isSelected = _selectedSymptom == symptom;
               final isHeartActive = _heartStates[symptom] ?? false;
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
-                child: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      _selectedSymptom = symptom;
-                      widget.onSymptomTap(symptom);
-                    });
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 10.0),
-                    child: Container(
-                      height: 60,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(
-                          color: const Color(0xFFEEC643), // Yellow border
-                          width: 1,
-                        ),
-                        gradient: isSelected
-                            ? LinearGradient(
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                                colors: [
-                                  const Color(0xFF0A1A2F).withOpacity(0.7),
-                                  const Color(0xFF0A1A3F),
-                                ],
-                              )
-                            : null,
-                      ),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                            right: 10.0,
-                            left: 10,
+              return Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _selectedSymptom = symptom;
+                          widget.onSymptomTap(symptom);
+                        });
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 10.0),
+                        child: Container(
+                          height: 60,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                              color: const Color(0xFFEEC643), // Yellow border
+                              width: 1,
+                            ),
+                            gradient: isSelected
+                                ? LinearGradient(
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
+                                    colors: [
+                                      const Color(0xFF0A1A2F).withOpacity(0.7),
+                                      const Color(0xFF0A1A3F),
+                                    ],
+                                  )
+                                : null,
                           ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  symptom,
-                                  style: AppTextStyles.bold.copyWith(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w500,
-                                      color: AppColors.txtWhiteColor),
-                                ),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                right: 10.0,
+                                left: 10,
                               ),
-                              // Heart icon with separate tap handler
-                              if (widget.showHeartIcon)
-                                GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      _heartStates[symptom] =
-                                          !(_heartStates[symptom] ?? false);
-                                      // Notify parent of selection change
-                                      widget.onSelectionChanged(_heartStates
-                                          .entries
-                                          .where((entry) => entry.value)
-                                          .map((entry) => entry.key)
-                                          .toList());
-                                    });
-                                  },
-                                  child: Image.asset(
-                                    isHeartActive
-                                        ? AppIcons.like
-                                        : AppIcons.heart,
-                                    width: 25,
-                                    height: 25,
-                                    color: isHeartActive
-                                        ? Colors.grey
-                                        : AppColors.txtRedColor,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      symptom,
+                                      style: AppTextStyles.bold.copyWith(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w500,
+                                          color: AppColors.txtWhiteColor),
+                                    ),
                                   ),
-                                ),
-                              // Recent icon
-                              if (widget.showRecentIcon)
-                                Image.asset(
-                                  AppIcons.recent,
-                                  width: 25,
-                                  height: 25,
-                                  color: isSelected
-                                      ? AppColors.txtOrangeColor
-                                      : AppColors.txtWhiteColor,
-                                ),
-                            ],
+                                  // Heart icon with separate tap handler
+                                  if (widget.showHeartIcon)
+                                    GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          _heartStates[symptom] =
+                                              !(_heartStates[symptom] ?? false);
+                                          // Notify parent of selection change
+                                          widget.onSelectionChanged(_heartStates
+                                              .entries
+                                              .where((entry) => entry.value)
+                                              .map((entry) => entry.key)
+                                              .toList());
+                                        });
+                                      },
+                                      child: Image.asset(
+                                        isHeartActive
+                                            ? AppIcons.like
+                                            : AppIcons.heart,
+                                        width: 25,
+                                        height: 25,
+                                        color: isHeartActive
+                                            ? Colors.grey
+                                            : AppColors.txtRedColor,
+                                      ),
+                                    ),
+                                  // Recent icon
+                                  if (widget.showRecentIcon)
+                                    Image.asset(
+                                      AppIcons.recent,
+                                      width: 25,
+                                      height: 25,
+                                      color: isSelected
+                                          ? AppColors.txtOrangeColor
+                                          : AppColors.txtWhiteColor,
+                                    ),
+                                ],
+                              ),
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                ],
               );
             }).toList(),
         ],

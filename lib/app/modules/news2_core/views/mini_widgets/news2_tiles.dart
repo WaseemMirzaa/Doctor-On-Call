@@ -75,61 +75,69 @@ class _SymptomSelectionWidgetState extends State<News2Tiles> {
                     );
                   });
                 },
-                child: Container(
-                  height: 60,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(
-                      color: const Color(0xFFEEC643), // Yellow border
-                      width: 1,
-                    ),
-                    gradient: isSelected
-                        ? LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                              const Color(0xFF0A1A2F).withOpacity(0.7),
-                              const Color(0xFF0A1A3F),
-                            ],
-                          )
-                        : null,
-                  ),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                      child: TextFormField(
-                        keyboardType: TextInputType.number,
-                        controller: _controllers[symptom],
-                        style: AppTextStyles.medium.copyWith(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.txtWhiteColor,
+                child: Column(
+                  children: [
+                    Container(
+                      height: 60,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(
+                          color: const Color(0xFFEEC643), // Yellow border
+                          width: 1,
                         ),
-                        decoration: InputDecoration(
-                          hintText: symptom,
-                          hintStyle: AppTextStyles.medium.copyWith(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                            color: AppColors
-                                .txtWhiteColor, // Slightly faded for hint
+                        gradient: isSelected
+                            ? LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [
+                                  const Color(0xFF0A1A2F).withOpacity(0.7),
+                                  const Color(0xFF0A1A3F),
+                                ],
+                              )
+                            : null,
+                      ),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                          child: TextFormField(
+                            keyboardType: TextInputType.number,
+                            controller: _controllers[symptom],
+                            style: AppTextStyles.medium.copyWith(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.txtWhiteColor,
+                            ),
+                            decoration: InputDecoration(
+                              hintText: symptom,
+                              hintStyle: AppTextStyles.medium.copyWith(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                                color: AppColors
+                                    .txtWhiteColor, // Slightly faded for hint
+                              ),
+                              border: InputBorder.none, // No additional border
+                              contentPadding:
+                                  const EdgeInsets.symmetric(vertical: 15.0),
+                            ),
+                            onChanged: (value) {
+                              // Notify selection change with updated inputs
+                              widget.onSelectionChanged(
+                                _controllers.entries
+                                    .where(
+                                        (entry) => entry.value.text.isNotEmpty)
+                                    .map((entry) => entry.value.text)
+                                    .toList(),
+                              );
+                            },
                           ),
-                          border: InputBorder.none, // No additional border
-                          contentPadding:
-                              const EdgeInsets.symmetric(vertical: 15.0),
                         ),
-                        onChanged: (value) {
-                          // Notify selection change with updated inputs
-                          widget.onSelectionChanged(
-                            _controllers.entries
-                                .where((entry) => entry.value.text.isNotEmpty)
-                                .map((entry) => entry.value.text)
-                                .toList(),
-                          );
-                        },
                       ),
                     ),
-                  ),
+                    SizedBox(
+                      height: 14,
+                    ),
+                  ],
                 ),
               ),
             );
