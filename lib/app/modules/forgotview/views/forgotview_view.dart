@@ -27,7 +27,7 @@ class ForgotviewView extends GetView<ForgotviewController> {
                 ),
             Spacer(),
             ForgotBottomText(onLoginTap: () {
-              Get.toNamed(Routes.LOGIN);
+              Get.offAllNamed(Routes.LOGIN);
             }),
           ],
         ),

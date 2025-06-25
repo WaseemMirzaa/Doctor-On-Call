@@ -63,7 +63,7 @@ class News2List extends StatelessWidget {
           child: GestureDetector(
             onTap: () {
               print('Calculate is tapped');
-              _showNews2ScoreDialog(context); // Show the dialog on tap
+              _showNews2ScoreDialog(context);
             },
             child: Container(
               height: 60,
@@ -87,75 +87,94 @@ class News2List extends StatelessWidget {
   void _showNews2ScoreDialog(BuildContext context) {
     showDialog(
       context: context,
+      barrierDismissible: false, // Prevent dismiss on outside tap
       builder: (BuildContext context) {
         return AlertDialog(
-          backgroundColor: const Color(0xFF00132B), // Dark blue background
+          backgroundColor: const Color(0xFF00132B),
+          contentPadding: EdgeInsets.zero, // Remove default padding
           shape: RoundedRectangleBorder(
             side: BorderSide(color: AppColors.txtOrangeColor, width: 1),
             borderRadius: BorderRadius.circular(20),
           ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
+          content: Stack(
             children: [
-              // Title: NEWS2 Score
-              Center(
-                child: Text(AppText.news2Score2,
-                    style: AppTextStyles.bold.copyWith(fontSize: 25)),
-              ),
-              const SizedBox(height: 20),
-              // Total NEWS2 Score
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Total NEWS2 Score',
-                      style: AppTextStyles.medium
-                          .copyWith(fontWeight: FontWeight.w500, fontSize: 18)),
-                  Text('7',
-                      style: AppTextStyles.medium
-                          .copyWith(fontWeight: FontWeight.w500, fontSize: 18)),
-                ],
-              ),
-              const SizedBox(height: 10),
-              // Risk Level
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Risk Level',
-                      style: AppTextStyles.medium
-                          .copyWith(fontWeight: FontWeight.w500, fontSize: 18)),
-                  Text('High',
-                      style: AppTextStyles.medium
-                          .copyWith(fontWeight: FontWeight.w500, fontSize: 18)),
-                ],
-              ),
-              const SizedBox(height: 20),
-              // Action
-              Text('Action',
-                  style: AppTextStyles.medium.copyWith(
-                      color: Colors.red,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 18)),
-              const SizedBox(height: 5),
-              Text('Urgent clinical review and transfer to higher-level care',
-                  style: AppTextStyles.regular),
-              const SizedBox(height: 20),
-              // Close Button
-              Center(
-                child: ElevatedButton(
+              // Cross Button
+              Positioned(
+                top: 8,
+                right: 8,
+                child: IconButton(
+                  icon: const Icon(Icons.close, color: Colors.white),
                   onPressed: () {
-                    Navigator.of(context).pop(); // Close the dialog
+                    Navigator.of(context).pop(); // Close dialog
                   },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFEEC643), // Yellow button
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+
+              // Main Content with padding
+              Padding(
+                padding: const EdgeInsets.all(20.0).copyWith(top: 50),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Center(
+                      child: Text(
+                        AppText.news2Score2,
+                        style: AppTextStyles.bold.copyWith(fontSize: 25),
+                      ),
                     ),
-                    minimumSize: const Size(double.infinity, 50),
-                  ),
-                  child: Text('Close',
-                      style: AppTextStyles.bold
-                          .copyWith(color: AppColors.txtBlackColor)),
+                    const SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Total NEWS2 Score',
+                            style: AppTextStyles.medium.copyWith(
+                                fontWeight: FontWeight.w500, fontSize: 18)),
+                        Text('7',
+                            style: AppTextStyles.medium.copyWith(
+                                fontWeight: FontWeight.w500, fontSize: 18)),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Risk Level',
+                            style: AppTextStyles.medium.copyWith(
+                                fontWeight: FontWeight.w500, fontSize: 18)),
+                        Text('High',
+                            style: AppTextStyles.medium.copyWith(
+                                fontWeight: FontWeight.w500, fontSize: 18)),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    Text('Action',
+                        style: AppTextStyles.medium.copyWith(
+                            color: Colors.red,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 18)),
+                    const SizedBox(height: 5),
+                    Text('Urgent clinical review and transfer to higher-level care',
+                        style: AppTextStyles.regular),
+                    const SizedBox(height: 20),
+                    Center(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).pop(); // Close dialog
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFFEEC643),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          minimumSize: const Size(double.infinity, 50),
+                        ),
+                        child: Text('Close',
+                            style: AppTextStyles.bold
+                                .copyWith(color: AppColors.txtBlackColor)),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -164,4 +183,5 @@ class News2List extends StatelessWidget {
       },
     );
   }
+
 }

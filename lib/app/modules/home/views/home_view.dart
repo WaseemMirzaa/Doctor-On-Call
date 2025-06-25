@@ -1,4 +1,3 @@
-import 'package:dr_on_call/app/modules/home/views/widgets/background_container2.dart';
 import 'package:dr_on_call/config/AppImages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -6,6 +5,7 @@ import '../../../../config/AppColors.dart';
 import '../../../../config/AppIcons.dart';
 import '../../../../config/AppText.dart';
 import '../../../../config/AppTextStyle.dart';
+import '../../../widgets/background_container.dart';
 import '../controllers/home_controller.dart';
 import 'widgets/feature_card.dart';
 import 'widgets/custom_bottom_nav.dart';
@@ -16,7 +16,7 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BackgroundContainer2(
+      body: BackgroundContainer(
         child: SafeArea(
           child: SingleChildScrollView(
             child: Column(

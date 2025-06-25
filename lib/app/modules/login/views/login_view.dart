@@ -1,10 +1,8 @@
 import 'package:dr_on_call/app/routes/app_pages.dart';
 import 'package:dr_on_call/app/widgets/background_container.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../../config/AppImages.dart';
-import '../../../widgets/custom_textfield.dart';
+
 import '../controllers/login_controller.dart';
 import 'mini_widgets/bottom_text.dart';
 import 'mini_widgets/log_header_section.dart';
@@ -42,7 +40,7 @@ class LoginView extends GetView<LoginController> {
                 child: Padding(
                   padding: const EdgeInsets.only(bottom: 20.0),
                   child: LoginBottomText(onSignUpTap: () {
-                    Get.toNamed(Routes.SIGNUP);
+                    Get.offNamed(Routes.SIGNUP);
                   }),
                 ),
               ),

@@ -17,6 +17,7 @@ class SignUpForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isChecked = false;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -42,17 +43,6 @@ class SignUpForm extends StatelessWidget {
           controller: controller.passwordController,
         ),
         const SizedBox(height: 20),
-
-        // TODO: just uncomment this calling method then the back will work
-        // Show loader or button
-        // Obx(() => controller.isLoading.value
-        //     ? const CircularProgressIndicator()
-        //     : RoundedTextContainer(
-        //         text: AppText.signUp,
-        //         color: AppColors.baseColor,
-        //         onTap: controller.signUp,
-        //       )),
-
         RoundedTextContainer(
           text: AppText.signUp,
           color: AppColors.baseColor,
@@ -60,14 +50,34 @@ class SignUpForm extends StatelessWidget {
             Get.toNamed(Routes.LOGIN);
           },
         ),
-
         const SizedBox(height: 15),
+        Row(
+          crossAxisAlignment:
+              CrossAxisAlignment.start, // align checkbox with text top
+          children: [
+            // Obx(() => Padding(
+            //       padding: const EdgeInsets.only(top: 2),
+            //       child: Checkbox(
+            //         value: controller.isChecked.value,
+            //         onChanged: (value) {
+            //           controller.isChecked.value = value ?? false;
+            //         },
+            //         visualDensity: VisualDensity.compact,
+            //       ),
+            //     )),
 
-        Text(
-          AppText.policyAgreement,
-          textAlign: TextAlign.center,
-          style: AppTextStyles.regular.copyWith(fontSize: 11),
-        ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                child: Text(
+                  AppText.policyAgreement,
+                  textAlign: TextAlign.left,
+                  style: AppTextStyles.regular.copyWith(fontSize: 12),
+                ),
+              ),
+            ),
+          ],
+        )
       ],
     );
   }

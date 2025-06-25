@@ -15,6 +15,7 @@ class SignupController extends GetxController {
   final passwordController = TextEditingController();
 
   final isLoading = false.obs;
+  var isChecked = false.obs;
 
   void signUp() async {
     final email = emailController.text.trim();
