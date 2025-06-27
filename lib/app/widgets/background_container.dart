@@ -6,7 +6,7 @@ class BackgroundContainer extends StatelessWidget {
 
   const BackgroundContainer({
     Key? key,
-    required this.child, // 👈 allows you to pass content inside the background
+    required this.child,
   }) : super(key: key);
 
   @override

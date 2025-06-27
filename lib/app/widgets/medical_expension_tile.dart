@@ -39,7 +39,7 @@ class MedicalExpansionTile extends StatelessWidget {
             child: Text(
               content,
               style: AppTextStyles.regular.copyWith(
-                color: isRedContent ? Colors.red : AppColors.txtWhiteColor,
+                color: isRedContent ? Colors.black : AppColors.txtWhiteColor,
                 fontSize: 13,
               ),
               textAlign: TextAlign.left,

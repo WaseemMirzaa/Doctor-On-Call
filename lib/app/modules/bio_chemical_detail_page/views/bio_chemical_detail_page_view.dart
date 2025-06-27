@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
+import '../../../../config/AppImages.dart';
 import '../../../widgets/background_container.dart';
 import '../controllers/bio_chemical_detail_page_controller.dart';
 
