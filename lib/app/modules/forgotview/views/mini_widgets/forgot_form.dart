@@ -26,24 +26,24 @@ class ForgotForm extends StatelessWidget {
 
         // TODO: just uncomment this calling method then the back will work
 
-        // Obx(() => controller.isLoading.value
-        //     ? const CircularProgressIndicator()
-        //     : RoundedTextContainer(
-        //         text: AppText.send,
-        //         color: AppColors.baseColor,
-        //         onTap: () async {
-        //           await controller.sendResetLink();
-        //           onSendTap?.call(); // 👈 optional callback after success
-        //         },
-        //       )),
+        Obx(() => controller.isLoading.value
+            ? const CircularProgressIndicator()
+            : RoundedTextContainer(
+                text: AppText.send,
+                color: AppColors.baseColor,
+                onTap: () async {
+                  await controller.sendResetLink();
+                  onSendTap?.call(); // 👈 optional callback after success
+                },
+              )),
 
-        RoundedTextContainer(
-          text: AppText.send,
-          color: AppColors.baseColor,
-          onTap: () {
-            Get.toNamed(Routes.LOGIN);
-          },
-        )
+        // RoundedTextContainer(
+        //   text: AppText.send,
+        //   color: AppColors.baseColor,
+        //   onTap: () {
+        //     Get.toNamed(Routes.LOGIN);
+        //   },
+        // )
       ],
     );
   }

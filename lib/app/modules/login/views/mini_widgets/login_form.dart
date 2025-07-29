@@ -47,21 +47,21 @@ class LoginForm extends StatelessWidget {
 
         // TODO: just uncomment this calling method then the back will work
 
-        // Obx(() => controller.isLoading.value
-        //     ? CircularProgressIndicator()
-        //     : RoundedTextContainer(
-        //         text: AppText.logIn,
-        //         color: AppColors.baseColor,
-        //         onTap: controller.login,
-        //       )),
+        Obx(() => controller.isLoading.value
+            ? CircularProgressIndicator()
+            : RoundedTextContainer(
+                text: AppText.logIn,
+                color: AppColors.baseColor,
+                onTap: controller.login,
+              )),
 
-        RoundedTextContainer(
-          text: AppText.logIn,
-          color: AppColors.baseColor,
-          onTap: () {
-            Get.toNamed(Routes.HOME);
-          },
-        )
+        // RoundedTextContainer(
+        //   text: AppText.logIn,
+        //   color: AppColors.baseColor,
+        //   onTap: () {
+        //     Get.toNamed(Routes.HOME);
+        //   },
+        // )
       ],
     );
   }

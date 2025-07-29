@@ -53,29 +53,29 @@ class SignUpForm extends StatelessWidget {
         const SizedBox(height: 15),
         Row(
           crossAxisAlignment:
-              CrossAxisAlignment.start, // align checkbox with text top
+              CrossAxisAlignment.start,
           children: [
-            // Obx(() => Padding(
-            //       padding: const EdgeInsets.only(top: 2),
-            //       child: Checkbox(
-            //         value: controller.isChecked.value,
-            //         onChanged: (value) {
-            //           controller.isChecked.value = value ?? false;
-            //         },
-            //         visualDensity: VisualDensity.compact,
-            //       ),
-            //     )),
+            Obx(() => Padding(
+                  padding: const EdgeInsets.only(top: 2),
+                  child: Checkbox(
+                    value: controller.isChecked.value,
+                    onChanged: (value) {
+                      controller.isChecked.value = value ?? false;
+                    },
+                    visualDensity: VisualDensity.compact,
+                  ),
+                )),
 
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                child: Text(
-                  AppText.policyAgreement,
-                  textAlign: TextAlign.left,
-                  style: AppTextStyles.regular.copyWith(fontSize: 12),
-                ),
-              ),
-            ),
+            // Expanded(
+            //   child: Padding(
+            //     padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+            //     child: Text(
+            //       AppText.policyAgreement,
+            //       textAlign: TextAlign.left,
+            //       style: AppTextStyles.regular.copyWith(fontSize: 12),
+            //     ),
+            //   ),
+            // ),
           ],
         )
       ],
