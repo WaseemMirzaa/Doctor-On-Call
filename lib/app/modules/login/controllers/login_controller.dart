@@ -1,16 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../routes/app_pages.dart';
 import '../../../widgets/custom_snack_bar.dart';
 
 class LoginController extends GetxController {
-  //TODO: Implement LoginController
-
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-
   final isLoading = false.obs;
 
   void login() async {
@@ -25,7 +23,6 @@ class LoginController extends GetxController {
       CustomSnackBar.warning("Email is required");
       return;
     }
-
     if (password.isEmpty) {
       CustomSnackBar.warning("Password is required");
       return;
@@ -38,6 +35,10 @@ class LoginController extends GetxController {
         email: email,
         password: password,
       );
+
+      // ✅ Set isLoggedIn flag in SharedPreferences
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isLoggedIn', true);
 
       CustomSnackBar.success("Logged in successfully!");
       emailController.clear();
@@ -73,22 +74,4 @@ class LoginController extends GetxController {
       isLoading.value = false;
     }
   }
-
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }
