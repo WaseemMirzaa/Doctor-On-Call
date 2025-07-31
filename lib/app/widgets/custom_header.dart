@@ -27,9 +27,9 @@ class CommonTitleSection extends StatelessWidget {
         BackIconButton(
           onTap: onBackTap ?? () => Get.back(),
         ),
-        // const SizedBox(height: 5),
         Text(
           title,
+          textAlign: TextAlign.center,
           style: AppTextStyles.bold.copyWith(fontSize: 25),
         ),
         if (description != null) ...[

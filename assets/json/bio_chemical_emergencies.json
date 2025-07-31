@@ -381,7 +381,8 @@
         "Excellent with early IV calcium replacement",
         "Risk of cardiac arrest if untreated"
     ]
-},{
+},
+    {
     "category":"Hypokalaemia",
     "title": "Mild to Moderate Hypokalaemia",
     "definition": {
