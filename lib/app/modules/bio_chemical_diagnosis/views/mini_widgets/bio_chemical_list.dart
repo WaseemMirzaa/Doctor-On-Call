@@ -13,123 +13,197 @@ class BioChemicalList extends StatelessWidget {
     final controller = Get.find<BioChemicalDiagnosisController>();
 
     return Obx(() {
-      // Show loading indicator while categories are being fetched
-      if (controller.isLoadingCategories.value) {
-        return const Center(
-          child: Padding(
-            padding: EdgeInsets.all(20.0),
-            child: CircularProgressIndicator(),
-          ),
-        );
+      // Check if we're in category view (showing titles within a category)
+      if (controller.isInCategoryView.value) {
+        return _buildCategoryTitlesView(controller);
       }
 
-      // Show error message if there's an error
-      if (controller.errorMessage.value.isNotEmpty) {
-        return Center(
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Icon(
-                  Icons.error_outline,
+      // Main list view (categories + standalone titles)
+      return _buildMainListView(controller);
+    });
+  }
+
+  Widget _buildMainListView(BioChemicalDiagnosisController controller) {
+    if (controller.isLoadingMainList.value) {
+      return const Center(
+        child: Padding(
+          padding: EdgeInsets.all(20.0),
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
+
+    if (controller.errorMessage.value.isNotEmpty) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(
+                Icons.error_outline,
+                color: Colors.red,
+                size: 48,
+              ),
+              const SizedBox(height: 16),
+              const Text(
+                'Error loading data',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
                   color: Colors.red,
-                  size: 48,
                 ),
-                const SizedBox(height: 16),
-                const Text(
-                  'Error loading categories',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.red,
-                  ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                controller.errorMessage.value,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.grey[600],
                 ),
-                const SizedBox(height: 8),
-                Text(
-                  controller.errorMessage.value,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.grey[600],
-                  ),
-                ),
-                const SizedBox(height: 16),
-                ElevatedButton(
-                  onPressed: () => controller.loadCategories(),
-                  child: const Text('Retry'),
-                ),
-              ],
-            ),
+              ),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () => controller.loadMainListItems(),
+                child: const Text('Retry'),
+              ),
+            ],
           ),
-        );
-      }
+        ),
+      );
+    }
 
-      // Show message if no categories found
-      if (controller.categories.isEmpty) {
-        return Center(
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Icon(
-                  Icons.info_outline,
-                  color: Colors.grey,
-                  size: 48,
+    if (controller.mainListItems.isEmpty) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(
+                Icons.info_outline,
+                color: Colors.grey,
+                size: 48,
+              ),
+              const SizedBox(height: 16),
+              Text(
+                'No data found',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey[600],
                 ),
-                const SizedBox(height: 16),
-                Text(
-                  'No categories found',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.grey[600],
-                  ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                'Please check your internet connection and try again.',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.grey[600],
                 ),
-                const SizedBox(height: 8),
-                Text(
-                  'Please check your internet connection and try again.',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.grey[600],
-                  ),
-                ),
-                const SizedBox(height: 16),
-                ElevatedButton(
-                  onPressed: () => controller.loadCategories(),
-                  child: const Text('Refresh'),
-                ),
-              ],
-            ),
+              ),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () => controller.loadMainListItems(),
+                child: const Text('Refresh'),
+              ),
+            ],
           ),
-        );
-      }
+        ),
+      );
+    }
 
-      // Display categories using SymptomSelectionWidget
-      return SymptomSelectionWidget(
-        symptoms: controller.categories,
-        onSelectionChanged: (selectedSymptoms) {
-          // Handle multiple selection if needed
-          print('Selected categories: $selectedSymptoms');
-        },
-        padding: const EdgeInsets.all(16.0),
-        spacing: 8.0,
-        onSymptomTap: (category) {
-          // Load emergencies for this category first
-          controller.loadEmergenciesByCategory(category).then((_) {
-            // Navigate to detail page with the selected category
+    return SymptomSelectionWidget(
+      symptoms: controller.mainListItems,
+      onSelectionChanged: (selectedItems) {
+        print('Selected items: $selectedItems');
+      },
+      padding: const EdgeInsets.all(16.0),
+      spacing: 8.0,
+      onSymptomTap: (item) {
+        controller.onMainListItemTap(item).then((_) {
+          // Check if it was a standalone title (emergency loaded)
+          if (controller.emergencies.isNotEmpty &&
+              !controller.isInCategoryView.value) {
+            // Navigate to detail page for standalone emergency
             Get.toNamed(
               Routes.BIO_CHEMICAL_DETAIL_PAGE,
               arguments: {
-                'category': category,
+                'title': item,
                 'emergencies': controller.emergencies.toList(),
               },
             );
-          });
-        },
+          }
+          // If it was a category, the view will automatically update to show titles
+        });
+      },
+    );
+  }
+
+  Widget _buildCategoryTitlesView(BioChemicalDiagnosisController controller) {
+    print(
+        'DEBUG UI: Building category titles view for: ${controller.selectedCategory.value}');
+    print(
+        'DEBUG UI: Category titles count: ${controller.categoryTitles.length}');
+    print('DEBUG UI: Is loading titles: ${controller.isLoadingTitles.value}');
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        //       Expanded(
+        //         child: Text(
+        //           controller.selectedCategory.value,
+        //           style: const TextStyle(
+        //             fontSize: 18,
+        //             fontWeight: FontWeight.bold,
+        //           ),
+        //         ),
+        //       ),
+        //     ],
+        //   ),
+        // ),
+
+        _buildTitlesList(controller),
+      ],
+    );
+  }
+
+  Widget _buildTitlesList(BioChemicalDiagnosisController controller) {
+    if (controller.isLoadingTitles.value) {
+      return const Center(
+        child: CircularProgressIndicator(),
       );
-    });
+    }
+
+    if (controller.categoryTitles.isEmpty) {
+      return const Center(
+        child: Text('No titles found in this category'),
+      );
+    }
+
+    return SymptomSelectionWidget(
+      symptoms: controller.categoryTitles,
+      onSelectionChanged: (selectedTitles) {
+        print('Selected titles: $selectedTitles');
+      },
+      padding: const EdgeInsets.all(16.0),
+      spacing: 8.0,
+      onSymptomTap: (title) {
+        controller.loadEmergencyByTitle(title).then((_) {
+          if (controller.emergencies.isNotEmpty) {
+            Get.toNamed(
+              Routes.BIO_CHEMICAL_DETAIL_PAGE,
+              arguments: {
+                'title': title,
+                'category': controller.selectedCategory.value,
+                'emergencies': controller.emergencies.toList(),
+              },
+            );
+          }
+        });
+      },
+    );
   }
 }
