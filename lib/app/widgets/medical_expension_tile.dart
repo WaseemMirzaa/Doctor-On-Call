@@ -24,6 +24,7 @@ class MedicalExpansionTile extends StatelessWidget {
     return Theme(
       data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
       child: ExpansionTile(
+        expandedAlignment: Alignment.centerLeft,
         title: Text(title,
             style: AppTextStyles.medium.copyWith(
               fontSize: 17,

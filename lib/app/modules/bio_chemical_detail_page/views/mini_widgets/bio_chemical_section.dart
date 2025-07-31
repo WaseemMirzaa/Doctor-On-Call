@@ -54,7 +54,7 @@ class BioChemicalSection extends StatelessWidget {
       }
 
       return ListView(
-        padding: const EdgeInsets.all(10.0),
+        // padding: const EdgeInsets.all(10.0),
         children: [
           // Definition
           MedicalExpansionTile(
