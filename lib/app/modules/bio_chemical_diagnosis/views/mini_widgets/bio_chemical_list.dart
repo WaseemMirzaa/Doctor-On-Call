@@ -1,6 +1,7 @@
 import 'package:dr_on_call/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../widgets/symptom_selection_widget.dart';
 import '../../controllers/bio_chemical_diagnosis_controller.dart';
@@ -122,22 +123,30 @@ class BioChemicalList extends StatelessWidget {
       },
       padding: const EdgeInsets.all(16.0),
       spacing: 8.0,
-      onSymptomTap: (item) {
-        controller.onMainListItemTap(item).then((_) {
-          // Check if it was a standalone title (emergency loaded)
-          if (controller.emergencies.isNotEmpty &&
-              !controller.isInCategoryView.value) {
-            // Navigate to detail page for standalone emergency
-            Get.toNamed(
-              Routes.BIO_CHEMICAL_DETAIL_PAGE,
-              arguments: {
-                'title': item,
-                'emergencies': controller.emergencies.toList(),
-              },
-            );
-          }
-          // If it was a category, the view will automatically update to show titles
-        });
+      onSymptomTap: (item) async {
+        // Save to recent
+        final prefs = await SharedPreferences.getInstance();
+        final newItem = 'Biochemical|$item';
+        List<String> recentList = prefs.getStringList('recentSymptoms') ?? [];
+        recentList.removeWhere((i) => i == newItem);
+        recentList.insert(0, newItem);
+        if (recentList.length > 10) recentList = recentList.take(10).toList();
+        await prefs.setStringList('recentSymptoms', recentList);
+
+        // Load emergency and navigate
+        await controller.onMainListItemTap(item);
+        if (controller.emergencies.isNotEmpty &&
+            !controller.isInCategoryView.value) {
+          Get.toNamed(
+            Routes.BIO_CHEMICAL_DETAIL_PAGE,
+            arguments: {
+              'title': item,
+              'category': 'Biochemical',
+              'emergencies': controller.emergencies.toList(),
+            },
+          );
+        }
+        // If it's a category, the view will update to show titles
       },
     );
   }
@@ -190,19 +199,27 @@ class BioChemicalList extends StatelessWidget {
       },
       padding: const EdgeInsets.all(16.0),
       spacing: 8.0,
-      onSymptomTap: (title) {
-        controller.loadEmergencyByTitle(title).then((_) {
-          if (controller.emergencies.isNotEmpty) {
-            Get.toNamed(
-              Routes.BIO_CHEMICAL_DETAIL_PAGE,
-              arguments: {
-                'title': title,
-                'category': controller.selectedCategory.value,
-                'emergencies': controller.emergencies.toList(),
-              },
-            );
-          }
-        });
+      onSymptomTap: (title) async {
+        // Save to recent
+        final prefs = await SharedPreferences.getInstance();
+        final newItem = 'Biochemical|$title';
+        List<String> recentList = prefs.getStringList('recentSymptoms') ?? [];
+        recentList.removeWhere((i) => i == newItem);
+        recentList.insert(0, newItem);
+        if (recentList.length > 10) recentList = recentList.take(10).toList();
+        await prefs.setStringList('recentSymptoms', recentList);
+
+        await controller.loadEmergencyByTitle(title);
+        if (controller.emergencies.isNotEmpty) {
+          Get.toNamed(
+            Routes.BIO_CHEMICAL_DETAIL_PAGE,
+            arguments: {
+              'title': title,
+              'category': controller.selectedCategory.value,
+              'emergencies': controller.emergencies.toList(),
+            },
+          );
+        }
       },
     );
   }
