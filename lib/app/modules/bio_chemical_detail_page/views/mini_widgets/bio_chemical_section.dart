@@ -2,6 +2,7 @@ import 'package:dr_on_call/config/AppText.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../../config/AppColors.dart';
 import '../../../../widgets/medical_expension_tile.dart';
 import '../../controllers/bio_chemical_detail_page_controller.dart';
 import '../../../bio_chemical_diagnosis/model/biochemical_emergencies.dart';
@@ -104,11 +105,19 @@ class BioChemicalSection extends StatelessWidget {
               content: _buildDynamicListContent(emergency.managementEmergency),
             ),
 
-          // Red Flags
+          // Red Flags - Special styling
           if (emergency.redFlags.isNotEmpty)
-            MedicalExpansionTile(
-              title: 'Red Flags',
-              content: _buildListContent(emergency.redFlags),
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                color: AppColors.txtWhiteColor,
+              ),
+              child: MedicalExpansionTile(
+                title: 'Red Flags',
+                content: _buildListContent(emergency.redFlags),
+                isRedFlag: true,
+                isRedContent: true,
+              ),
             ),
 
           // Prognosis & Disposition
