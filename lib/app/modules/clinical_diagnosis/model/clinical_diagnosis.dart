@@ -35,15 +35,16 @@ class ClinicalDiagnosis {
       symptoms: List<String>.from(json['symptoms'] ?? []),
       signs: List<String>.from(json['signs'] ?? []),
       investigations: List<String>.from(json['investigations'] ?? []),
-      diagnosis: List<String>.from(json['diagnosis'] ?? []),
-      managementEmergency: json['management_emergency'] is List
-          ? List<dynamic>.from(json['management_emergency'] ?? [])
-          : [],
-      redFlags: List<String>.from(json['red_flags'] ?? []),
-      prognosisDisposition: json['prognosis_disposition'] is List
-          ? List<dynamic>.from(json['prognosis_disposition'] ?? [])
-          : [],
-      ctHeadIndications: List<String>.from(json['ct_head_indications'] ?? []),
+      diagnosis:
+          (json['diagnosis'] as List?)?.map((e) => e.toString()).toList() ?? [],
+      managementEmergency: (json['management_emergency'] as List?) ?? [],
+      redFlags:
+          (json['red_flags'] as List?)?.map((e) => e.toString()).toList() ?? [],
+      prognosisDisposition: (json['prognosis_disposition'] as List?) ?? [],
+      ctHeadIndications: (json['ct_head_indications'] as List?)
+              ?.map((e) => e.toString())
+              .toList() ??
+          [],
     );
   }
 
@@ -74,8 +75,17 @@ class ClinicalDefinition {
   });
 
   factory ClinicalDefinition.fromJson(Map<String, dynamic> json) {
+    final rawCriteria = json['criteria'];
+
+    String? parsedCriteria;
+    if (rawCriteria is List) {
+      parsedCriteria = rawCriteria.join(" | ");
+    } else if (rawCriteria is String) {
+      parsedCriteria = rawCriteria;
+    }
+
     return ClinicalDefinition(
-      criteria: json['criteria'],
+      criteria: parsedCriteria,
       notes: List<String>.from(json['notes'] ?? []),
     );
   }

@@ -147,26 +147,26 @@ class ClinicalDiagnosisList extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         // Header with back button and category name
-        Container(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
-            children: [
-              IconButton(
-                onPressed: () => controller.goBackToMainList(),
-                icon: const Icon(Icons.arrow_back),
-              ),
-              Expanded(
-                child: Text(
-                  controller.selectedCategory.value,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
+        // Container(
+        //   padding: const EdgeInsets.all(16.0),
+        //   child: Row(
+        //     children: [
+        //       IconButton(
+        //         onPressed: () => controller.goBackToMainList(),
+        //         icon: const Icon(Icons.arrow_back),
+        //       ),
+        //       Expanded(
+        //         child: Text(
+        //           controller.selectedCategory.value,
+        //           style: const TextStyle(
+        //             fontSize: 18,
+        //             fontWeight: FontWeight.bold,
+        //           ),
+        //         ),
+        //       ),
+        //     ],
+        //   ),
+        // ),
 
         // Titles list
         _buildTitlesList(controller),
