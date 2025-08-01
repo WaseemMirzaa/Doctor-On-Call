@@ -31,15 +31,22 @@ class RecentList extends StatelessWidget {
         spacing: 8.0,
         onSymptomTap: (title) async {
           final index = recentController.recentSymptoms.indexOf(title);
+          if (index == -1) {
+            Get.snackbar("Error", "Recent item not found");
+            return;
+          }
+
           final recent = recentController.recentActivities[index];
           final category = recent['category'] ?? '';
           final type = recent['type'] ?? 'biochemical';
+
+          // 🟢 Update timestamp in background without blocking navigation
+          recentController.updateRecentTimestamp(title, type);
 
           print('🟡 Tapped recent: $title | Category: $category | Type: $type');
 
           if (type == 'biochemical') {
             await bioController.loadEmergencyByTitle(title);
-
             if (bioController.emergencies.isNotEmpty) {
               Get.toNamed(
                 Routes.BIO_CHEMICAL_DETAIL_PAGE,
@@ -54,7 +61,6 @@ class RecentList extends StatelessWidget {
             }
           } else if (type == 'clinical') {
             await clinicalController.loadDiagnosisByTitle(title);
-
             if (clinicalController.diagnoses.isNotEmpty) {
               Get.toNamed(
                 Routes.CLINICAL_DETAILS,

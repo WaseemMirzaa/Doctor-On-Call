@@ -14,7 +14,10 @@ class RecentController extends GetxController {
   }
 
   Future<void> fetchRecents() async {
+    if (isLoading.value) return;
+
     isLoading.value = true;
+
     try {
       final activities = await RecentsService.getRecentActivities();
       recentActivities.assignAll(activities);
@@ -30,5 +33,16 @@ class RecentController extends GetxController {
   Future<void> clearRecents() async {
     await RecentsService.clearRecentActivities();
     await fetchRecents();
+  }
+
+  Future<void> updateRecentTimestamp(String title, String type) async {
+    try {
+      await RecentsService.updateActivityTimestamp(title, type);
+
+      // 🔁 Refresh in background without affecting navigation
+      fetchRecents(); // do not await
+    } catch (e) {
+      print('⚠️ Failed to update recent timestamp: $e');
+    }
   }
 }

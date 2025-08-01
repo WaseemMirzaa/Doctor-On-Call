@@ -136,7 +136,6 @@ class BioChemicalDiagnosisController extends GetxController {
       );
     } catch (e) {
       print('Error storing recent activity: $e');
-      // Don't throw error here as it shouldn't affect the main functionality
     }
   }
 
