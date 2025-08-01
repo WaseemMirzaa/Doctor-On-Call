@@ -13,6 +13,31 @@ class RecentController extends GetxController {
     fetchRecents();
   }
 
+  // Future<void> fetchRecents() async {
+  //   if (isLoading.value) return;
+  //
+  //   isLoading.value = true;
+  //
+  //   try {
+  //     final activities = await RecentsService.getRecentActivities();
+  //     recentActivities.assignAll(activities);
+  //
+  //     // Format: type (category - title)
+  //     recentSymptoms.assignAll(
+  //       activities.map((e) {
+  //         final type = e['type'] ?? '';
+  //         final category = e['category'] ?? '';
+  //         final title = e['title'] ?? '';
+  //         return '$type ($category - $title)';
+  //       }).toList(),
+  //     );
+  //   } catch (e) {
+  //     print("⚠️ Error fetching recent symptoms: $e");
+  //   } finally {
+  //     isLoading.value = false;
+  //   }
+  // }
+
   Future<void> fetchRecents() async {
     if (isLoading.value) return;
 
@@ -21,8 +46,10 @@ class RecentController extends GetxController {
     try {
       final activities = await RecentsService.getRecentActivities();
       recentActivities.assignAll(activities);
+
       recentSymptoms.assignAll(
-          activities.map((e) => e['title'] as String).toSet().toList());
+        activities.map((e) => e['title'] as String).toList(),
+      );
     } catch (e) {
       print("⚠️ Error fetching recent symptoms: $e");
     } finally {
@@ -38,9 +65,7 @@ class RecentController extends GetxController {
   Future<void> updateRecentTimestamp(String title, String type) async {
     try {
       await RecentsService.updateActivityTimestamp(title, type);
-
-      // 🔁 Refresh in background without affecting navigation
-      fetchRecents(); // do not await
+      fetchRecents();
     } catch (e) {
       print('⚠️ Failed to update recent timestamp: $e');
     }

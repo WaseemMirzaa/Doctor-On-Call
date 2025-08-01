@@ -17,67 +17,135 @@ class RecentList extends StatelessWidget {
     final clinicalController = Get.put(ClinicalDiagnosisController());
 
     return Obx(() {
+      // ✅ Now the entire widget is wrapped in one Obx, but correctly uses observables
       if (recentController.isLoading.value) {
         return const Center(child: CircularProgressIndicator());
       }
 
       return SymptomSelectionWidget(
-        symptoms: recentController.recentSymptoms,
-        onSelectionChanged: (selected) {
-          print('Selected: $selected');
-        },
-        showRecentIcon: true,
-        padding: const EdgeInsets.all(16.0),
-        spacing: 8.0,
-        onSymptomTap: (title) async {
-          final index = recentController.recentSymptoms.indexOf(title);
-          if (index == -1) {
-            Get.snackbar("Error", "Recent item not found");
-            return;
-          }
+          symptoms: recentController.recentSymptoms,
+          onSelectionChanged: (selected) {
+            print('Selected: $selected');
+          },
+          showRecentIcon: true,
+          padding: const EdgeInsets.all(16.0),
+          spacing: 8.0,
 
-          final recent = recentController.recentActivities[index];
-          final category = recent['category'] ?? '';
-          final type = recent['type'] ?? 'biochemical';
+          // onSymptomTap: (label) async {
+          //   // label = "biochemical (Standalone - Acute Severe Anemia)"
+          //   final typeSplit = label.split(' (');
+          //   if (typeSplit.length < 2) {
+          //     Get.snackbar("Error", "Invalid recent format");
+          //     return;
+          //   }
+          //
+          //   final type = typeSplit[0];
+          //   final inner = typeSplit[1].replaceAll(')', '');
+          //   final innerSplit = inner.split(' - ');
+          //
+          //   if (innerSplit.length < 2) {
+          //     Get.snackbar("Error", "Invalid recent format");
+          //     return;
+          //   }
+          //
+          //   final category = innerSplit[0];
+          //   final title =
+          //       innerSplit.sublist(1).join(' - '); // in case title has -
+          //
+          //   final index = recentController.recentSymptoms.indexOf(label);
+          //   if (index == -1) {
+          //     Get.snackbar("Error", "Recent item not found");
+          //     return;
+          //   }
+          //
+          //   // 🔄 Update timestamp in background
+          //   recentController.updateRecentTimestamp(title, type);
+          //
+          //   print(
+          //       '🟡 Tapped recent: $title | Category: $category | Type: $type');
+          //
+          //   if (type == 'biochemical') {
+          //     await bioController.loadEmergencyByTitle(title);
+          //     if (bioController.emergencies.isNotEmpty) {
+          //       Get.toNamed(
+          //         Routes.BIO_CHEMICAL_DETAIL_PAGE,
+          //         arguments: {
+          //           'title': title,
+          //           'category': category,
+          //           'emergencies': bioController.emergencies.toList(),
+          //         },
+          //       );
+          //     } else {
+          //       Get.snackbar("No Data", "No emergency found for '$title'");
+          //     }
+          //   } else if (type == 'clinical') {
+          //     await clinicalController.loadDiagnosisByTitle(title);
+          //     if (clinicalController.diagnoses.isNotEmpty) {
+          //       Get.toNamed(
+          //         Routes.CLINICAL_DETAILS,
+          //         arguments: {
+          //           'title': title,
+          //           'category': category,
+          //           'diagnoses': clinicalController.diagnoses.toList(),
+          //         },
+          //       );
+          //     } else {
+          //       Get.snackbar("No Data", "No diagnosis found for '$title'");
+          //     }
+          //   } else {
+          //     Get.snackbar("Unknown Type", "Type '$type' not supported.");
+          //   }
+          // });
 
-          // 🟢 Update timestamp in background without blocking navigation
-          recentController.updateRecentTimestamp(title, type);
-
-          print('🟡 Tapped recent: $title | Category: $category | Type: $type');
-
-          if (type == 'biochemical') {
-            await bioController.loadEmergencyByTitle(title);
-            if (bioController.emergencies.isNotEmpty) {
-              Get.toNamed(
-                Routes.BIO_CHEMICAL_DETAIL_PAGE,
-                arguments: {
-                  'title': title,
-                  'category': category,
-                  'emergencies': bioController.emergencies.toList(),
-                },
-              );
-            } else {
-              Get.snackbar("No Data", "No emergency found for '$title'");
+          onSymptomTap: (title) async {
+            final index = recentController.recentSymptoms.indexOf(title);
+            if (index == -1) {
+              Get.snackbar("Error", "Recent item not found");
+              return;
             }
-          } else if (type == 'clinical') {
-            await clinicalController.loadDiagnosisByTitle(title);
-            if (clinicalController.diagnoses.isNotEmpty) {
-              Get.toNamed(
-                Routes.CLINICAL_DETAILS,
-                arguments: {
-                  'title': title,
-                  'category': category,
-                  'diagnoses': clinicalController.diagnoses.toList(),
-                },
-              );
+
+            final recent = recentController.recentActivities[index];
+            final category = recent['category'] ?? '';
+            final type = recent['type'] ?? 'biochemical';
+
+            // ✅ Update Firestore timestamp
+            recentController.updateRecentTimestamp(title, type);
+
+            print(
+                '🟡 Tapped recent: $title | Category: $category | Type: $type');
+
+            if (type == 'biochemical') {
+              await bioController.loadEmergencyByTitle(title);
+              if (bioController.emergencies.isNotEmpty) {
+                Get.toNamed(
+                  Routes.BIO_CHEMICAL_DETAIL_PAGE,
+                  arguments: {
+                    'title': title,
+                    'category': category,
+                    'emergencies': bioController.emergencies.toList(),
+                  },
+                );
+              } else {
+                Get.snackbar("No Data", "No emergency found for '$title'");
+              }
+            } else if (type == 'clinical') {
+              await clinicalController.loadDiagnosisByTitle(title);
+              if (clinicalController.diagnoses.isNotEmpty) {
+                Get.toNamed(
+                  Routes.CLINICAL_DETAILS,
+                  arguments: {
+                    'title': title,
+                    'category': category,
+                    'diagnoses': clinicalController.diagnoses.toList(),
+                  },
+                );
+              } else {
+                Get.snackbar("No Data", "No diagnosis found for '$title'");
+              }
             } else {
-              Get.snackbar("No Data", "No diagnosis found for '$title'");
+              Get.snackbar("Unknown Type", "Type '$type' not supported.");
             }
-          } else {
-            Get.snackbar("Unknown Type", "Type '$type' not supported.");
-          }
-        },
-      );
+          });
     });
   }
 }
