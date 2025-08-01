@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import '../../../services/clinical_diagnosis.dart';
+import '../../../services/recents_service.dart';
 import '../model/clinical_diagnosis.dart';
 
 class ClinicalDiagnosisController extends GetxController {
@@ -107,6 +108,9 @@ class ClinicalDiagnosisController extends GetxController {
       if (diagnosis != null) {
         diagnoses.clear();
         diagnoses.add(diagnosis);
+
+        // Store recent activity when diagnosis is loaded
+        await _storeRecentActivity(title);
       } else {
         errorMessage.value = 'Diagnosis not found: $title';
       }
@@ -115,6 +119,24 @@ class ClinicalDiagnosisController extends GetxController {
       print('Error loading diagnosis by title: $e');
     } finally {
       isLoadingDiagnoses.value = false;
+    }
+  }
+
+  /// Store recent activity for clinical diagnosis
+  Future<void> _storeRecentActivity(String title) async {
+    try {
+      String category = selectedCategory.value.isNotEmpty
+          ? selectedCategory.value
+          : 'Standalone';
+
+      await RecentsService.addRecentActivity(
+        title: title,
+        category: category,
+        type: 'clinical',
+      );
+    } catch (e) {
+      print('Error storing recent activity: $e');
+      // Don't throw error here as it shouldn't affect the main functionality
     }
   }
 

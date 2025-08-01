@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../clinical_diagnosis/model/clinical_diagnosis.dart';
 
 class ClinicalDetailsController extends GetxController {
@@ -15,24 +14,6 @@ class ClinicalDetailsController extends GetxController {
   void onInit() {
     super.onInit();
     _loadArgumentsData();
-    final args = Get.arguments;
-    final title = args?['title'];
-    final category = args?['category'] ?? 'Clinical';
-    if (title != null) {
-      _saveToRecent(title, category);
-    }
-  }
-
-  Future<void> _saveToRecent(String title, String category) async {
-    final prefs = await SharedPreferences.getInstance();
-    final newItem = '$category|$title';
-    List<String> recentList = prefs.getStringList('recentSymptoms') ?? [];
-    recentList.removeWhere((item) => item == newItem);
-    recentList.insert(0, newItem);
-    if (recentList.length > 10) {
-      recentList = recentList.take(10).toList();
-    }
-    await prefs.setStringList('recentSymptoms', recentList);
   }
 
   /// Load data passed from the previous screen

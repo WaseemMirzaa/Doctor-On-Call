@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import '../../../services/biochemical_emergency_service.dart';
+import '../../../services/recents_service.dart';
 import '../model/biochemical_emergencies.dart';
 
 class BioChemicalDiagnosisController extends GetxController {
@@ -107,6 +108,9 @@ class BioChemicalDiagnosisController extends GetxController {
       if (emergency != null) {
         emergencies.clear();
         emergencies.add(emergency);
+
+        // Store recent activity when emergency is loaded
+        await _storeRecentActivity(title);
       } else {
         errorMessage.value = 'Emergency not found: $title';
       }
@@ -115,6 +119,24 @@ class BioChemicalDiagnosisController extends GetxController {
       print('Error loading emergency by title: $e');
     } finally {
       isLoadingEmergencies.value = false;
+    }
+  }
+
+  /// Store recent activity for biochemical emergency
+  Future<void> _storeRecentActivity(String title) async {
+    try {
+      String category = selectedCategory.value.isNotEmpty
+          ? selectedCategory.value
+          : 'Standalone';
+
+      await RecentsService.addRecentActivity(
+        title: title,
+        category: category,
+        type: 'biochemical',
+      );
+    } catch (e) {
+      print('Error storing recent activity: $e');
+      // Don't throw error here as it shouldn't affect the main functionality
     }
   }
 

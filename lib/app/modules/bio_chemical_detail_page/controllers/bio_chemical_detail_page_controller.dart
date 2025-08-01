@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../bio_chemical_diagnosis/model/biochemical_emergencies.dart';
 
 class BioChemicalDetailPageController extends GetxController {
@@ -15,11 +14,6 @@ class BioChemicalDetailPageController extends GetxController {
   void onInit() {
     super.onInit();
     _loadArgumentsData();
-    final args = Get.arguments;
-    final title = args?['title'];
-    if (title != null) {
-      _saveToRecent(title);
-    }
   }
 
   /// Load data passed from the previous screen
@@ -52,18 +46,6 @@ class BioChemicalDetailPageController extends GetxController {
     } else {
       print('DEBUG Detail Controller: No arguments or invalid format');
     }
-  }
-
-  Future<void> _saveToRecent(String title) async {
-    final prefs = await SharedPreferences.getInstance();
-    final newItem = 'Biochemical|$title';
-    List<String> recentList = prefs.getStringList('recentSymptoms') ?? [];
-    recentList.removeWhere((item) => item == newItem);
-    recentList.insert(0, newItem);
-    if (recentList.length > 10) {
-      recentList = recentList.take(10).toList();
-    }
-    await prefs.setStringList('recentSymptoms', recentList);
   }
 
   /// Get the currently selected emergency
