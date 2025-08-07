@@ -43,39 +43,38 @@ class SignUpForm extends StatelessWidget {
           controller: controller.passwordController,
         ),
         const SizedBox(height: 20),
-        RoundedTextContainer(
-          text: AppText.signUp,
-          color: AppColors.baseColor,
-          onTap: () {
-            Get.toNamed(Routes.LOGIN);
-          },
+        Obx(
+          () => controller.isLoading.value
+              ? CircularProgressIndicator()
+              : RoundedTextContainer(
+                  text: AppText.signUp,
+                  color: AppColors.baseColor,
+                  onTap: controller.signUp),
         ),
         const SizedBox(height: 15),
         Row(
-          crossAxisAlignment:
-              CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Obx(() => Padding(
-                  padding: const EdgeInsets.only(top: 2),
-                  child: Checkbox(
-                    value: controller.isChecked.value,
-                    onChanged: (value) {
-                      controller.isChecked.value = value ?? false;
-                    },
-                    visualDensity: VisualDensity.compact,
-                  ),
-                )),
-
-            // Expanded(
-            //   child: Padding(
-            //     padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-            //     child: Text(
-            //       AppText.policyAgreement,
-            //       textAlign: TextAlign.left,
-            //       style: AppTextStyles.regular.copyWith(fontSize: 12),
-            //     ),
-            //   ),
-            // ),
+            // Obx(() => Padding(
+            //       padding: const EdgeInsets.only(top: 2),
+            //       child: Checkbox(
+            //         value: controller.isChecked.value,
+            //         onChanged: (value) {
+            //           controller.isChecked.value = value ?? false;
+            //         },
+            //         visualDensity: VisualDensity.compact,
+            //       ),
+            //     )),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                child: Text(
+                  AppText.policyAgreement,
+                  textAlign: TextAlign.left,
+                  style: AppTextStyles.regular.copyWith(fontSize: 12),
+                ),
+              ),
+            ),
           ],
         )
       ],
