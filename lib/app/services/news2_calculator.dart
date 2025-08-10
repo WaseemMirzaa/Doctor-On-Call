@@ -147,6 +147,68 @@ class News2Calculator {
   }
 }
 
+/// Enhanced NEWS2 Calculator with AVPU+C scoring
+class EnhancedNews2Calculator extends News2Calculator {
+  final News2Calculator baseCalculator;
+  final int consciousnessScore;
+
+  EnhancedNews2Calculator({
+    required this.baseCalculator,
+    required this.consciousnessScore,
+  }) : super(
+          respiratoryRate: baseCalculator.respiratoryRate,
+          oxygenSaturation: baseCalculator.oxygenSaturation,
+          onSupplementalOxygen: baseCalculator.onSupplementalOxygen,
+          systolicBP: baseCalculator.systolicBP,
+          heartRate: baseCalculator.heartRate,
+          temperature: baseCalculator.temperature,
+          isConfusedOrUnresponsive: baseCalculator.isConfusedOrUnresponsive,
+        );
+
+  @override
+  int calculateTotalScore() {
+    int totalScore = 0;
+
+    // Respiratory Rate scoring
+    totalScore += _getRespiratoryRateScore(respiratoryRate);
+
+    // Oxygen Saturation scoring
+    totalScore += _getOxygenSaturationScore(oxygenSaturation);
+
+    // Systolic Blood Pressure scoring
+    totalScore += _getSystolicBPScore(systolicBP);
+
+    // Heart Rate scoring
+    totalScore += _getHeartRateScore(heartRate);
+
+    // Temperature scoring
+    totalScore += _getTemperatureScore(temperature);
+
+    // Enhanced Level of Consciousness scoring (AVPU+C)
+    totalScore += consciousnessScore;
+
+    // Supplemental Oxygen scoring
+    if (onSupplementalOxygen) {
+      totalScore += 2;
+    }
+
+    return totalScore;
+  }
+
+  @override
+  Map<String, int> getScoreBreakdown() {
+    return {
+      'Respiratory Rate': _getRespiratoryRateScore(respiratoryRate),
+      'Oxygen Saturation': _getOxygenSaturationScore(oxygenSaturation),
+      'Systolic BP': _getSystolicBPScore(systolicBP),
+      'Heart Rate': _getHeartRateScore(heartRate),
+      'Temperature': _getTemperatureScore(temperature),
+      'Level of Consciousness (AVPU)': consciousnessScore,
+      'Supplemental Oxygen': onSupplementalOxygen ? 2 : 0,
+    };
+  }
+}
+
 /// Example usage:
 /// ```dart
 /// final calculator = News2Calculator(

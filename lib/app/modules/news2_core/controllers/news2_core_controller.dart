@@ -11,8 +11,20 @@ class News2CoreController extends GetxController {
   final systolicBPController = TextEditingController();
   final heartRateController = TextEditingController();
 
-  // Observable for level of consciousness (AVPU)
+  // Observable for level of consciousness checkbox
   final isConfusedOrUnresponsive = false.obs;
+
+  // Observable for AVPU+C level selection
+  final selectedConsciousnessLevel = 'Alert'.obs;
+
+  // AVPU+C options with their scores
+  final consciousnessOptions = <String, int>{
+    'Alert': 0,
+    'Voice': 3,
+    'Pain': 3,
+    'Unresponsive': 3,
+    // 'New Confusion': 3,
+  };
 
   // Observable for oxygen requirement
   final onSupplementalOxygen = false.obs;
@@ -41,9 +53,28 @@ class News2CoreController extends GetxController {
     super.onClose();
   }
 
-  /// Toggle level of consciousness state
+  /// Toggle level of consciousness checkbox
   void toggleLevelOfConsciousness() {
     isConfusedOrUnresponsive.value = !isConfusedOrUnresponsive.value;
+    // Reset to Alert when unchecked
+    if (!isConfusedOrUnresponsive.value) {
+      selectedConsciousnessLevel.value = 'Alert';
+    }
+  }
+
+  /// Set consciousness level
+  void setConsciousnessLevel(String level) {
+    selectedConsciousnessLevel.value = level;
+    // Update the boolean based on the selected level
+    isConfusedOrUnresponsive.value = level != 'Alert';
+  }
+
+  /// Get consciousness score based on AVPU+C
+  int getConsciousnessScore() {
+    if (!isConfusedOrUnresponsive.value) {
+      return 0; // If checkbox not checked, score is 0 (Alert)
+    }
+    return consciousnessOptions[selectedConsciousnessLevel.value] ?? 0;
   }
 
   /// Toggle oxygen requirement state
@@ -136,7 +167,13 @@ class News2CoreController extends GetxController {
         isConfusedOrUnresponsive: isConfusedOrUnresponsive.value,
       );
 
-      calculationResult.value = calculator;
+      // Create enhanced calculator with AVPU scoring
+      final enhancedCalculator = EnhancedNews2Calculator(
+        baseCalculator: calculator,
+        consciousnessScore: getConsciousnessScore(),
+      );
+
+      calculationResult.value = enhancedCalculator;
       return true;
     } catch (e) {
       CustomSnackBar.error("Error calculating NEWS2 score: ${e.toString()}");
@@ -152,6 +189,7 @@ class News2CoreController extends GetxController {
     systolicBPController.clear();
     heartRateController.clear();
     isConfusedOrUnresponsive.value = false;
+    selectedConsciousnessLevel.value = 'Alert';
     onSupplementalOxygen.value = false;
     calculationResult.value = null;
   }

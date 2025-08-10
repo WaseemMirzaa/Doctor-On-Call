@@ -47,48 +47,111 @@ class News2Tiles extends StatelessWidget {
   }
 
   Widget _buildSymptomField(String symptom, News2CoreController controller) {
-    // Handle boolean fields differently
+    // Handle level of consciousness with checkbox and dropdown
     if (symptom == AppText.levelOfConsciousness) {
-      return Obx(() => GestureDetector(
-            onTap: () {
-              controller.toggleLevelOfConsciousness();
-              onSymptomTap(symptom);
-            },
-            child: Container(
-              height: 60,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(
-                  color: const Color(0xFFEEC643),
-                  width: 1,
+      return Obx(() => Column(
+            children: [
+              // Checkbox for Level of Consciousness
+              GestureDetector(
+                onTap: () {
+                  controller.toggleLevelOfConsciousness();
+                  onSymptomTap(symptom);
+                },
+                child: Container(
+                  height: 60,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                      color: const Color(0xFFEEC643),
+                      width: 1,
+                    ),
+                    color: controller.isConfusedOrUnresponsive.value
+                        ? const Color(0xFF0A1A3F)
+                        : null,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          symptom,
+                          style: AppTextStyles.medium.copyWith(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.txtWhiteColor,
+                          ),
+                        ),
+                        Icon(
+                          controller.isConfusedOrUnresponsive.value
+                              ? Icons.check_box
+                              : Icons.check_box_outline_blank,
+                          color: AppColors.txtOrangeColor,
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-                color: controller.isConfusedOrUnresponsive.value
-                    ? const Color(0xFF0A1A3F)
-                    : null,
               ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      symptom,
-                      style: AppTextStyles.medium.copyWith(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.txtWhiteColor,
+              // AVPU Dropdown (shown when checkbox is checked)
+              if (controller.isConfusedOrUnresponsive.value) ...[
+                const SizedBox(height: 20),
+                Container(
+                  height: 60,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                      color: const Color(0xFFEEC643),
+                      width: 1,
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        value: controller.selectedConsciousnessLevel.value,
+                        isExpanded: true,
+                        dropdownColor: const Color(0xFF0A1A3F),
+                        style: AppTextStyles.medium.copyWith(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.txtWhiteColor,
+                        ),
+                        icon: const Icon(
+                          Icons.arrow_drop_down,
+                          color: AppColors.txtOrangeColor,
+                        ),
+                        items: controller.consciousnessOptions.keys
+                            .map((String level) {
+                          final score = controller.consciousnessOptions[level]!;
+                          return DropdownMenuItem<String>(
+                            value: level,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  level,
+                                  style: AppTextStyles.medium.copyWith(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500,
+                                    color: AppColors.txtWhiteColor,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        }).toList(),
+                        onChanged: (String? newValue) {
+                          if (newValue != null) {
+                            controller.setConsciousnessLevel(newValue);
+                          }
+                        },
                       ),
                     ),
-                    Icon(
-                      controller.isConfusedOrUnresponsive.value
-                          ? Icons.check_box
-                          : Icons.check_box_outline_blank,
-                      color: AppColors.txtOrangeColor,
-                    ),
-                  ],
+                  ),
                 ),
-              ),
-            ),
+              ],
+            ],
           ));
     }
 
