@@ -30,7 +30,7 @@ class OnboardingscreenView extends GetView<OnboardingscreenController> {
           Container(
             width: double.infinity,
             height: double.infinity,
-            color: const Color(0xFF001631).withOpacity(0.5),
+            color: const Color(0xFF001631).withValues(alpha: 0.5),
           ),
 
           // ✅ This goes inside children

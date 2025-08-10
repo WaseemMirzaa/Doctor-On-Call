@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import '../../../services/biochemical_emergency_service.dart';
 import '../../../services/recents_service.dart';
+import '../../../services/favorites_service.dart';
 import '../model/biochemical_emergencies.dart';
 
 class BioChemicalDiagnosisController extends GetxController {
@@ -25,10 +26,35 @@ class BioChemicalDiagnosisController extends GetxController {
   final RxBool isInCategoryView =
       false.obs; // Track if we're viewing titles within a category
 
+  // Favorites state
+  final RxMap<String, bool> favoriteStates = <String, bool>{}.obs;
+
   @override
   void onInit() {
     super.onInit();
+
+    // Check if we have arguments from favorites navigation
+    final arguments = Get.arguments as Map<String, dynamic>?;
+    if (arguments != null) {
+      final selectedCategory = arguments['selectedCategory'] as String?;
+      final showCategoryView = arguments['showCategoryView'] as bool?;
+
+      if (selectedCategory != null && showCategoryView == true) {
+        // Set up category view
+        this.selectedCategory.value = selectedCategory;
+        isInCategoryView.value = true;
+
+        // Load the category titles
+        loadTitlesInCategory(selectedCategory).then((_) {
+          loadFavoriteStates();
+        });
+        return;
+      }
+    }
+
+    // Default initialization
     loadMainListItems();
+    loadFavoriteStates();
   }
 
   /// Load main list items (categories + standalone titles)
@@ -40,6 +66,9 @@ class BioChemicalDiagnosisController extends GetxController {
       final List<String> fetchedItems =
           await BiochemicalEmergencyService.getMainListItems();
       mainListItems.assignAll(fetchedItems);
+
+      // Load favorite states for the main list items
+      await loadFavoriteStates();
     } catch (e) {
       errorMessage.value = 'Failed to load items: $e';
       print('Error loading main list items: $e');
@@ -65,6 +94,8 @@ class BioChemicalDiagnosisController extends GetxController {
         selectedCategory.value = item;
         isInCategoryView.value = true;
         await loadTitlesInCategory(item);
+        // Reload favorite states for category titles
+        await loadFavoriteStates();
         print('DEBUG: Category titles loaded: ${categoryTitles.length}');
         print('DEBUG: Category titles: ${categoryTitles.toList()}');
       } else {
@@ -162,5 +193,56 @@ class BioChemicalDiagnosisController extends GetxController {
     } catch (e) {
       print('Connection test failed: $e');
     }
+  }
+
+  /// Load favorite states for all items
+  Future<void> loadFavoriteStates() async {
+    try {
+      final items = isInCategoryView.value ? categoryTitles : mainListItems;
+      favoriteStates.clear();
+
+      for (String item in items) {
+        final itemId = FavoritesService.generateItemId(
+            item,
+            selectedCategory.value.isEmpty ? 'General' : selectedCategory.value,
+            FavoriteType.biochemicalEmergency);
+        final isFav = await FavoritesService.isFavorite(itemId);
+        favoriteStates[item] = isFav;
+      }
+    } catch (e) {
+      print('Error loading favorite states: $e');
+    }
+  }
+
+  /// Toggle favorite status for an item
+  Future<void> toggleFavorite(String item) async {
+    try {
+      final itemId = FavoritesService.generateItemId(
+          item,
+          selectedCategory.value.isEmpty ? 'General' : selectedCategory.value,
+          FavoriteType.biochemicalEmergency);
+
+      final success = await FavoritesService.toggleFavorite(
+        itemId: itemId,
+        title: item,
+        category:
+            selectedCategory.value.isEmpty ? 'General' : selectedCategory.value,
+        type: FavoriteType.biochemicalEmergency,
+      );
+
+      if (success) {
+        // Force UI update by creating a new map
+        final newStates = Map<String, bool>.from(favoriteStates);
+        newStates[item] = !(favoriteStates[item] ?? false);
+        favoriteStates.assignAll(newStates);
+      }
+    } catch (e) {
+      print('Error toggling favorite: $e');
+    }
+  }
+
+  /// Check if an item is favorite
+  bool isFavorite(String item) {
+    return favoriteStates[item] ?? false;
   }
 }

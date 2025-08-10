@@ -2,6 +2,8 @@ import 'package:dr_on_call/app/modules/news2_core/views/mini_widgets/news2_tiles
 import 'package:dr_on_call/config/AppColors.dart';
 import 'package:dr_on_call/config/AppTextStyle.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import '../../controllers/news2_core_controller.dart';
 
 import '../../../../../config/AppText.dart';
 
@@ -10,6 +12,8 @@ class News2List extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<News2CoreController>();
+
     return Column(
       children: [
         News2Tiles(
@@ -23,47 +27,29 @@ class News2List extends StatelessWidget {
             AppText.oxygenRequirement,
           ],
           onSelectionChanged: (selectedSymptoms) {
-            print('Selected symptoms: $selectedSymptoms');
+            // Handle selection changes if needed
           },
           padding: const EdgeInsets.only(
             left: 16.0,
             right: 16.0,
+            bottom: 10,
           ),
-          spacing: 8.0,
+          spacing: 22.0,
           onSymptomTap: (symptom) {
-            switch (symptom) {
-              case AppText.cardiacIschaemia:
-                print('Cardiac Ischaemia Tapped!');
-                break;
-              case AppText.aorticDissection:
-                print('Aortic Dissection Tapped!');
-                break;
-              case AppText.gastrointestinal:
-                print('Gastrointestinal Tapped!');
-                break;
-              case AppText.nsk:
-                print('NSK Tapped!');
-                break;
-              case AppText.psychological:
-                print('Psychological Tapped!');
-                break;
-              case AppText.headache:
-                print('Headache Tapped!');
-                break;
-              case AppText.oxygenRequirement:
-                print('Oxygen Requirement Tapped!');
-                break;
-              default:
-                print('No route defined for: $symptom');
-            }
+            // Handle symptom tap if needed for navigation
           },
         ),
         Padding(
-          padding: const EdgeInsets.only(right: 15.0, left: 15.0),
+          padding: const EdgeInsets.only(
+            right: 15.0,
+            left: 15.0,
+          ),
           child: GestureDetector(
             onTap: () {
-              print('Calculate is tapped');
-              _showNews2ScoreDialog(context);
+              // Validate and calculate NEWS2 score
+              if (controller.calculateNews2Score()) {
+                _showNews2ScoreDialog(context, controller);
+              }
             },
             child: Container(
               height: 60,
@@ -84,7 +70,25 @@ class News2List extends StatelessWidget {
     );
   }
 
-  void _showNews2ScoreDialog(BuildContext context) {
+  void _showNews2ScoreDialog(
+      BuildContext context, News2CoreController controller) {
+    final calculator = controller.calculationResult.value;
+    if (calculator == null) {
+      return;
+    }
+
+    final totalScore = calculator.calculateTotalScore();
+    final riskLevel = calculator.interpretScore();
+    final actionRecommendation = calculator.getActionRecommendation();
+
+    // Determine risk color
+    Color getRiskColor() {
+      if (totalScore == 0) return Colors.green;
+      if (totalScore >= 1 && totalScore <= 4) return Colors.yellow;
+      if (totalScore >= 5 && totalScore <= 6) return Colors.orange;
+      return Colors.red;
+    }
+
     showDialog(
       context: context,
       barrierDismissible: false, // Prevent dismiss on outside tap
@@ -130,9 +134,11 @@ class News2List extends StatelessWidget {
                         Text('Total NEWS2 Score',
                             style: AppTextStyles.medium.copyWith(
                                 fontWeight: FontWeight.w500, fontSize: 18)),
-                        Text('7',
+                        Text('$totalScore',
                             style: AppTextStyles.medium.copyWith(
-                                fontWeight: FontWeight.w500, fontSize: 18)),
+                                fontWeight: FontWeight.w500,
+                                fontSize: 18,
+                                color: getRiskColor())),
                       ],
                     ),
                     const SizedBox(height: 10),
@@ -142,20 +148,21 @@ class News2List extends StatelessWidget {
                         Text('Risk Level',
                             style: AppTextStyles.medium.copyWith(
                                 fontWeight: FontWeight.w500, fontSize: 18)),
-                        Text('High',
+                        Text(riskLevel,
                             style: AppTextStyles.medium.copyWith(
-                                fontWeight: FontWeight.w500, fontSize: 18)),
+                                fontWeight: FontWeight.w500,
+                                fontSize: 18,
+                                color: getRiskColor())),
                       ],
                     ),
                     const SizedBox(height: 20),
                     Text('Action',
                         style: AppTextStyles.medium.copyWith(
-                            color: Colors.red,
+                            color: getRiskColor(),
                             fontWeight: FontWeight.w500,
                             fontSize: 18)),
                     const SizedBox(height: 5),
-                    Text('Urgent clinical review and transfer to higher-level care',
-                        style: AppTextStyles.regular),
+                    Text(actionRecommendation, style: AppTextStyles.regular),
                     const SizedBox(height: 20),
                     Center(
                       child: ElevatedButton(
@@ -183,5 +190,4 @@ class News2List extends StatelessWidget {
       },
     );
   }
-
 }

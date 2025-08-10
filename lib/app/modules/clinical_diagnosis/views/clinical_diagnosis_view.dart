@@ -13,16 +13,18 @@ class ClinicalDiagnosisView extends GetView<ClinicalDiagnosisController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BackgroundContainer(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              ClinicalDiagnosisHeader(),
-              SizedBox(
-                height: 50,
-              ),
-              ClinicalDiagnosisList(),
-            ],
-          ),
+        child: Column(
+          children: [
+            ClinicalDiagnosisHeader(),
+            SizedBox(
+              height: 50,
+            ),
+            Expanded(
+                child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: ClinicalDiagnosisList(),
+            )),
+          ],
         ),
       ),
     );

@@ -22,16 +22,10 @@ class ForgotviewController extends GetxController {
     isLoading.value = true;
 
     try {
-      print("Checking email: $email");
-      final methods =
-          await FirebaseAuth.instance.fetchSignInMethodsForEmail(email);
-      print("Available sign-in methods for $email: $methods");
+      print("Sending password reset email to: $email");
 
-      // if (methods.isEmpty || !methods.contains('password')) {
-      //   CustomSnackBar.error("This email is not registered.");
-      //   return;
-      // }
-
+      // Directly send password reset email without checking sign-in methods
+      // as fetchSignInMethodsForEmail is deprecated for security reasons
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
       CustomSnackBar.success("Reset email sent.");
       Get.toNamed(Routes.LOGIN);

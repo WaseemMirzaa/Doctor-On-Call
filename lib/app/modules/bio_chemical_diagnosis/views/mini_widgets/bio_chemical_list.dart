@@ -13,6 +13,9 @@ class BioChemicalList extends StatelessWidget {
     final controller = Get.find<BioChemicalDiagnosisController>();
 
     return Obx(() {
+      // Force observation of favoriteStates changes by accessing the map
+      controller.favoriteStates.length; // This forces GetX to track changes
+
       // Check if we're in category view (showing titles within a category)
       if (controller.isInCategoryView.value) {
         return _buildCategoryTitlesView(controller);
@@ -118,8 +121,14 @@ class BioChemicalList extends StatelessWidget {
     return SymptomSelectionWidget(
       symptoms: controller.mainListItems,
       onSelectionChanged: (selectedItems) {
-        print('Selected items: $selectedItems');
+        // This is called when heart icons are toggled internally
+        // We don't need this for external favorite management
       },
+      favoriteStates: Map<String, bool>.from(controller.favoriteStates),
+      onFavoriteToggle: (item) {
+        controller.toggleFavorite(item);
+      },
+      showHeartIcon: true,
       padding: const EdgeInsets.all(16.0),
       spacing: 8.0,
       onSymptomTap: (item) {
@@ -172,8 +181,14 @@ class BioChemicalList extends StatelessWidget {
 
   Widget _buildTitlesList(BioChemicalDiagnosisController controller) {
     if (controller.isLoadingTitles.value) {
-      return const Center(
-        child: CircularProgressIndicator(),
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const Center(
+            child: CircularProgressIndicator(),
+          ),
+        ],
       );
     }
 
@@ -186,8 +201,14 @@ class BioChemicalList extends StatelessWidget {
     return SymptomSelectionWidget(
       symptoms: controller.categoryTitles,
       onSelectionChanged: (selectedTitles) {
-        print('Selected titles: $selectedTitles');
+        // This is called when heart icons are toggled internally
+        // We don't need this for external favorite management
       },
+      favoriteStates: Map<String, bool>.from(controller.favoriteStates),
+      onFavoriteToggle: (title) {
+        controller.toggleFavorite(title);
+      },
+      showHeartIcon: true,
       padding: const EdgeInsets.all(16.0),
       spacing: 8.0,
       onSymptomTap: (title) {

@@ -1,9 +1,11 @@
 import 'package:dr_on_call/config/AppColors.dart';
 import 'package:dr_on_call/config/AppTextStyle.dart';
+import 'package:dr_on_call/config/AppText.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../controllers/news2_core_controller.dart';
 
-class News2Tiles extends StatefulWidget {
+class News2Tiles extends StatelessWidget {
   final List<String> symptoms;
   final ValueChanged<List<String>> onSelectionChanged;
   final Function(String) onSymptomTap; // Callback for navigation
@@ -20,34 +22,11 @@ class News2Tiles extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _SymptomSelectionWidgetState createState() => _SymptomSelectionWidgetState();
-}
-
-class _SymptomSelectionWidgetState extends State<News2Tiles> {
-  String? _selectedSymptom;
-  // Map to store text input for each symptom
-  final Map<String, TextEditingController> _controllers = {};
-
-  @override
-  void initState() {
-    super.initState();
-    // Initialize a TextEditingController for each symptom
-    for (var symptom in widget.symptoms) {
-      _controllers[symptom] = TextEditingController();
-    }
-  }
-
-  @override
-  void dispose() {
-    // Dispose all controllers to prevent memory leaks
-    _controllers.values.forEach((controller) => controller.dispose());
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final controller = Get.find<News2CoreController>();
+
     return Padding(
-      padding: widget.padding ??
+      padding: padding ??
           const EdgeInsets.only(
             left: 16.0,
             right: 16.0,
@@ -56,93 +35,167 @@ class _SymptomSelectionWidgetState extends State<News2Tiles> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          ...widget.symptoms.map((symptom) {
-            final isSelected = _selectedSymptom == symptom;
+          ...symptoms.map((symptom) {
             return Padding(
-              padding: EdgeInsets.only(bottom: widget.spacing),
-              child: GestureDetector(
-                onTap: () {
-                  setState(() {
-                    _selectedSymptom = symptom;
-                    // Call the navigation callback with the selected symptom
-                    widget.onSymptomTap(symptom);
-                    // Notify selection change with current inputs
-                    widget.onSelectionChanged(
-                      _controllers.entries
-                          .where((entry) => entry.value.text.isNotEmpty)
-                          .map((entry) => entry.value.text)
-                          .toList(),
-                    );
-                  });
-                },
-                child: Column(
+              padding: EdgeInsets.only(bottom: spacing),
+              child: _buildSymptomField(symptom, controller),
+            );
+          }).toList(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSymptomField(String symptom, News2CoreController controller) {
+    // Handle boolean fields differently
+    if (symptom == AppText.levelOfConsciousness) {
+      return Obx(() => GestureDetector(
+            onTap: () {
+              controller.toggleLevelOfConsciousness();
+              onSymptomTap(symptom);
+            },
+            child: Container(
+              height: 60,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(
+                  color: const Color(0xFFEEC643),
+                  width: 1,
+                ),
+                color: controller.isConfusedOrUnresponsive.value
+                    ? const Color(0xFF0A1A3F)
+                    : null,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      height: 60,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(
-                          color: const Color(0xFFEEC643), // Yellow border
-                          width: 1,
-                        ),
-                        gradient: isSelected
-                            ? LinearGradient(
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                                colors: [
-                                  const Color(0xFF0A1A2F).withOpacity(0.7),
-                                  const Color(0xFF0A1A3F),
-                                ],
-                              )
-                            : null,
-                      ),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                          child: TextFormField(
-                            keyboardType: TextInputType.number,
-                            controller: _controllers[symptom],
-                            style: AppTextStyles.medium.copyWith(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.txtWhiteColor,
-                            ),
-                            decoration: InputDecoration(
-                              hintText: symptom,
-                              hintStyle: AppTextStyles.medium.copyWith(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w500,
-                                color: AppColors
-                                    .txtWhiteColor, // Slightly faded for hint
-                              ),
-                              border: InputBorder.none, // No additional border
-                              contentPadding:
-                                  const EdgeInsets.symmetric(vertical: 15.0),
-                            ),
-                            onChanged: (value) {
-                              // Notify selection change with updated inputs
-                              widget.onSelectionChanged(
-                                _controllers.entries
-                                    .where(
-                                        (entry) => entry.value.text.isNotEmpty)
-                                    .map((entry) => entry.value.text)
-                                    .toList(),
-                              );
-                            },
-                          ),
-                        ),
+                    Text(
+                      symptom,
+                      style: AppTextStyles.medium.copyWith(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.txtWhiteColor,
                       ),
                     ),
-                    SizedBox(
-                      height: 14,
+                    Icon(
+                      controller.isConfusedOrUnresponsive.value
+                          ? Icons.check_box
+                          : Icons.check_box_outline_blank,
+                      color: AppColors.txtOrangeColor,
                     ),
                   ],
                 ),
               ),
-            );
-          }).toList(),
-        ],
+            ),
+          ));
+    }
+
+    if (symptom == AppText.oxygenRequirement) {
+      return Obx(() => GestureDetector(
+            onTap: () {
+              controller.toggleOxygenRequirement();
+              onSymptomTap(symptom);
+            },
+            child: Container(
+              height: 60,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(
+                  color: const Color(0xFFEEC643),
+                  width: 1,
+                ),
+                color: controller.onSupplementalOxygen.value
+                    ? const Color(0xFF0A1A3F)
+                    : null,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      symptom,
+                      style: AppTextStyles.medium.copyWith(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.txtWhiteColor,
+                      ),
+                    ),
+                    Icon(
+                      controller.onSupplementalOxygen.value
+                          ? Icons.check_box
+                          : Icons.check_box_outline_blank,
+                      color: AppColors.txtOrangeColor,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ));
+    }
+
+    // Handle numeric input fields
+    TextEditingController textController;
+    switch (symptom) {
+      case AppText.respiratoryRate:
+        textController = controller.respiratoryRateController;
+        break;
+      case AppText.oxygenSaturation:
+        textController = controller.oxygenSaturationController;
+        break;
+      case AppText.temperature:
+        textController = controller.temperatureController;
+        break;
+      case AppText.systolicBloodPressure:
+        textController = controller.systolicBPController;
+        break;
+      case AppText.heartRate:
+        textController = controller.heartRateController;
+        break;
+      default:
+        textController = TextEditingController();
+    }
+
+    return GestureDetector(
+      onTap: () => onSymptomTap(symptom),
+      child: Container(
+        height: 60,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(
+            color: const Color(0xFFEEC643),
+            width: 1,
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          child: TextFormField(
+            keyboardType: symptom == AppText.temperature
+                ? TextInputType.numberWithOptions(decimal: true)
+                : TextInputType.number,
+            controller: textController,
+            style: AppTextStyles.medium.copyWith(
+              fontSize: 18,
+              fontWeight: FontWeight.w500,
+              color: AppColors.txtWhiteColor,
+            ),
+            decoration: InputDecoration(
+              hintText: symptom,
+              hintStyle: AppTextStyles.medium.copyWith(
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
+                color: AppColors.txtWhiteColor,
+              ),
+              border: InputBorder.none,
+              contentPadding: const EdgeInsets.symmetric(vertical: 15.0),
+            ),
+            onChanged: (value) {
+              onSelectionChanged([value]);
+            },
+          ),
+        ),
       ),
     );
   }

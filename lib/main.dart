@@ -26,7 +26,7 @@ void main() async {
   // Optional: Precache image if needed later
   final bindingContext = WidgetsBinding.instance;
   bindingContext.addPostFrameCallback((_) {
-    final context = bindingContext.renderViewElement;
+    final context = bindingContext.rootElement;
     if (context != null) {
       precacheImage(const AssetImage(AppImages.bg2Copy), context);
     }

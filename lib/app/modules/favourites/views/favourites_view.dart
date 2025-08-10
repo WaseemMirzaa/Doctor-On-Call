@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../widgets/background_container.dart';
-import '../../clinical_details/views/mini_widgets/clinical_header.dart';
-import '../../clinical_presentations/views/mini_widgets/clinical_list.dart';
 import '../controllers/favourites_controller.dart';
 import 'mini_widgets/favorites_list.dart';
 
@@ -15,17 +13,19 @@ class FavouritesView extends GetView<FavouritesController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BackgroundContainer(
-          child: SingleChildScrollView(
         child: Column(
           children: [
             FavouritesHeader(),
-            SizedBox(
-              height: 50,
+            const SizedBox(height: 30),
+            Expanded(
+              child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: const FavoritesList(),
+              ),
             ),
-            FavoritesList(),
           ],
         ),
-      )),
+      ),
     );
   }
 }

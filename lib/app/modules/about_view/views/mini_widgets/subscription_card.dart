@@ -32,7 +32,7 @@ class SubscriptionCard extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
               border: Border.all(
-                color: AppColors.baseColor.withOpacity(0.8),
+                color: AppColors.baseColor.withValues(alpha: 0.8),
                 width: 1,
               ),
             ),

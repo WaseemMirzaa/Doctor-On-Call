@@ -14,17 +14,19 @@ class RecentView extends GetView<RecentController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BackgroundContainer(
-          child: SingleChildScrollView(
-        child: Column(
-          children: [
-            RecentHeader(),
-            SizedBox(
-              height: 50,
-            ),
-            RecentList(),
-          ],
-        ),
-      )),
+          child: Column(
+            children: [
+              RecentHeader(),
+              SizedBox(
+                height: 50,
+              ),
+                Expanded(
+                  child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: RecentList(),
+              )),
+            ],
+          )),
     );
   }
 }

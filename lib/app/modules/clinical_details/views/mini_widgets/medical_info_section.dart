@@ -134,13 +134,13 @@ class ClinicalInfoSection extends StatelessWidget {
     List<String> parts = [];
 
     if (definition.criteria != null) {
-      parts.add('${definition.criteria}');
+      parts.add('${definition.criteria}'.replaceAll('-', ''));
     }
 
     if (definition.notes.isNotEmpty) {
       if (parts.isNotEmpty) parts.add('\nNotes:');
       for (int i = 0; i < definition.notes.length; i++) {
-        parts.add('• ${definition.notes[i]}');
+        parts.add('• ${definition.notes[i].replaceAll('-', '')}');
       }
     }
 
@@ -150,7 +150,7 @@ class ClinicalInfoSection extends StatelessWidget {
   String _buildListContent(List<String> items) {
     if (items.isEmpty) return 'No information available';
 
-    return items.map((item) => '• $item').join('\n');
+    return items.map((item) => '• ${item.replaceAll('-', '')}').join('\n');
   }
 
   String _buildDynamicListContent(List<dynamic> items) {
@@ -159,23 +159,21 @@ class ClinicalInfoSection extends StatelessWidget {
     List<String> stringItems = [];
     for (var item in items) {
       if (item is String) {
-        stringItems.add(item);
+        stringItems.add(item.replaceAll('-', ''));
       } else if (item is Map) {
-        // Handle complex management items that might be objects
         if (item.containsKey('step') && item.containsKey('details')) {
-          // Handle structured management steps
-          String stepText = '${item['step']}';
+          String stepText = '${item['step']}'.replaceAll('-', '');
           if (item['details'] is List) {
             List<String> details = List<String>.from(item['details']);
-            stepText += ':\n  ${details.map((d) => '• $d').join('\n  ')}';
+            stepText +=
+                ':\n  ${details.map((d) => '• ${d.replaceAll('-', '')}').join('\n  ')}';
           }
           stringItems.add(stepText);
         } else {
-          // Handle other map structures
-          stringItems.add(item.toString());
+          stringItems.add(item.toString().replaceAll('-', ''));
         }
       } else {
-        stringItems.add(item.toString());
+        stringItems.add(item.toString().replaceAll('-', ''));
       }
     }
 

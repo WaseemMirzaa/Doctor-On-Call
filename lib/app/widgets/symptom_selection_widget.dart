@@ -14,6 +14,8 @@ class SymptomSelectionWidget extends StatefulWidget {
   final bool showHeartIcon;
   final bool showRecentIcon;
   final bool showFilter;
+  final Map<String, bool>? favoriteStates; // External favorite states
+  final Function(String)? onFavoriteToggle; // Callback for favorite toggle
 
   const SymptomSelectionWidget({
     Key? key,
@@ -25,6 +27,8 @@ class SymptomSelectionWidget extends StatefulWidget {
     this.showHeartIcon = false,
     this.showRecentIcon = false,
     this.showFilter = false,
+    this.favoriteStates,
+    this.onFavoriteToggle,
   }) : super(key: key);
 
   @override
@@ -115,7 +119,9 @@ class _SymptomSelectionWidgetState extends State<SymptomSelectionWidget> {
             // Symptom list
             ...filteredSymptoms.map((symptom) {
               final isSelected = _selectedSymptom == symptom;
-              final isHeartActive = _heartStates[symptom] ?? false;
+              final isHeartActive = widget.favoriteStates?[symptom] ??
+                  _heartStates[symptom] ??
+                  false;
               return Column(
                 children: [
                   Padding(
@@ -172,24 +178,33 @@ class _SymptomSelectionWidgetState extends State<SymptomSelectionWidget> {
                                   if (widget.showHeartIcon)
                                     GestureDetector(
                                       onTap: () {
-                                        setState(() {
-                                          _heartStates[symptom] =
-                                              !(_heartStates[symptom] ?? false);
-                                          // Notify parent of selection change
-                                          widget.onSelectionChanged(_heartStates
-                                              .entries
-                                              .where((entry) => entry.value)
-                                              .map((entry) => entry.key)
-                                              .toList());
-                                        });
+                                        if (widget.onFavoriteToggle != null) {
+                                          // Use external callback if provided
+                                          widget.onFavoriteToggle!(symptom);
+                                        } else {
+                                          // Fallback to internal state management
+                                          setState(() {
+                                            _heartStates[symptom] =
+                                                !(_heartStates[symptom] ??
+                                                    false);
+                                            // Notify parent of selection change
+                                            widget.onSelectionChanged(
+                                                _heartStates
+                                                    .entries
+                                                    .where(
+                                                        (entry) => entry.value)
+                                                    .map((entry) => entry.key)
+                                                    .toList());
+                                          });
+                                        }
                                       },
                                       child: Image.asset(
-                                        isHeartActive
+                                        !isHeartActive
                                             ? AppIcons.like
                                             : AppIcons.heart,
                                         width: 25,
                                         height: 25,
-                                        color: isHeartActive
+                                        color: !isHeartActive
                                             ? Colors.grey
                                             : AppColors.txtRedColor,
                                       ),
@@ -217,7 +232,7 @@ class _SymptomSelectionWidgetState extends State<SymptomSelectionWidget> {
                   ),
                 ],
               );
-            }).toList(),
+            }).toList()
         ],
       ),
     );
