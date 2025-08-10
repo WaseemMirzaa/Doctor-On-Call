@@ -13,6 +13,7 @@ class SymptomSelectionWidget extends StatefulWidget {
   final double spacing;
   final bool showHeartIcon;
   final bool showRecentIcon;
+  final bool showSearch;
   final bool showFilter;
   final Map<String, bool>? favoriteStates; // External favorite states
   final Function(String)? onFavoriteToggle; // Callback for favorite toggle
@@ -29,6 +30,7 @@ class SymptomSelectionWidget extends StatefulWidget {
     this.showFilter = false,
     this.favoriteStates,
     this.onFavoriteToggle,
+    this.showSearch = true,
   }) : super(key: key);
 
   @override
@@ -62,6 +64,8 @@ class _SymptomSelectionWidgetState extends State<SymptomSelectionWidget> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           // Search field
+          
+          if(widget.showSearch)
           Row(
             children: [
               Expanded(
