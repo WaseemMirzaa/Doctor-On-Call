@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-import '../../../../config/AppText.dart';
-import '../../../widgets/symptom_selection_widget.dart';
 import '../controllers/clinical_presentations_controller.dart';
 
 class ClinicalPresentationsView
@@ -16,17 +14,22 @@ class ClinicalPresentationsView
   Widget build(BuildContext context) {
     return Scaffold(
       body: BackgroundContainer(
+        child: RefreshIndicator(
+          onRefresh: () => controller.refreshPresentations(),
+          color: Colors.white,
+          backgroundColor: Colors.blue,
           child: SingleChildScrollView(
-        child: Column(
-          children: [
-            ClinicalHeader(),
-            SizedBox(
-              height: 50,
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: Column(
+              children: [
+                const ClinicalHeader(),
+                const SizedBox(height: 30),
+                const ClinicalList(),
+              ],
             ),
-            ClinicalList(),
-          ],
+          ),
         ),
-      )),
+      ),
     );
   }
 }

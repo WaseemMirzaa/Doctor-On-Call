@@ -15,18 +15,18 @@ class RecentView extends GetView<RecentController> {
     return Scaffold(
       body: BackgroundContainer(
           child: Column(
-            children: [
-              RecentHeader(),
-              SizedBox(
-                height: 50,
-              ),
-                Expanded(
-                  child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: RecentList(),
-              )),
-            ],
+        children: [
+          RecentHeader(),
+          SizedBox(
+            height: 50,
+          ),
+          Expanded(
+              child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: RecentList(),
           )),
+        ],
+      )),
     );
   }
 }

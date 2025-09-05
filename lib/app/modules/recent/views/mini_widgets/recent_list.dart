@@ -1,3 +1,4 @@
+import 'package:dr_on_call/app/modules/clinical_presentations/controllers/clinical_presentations_controller.dart';
 import 'package:dr_on_call/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,6 +16,7 @@ class RecentList extends StatelessWidget {
     final recentController = Get.put(RecentController());
     final bioController = Get.put(BioChemicalDiagnosisController());
     final clinicalController = Get.put(ClinicalDiagnosisController());
+    final presentationController = Get.put(ClinicalPresentationsController());
 
     return Obx(() {
       // ✅ Now the entire widget is wrapped in one Obx, but correctly uses observables
@@ -142,8 +144,16 @@ class RecentList extends StatelessWidget {
               } else {
                 Get.snackbar("No Data", "No diagnosis found for '$title'");
               }
-            } else {
-              Get.snackbar("Unknown Type", "Type '$type' not supported.");
+            } else if (type == "clinical_presentation") {
+              await presentationController.loadPresentationByTitle(title);
+              if (presentationController.presentations.isNotEmpty) {
+                Get.toNamed(
+                  Routes.CLINICAL_PRESENTATION_DETAIL,
+                  arguments: presentationController.currentPresentation.value,
+                );
+              } else {
+                Get.snackbar("Unknown Type", "Type '$type' not supported.");
+              }
             }
           });
     });

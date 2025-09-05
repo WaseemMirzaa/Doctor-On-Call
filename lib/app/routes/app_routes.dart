@@ -9,6 +9,8 @@ abstract class Routes {
   static const SIGNUP = _Paths.SIGNUP;
   static const FORGOTVIEW = _Paths.FORGOTVIEW;
   static const CLINICAL_PRESENTATIONS = _Paths.CLINICAL_PRESENTATIONS;
+  static const CLINICAL_PRESENTATION_DETAIL =
+      _Paths.CLINICAL_PRESENTATION_DETAIL;
   static const CHEST_PAIN = _Paths.CHEST_PAIN;
   static const MEDICAL_DROPDOWN = _Paths.MEDICAL_DROPDOWN;
   static const MEDICAL_DETAILS = _Paths.MEDICAL_DETAILS;
@@ -33,6 +35,7 @@ abstract class _Paths {
   static const SIGNUP = '/signup';
   static const FORGOTVIEW = '/forgotview';
   static const CLINICAL_PRESENTATIONS = '/clinical-presentations';
+  static const CLINICAL_PRESENTATION_DETAIL = '/clinical-presentation-detail';
   static const CHEST_PAIN = '/chest-pain';
   static const MEDICAL_DROPDOWN = '/medical-dropdown';
   static const MEDICAL_DETAILS = '/medical-details';

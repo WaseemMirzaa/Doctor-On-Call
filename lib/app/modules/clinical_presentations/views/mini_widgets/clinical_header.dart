@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../../config/AppColors.dart';
 import '../../../../../config/AppText.dart';
-import '../../../../widgets/back_icon_button.dart';
 import '../../../../widgets/custom_header.dart';
+import '../../controllers/clinical_presentations_controller.dart';
 
 class ClinicalHeader extends StatelessWidget {
   final VoidCallback? onBackTap;
@@ -16,11 +16,32 @@ class ClinicalHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
-      child: CommonTitleSection(
-        title: AppText.clinicalPresentation,
-      ),
-    );
+    final ClinicalPresentationsController controller = Get.find();
+
+    return Obx(() {
+      // Dynamic title based on current view
+      String title;
+      switch (controller.currentView.value) {
+        case 'subcategories':
+          title = controller.selectedMainCategory.value;
+          break;
+        case 'categories':
+        default:
+          title = AppText.clinicalPresentation;
+          break;
+      }
+
+      return Padding(
+        padding: const EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
+        child: Column(
+          children: [
+            CommonTitleSection(
+              title: title,
+            ),
+            const SizedBox(height: 20),
+          ],
+        ),
+      );
+    });
   }
 }

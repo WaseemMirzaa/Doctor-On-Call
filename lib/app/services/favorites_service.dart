@@ -177,7 +177,35 @@ class FavoritesService {
   static String generateItemId(
       String title, String category, FavoriteType type) {
     return '${type.toString()}_${category}_$title'
-        .replaceAll(' ', '_')
+        .replaceAll('/', '_') // Replace forward slashes
+        .replaceAll('\\', '_') // Replace backslashes
+        .replaceAll(' ', '_') // Replace spaces
+        .replaceAll('(', '_') // Replace parentheses
+        .replaceAll(')', '_')
+        .replaceAll('[', '_') // Replace square brackets
+        .replaceAll(']', '_')
+        .replaceAll('{', '_') // Replace curly brackets
+        .replaceAll('}', '_')
+        .replaceAll('&', '_') // Replace ampersands
+        .replaceAll('#', '_') // Replace hash symbols
+        .replaceAll('?', '_') // Replace question marks
+        .replaceAll('=', '_') // Replace equals signs
+        .replaceAll('+', '_') // Replace plus signs
+        .replaceAll('%', '_') // Replace percent signs
+        .replaceAll('@', '_') // Replace at symbols
+        .replaceAll('!', '_') // Replace exclamation marks
+        .replaceAll("'", '_') // Replace single quotes
+        .replaceAll('"', '_') // Replace double quotes
+        .replaceAll(':', '_') // Replace colons
+        .replaceAll(';', '_') // Replace semicolons
+        .replaceAll(',', '_') // Replace commas
+        .replaceAll('.', '_') // Replace periods
+        .replaceAll('<', '_') // Replace less than
+        .replaceAll('>', '_') // Replace greater than
+        .replaceAll('|', '_') // Replace pipe symbols
+        .replaceAll('*', '_') // Replace asterisks
+        .replaceAll(
+            RegExp(r'_{2,}'), '_') // Replace multiple underscores with single
         .toLowerCase();
   }
 }
@@ -186,6 +214,7 @@ class FavoritesService {
 enum FavoriteType {
   clinicalDiagnosis,
   biochemicalEmergency,
+  clinicalPresentations,
 }
 
 /// Enum for favorite path types
@@ -260,6 +289,8 @@ extension FavoriteTypeExtension on FavoriteType {
         return 'Clinical Diagnosis';
       case FavoriteType.biochemicalEmergency:
         return 'Biochemical Emergency';
+      case FavoriteType.clinicalPresentations:
+        return 'Clinical Presentations';
     }
   }
 }

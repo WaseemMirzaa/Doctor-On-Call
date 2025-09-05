@@ -64,46 +64,46 @@ class _SymptomSelectionWidgetState extends State<SymptomSelectionWidget> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           // Search field
-          
-          if(widget.showSearch)
-          Row(
-            children: [
-              Expanded(
-                child: Container(
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Center(
-                    child: TextField(
-                      onChanged: (value) {
-                        setState(() {
-                          _searchQuery = value;
-                        });
-                      },
-                      decoration: InputDecoration(
-                        hintText: 'Search',
-                        hintStyle: AppTextStyles.regular
-                            .copyWith(fontSize: 14, color: AppColors.darkBlue),
-                        prefixIcon: const Icon(Icons.search_rounded,
-                            color: Colors.black),
-                        border: InputBorder.none,
-                        contentPadding:
-                            const EdgeInsets.symmetric(vertical: 12),
+
+          if (widget.showSearch)
+            Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Center(
+                      child: TextField(
+                        onChanged: (value) {
+                          setState(() {
+                            _searchQuery = value;
+                          });
+                        },
+                        decoration: InputDecoration(
+                          hintText: 'Search',
+                          hintStyle: AppTextStyles.regular.copyWith(
+                              fontSize: 14, color: AppColors.darkBlue),
+                          prefixIcon: const Icon(Icons.search_rounded,
+                              color: Colors.black),
+                          border: InputBorder.none,
+                          contentPadding:
+                              const EdgeInsets.symmetric(vertical: 12),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              if (widget.showFilter)
-                SizedBox(
-                  height: 50,
-                  width: 60,
-                  child: FilterItems(),
-                ),
-            ],
-          ),
+                if (widget.showFilter)
+                  SizedBox(
+                    height: 50,
+                    width: 60,
+                    child: FilterItems(),
+                  ),
+              ],
+            ),
           const SizedBox(height: 16),
           if (filteredSymptoms.isEmpty)
             const Center(

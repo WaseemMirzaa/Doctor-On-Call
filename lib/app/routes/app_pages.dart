@@ -14,6 +14,7 @@ import '../modules/clinical_diagnosis/bindings/clinical_diagnosis_binding.dart';
 import '../modules/clinical_diagnosis/views/clinical_diagnosis_view.dart';
 import '../modules/clinical_presentations/bindings/clinical_presentations_binding.dart';
 import '../modules/clinical_presentations/views/clinical_presentations_view.dart';
+import '../modules/clinical_presentations/views/clinical_presentation_detail_view.dart';
 import '../modules/favourites/bindings/favourites_binding.dart';
 import '../modules/favourites/views/favourites_view.dart';
 import '../modules/forgotview/bindings/forgotview_binding.dart';
@@ -90,6 +91,15 @@ class AppPages {
     GetPage(
       name: _Paths.CLINICAL_PRESENTATIONS,
       page: () => const ClinicalPresentationsView(),
+      binding: ClinicalPresentationsBinding(),
+      transition: Transition.fade,
+      transitionDuration: Duration(milliseconds: 300),
+    ),
+    GetPage(
+      name: _Paths.CLINICAL_PRESENTATION_DETAIL,
+      page: () => ClinicalPresentationDetailView(
+        presentation: Get.arguments as Map<String, dynamic>,
+      ),
       binding: ClinicalPresentationsBinding(),
       transition: Transition.fade,
       transitionDuration: Duration(milliseconds: 300),

@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import '../../../services/favorites_service.dart';
 import '../../../services/clinical_diagnosis.dart';
 import '../../../services/biochemical_emergency_service.dart';
+import '../../../services/clinical_presentations_service.dart';
 import '../../../routes/app_pages.dart';
 
 class FavouritesController extends GetxController {
@@ -51,6 +52,10 @@ class FavouritesController extends GetxController {
         case FavoriteType.biochemicalEmergency:
           // Load biochemical emergency data and navigate
           await _navigateToBiochemicalDetails(item);
+          break;
+        case FavoriteType.clinicalPresentations:
+          // Load clinical presentation data and navigate
+          await _navigateToClinicalPresentationDetails(item);
           break;
       }
     } catch (e) {
@@ -187,6 +192,52 @@ class FavouritesController extends GetxController {
     }
   }
 
+  /// Navigate to clinical presentation details
+  Future<void> _navigateToClinicalPresentationDetails(FavoriteItem item) async {
+    try {
+      // First try to load presentation data by title
+      final presentation =
+          await ClinicalPresentationsService.getPresentationByTitle(item.title);
+
+      if (presentation != null) {
+        Get.toNamed(
+          Routes.CLINICAL_PRESENTATION_DETAIL,
+          arguments: presentation,
+        );
+      } else {
+        // If not found as individual item, navigate to presentations screen with the category
+        await _searchInPresentationCategories(item);
+      }
+    } catch (e) {
+      Get.snackbar('Error', 'Failed to load clinical presentation details');
+    }
+  }
+
+  /// Search for item in clinical presentation categories and navigate to category view
+  Future<void> _searchInPresentationCategories(FavoriteItem item) async {
+    try {
+      // Search for which category contains this item
+      final categoryName = await _findCategoryContainingItem(
+          item.title, FavoriteType.clinicalPresentations);
+
+      if (categoryName != null) {
+        // Navigate to clinical presentations screen with the found category
+        Get.toNamed(
+          Routes.CLINICAL_PRESENTATIONS,
+          arguments: {
+            'selectedCategory': categoryName,
+            'showCategoryView': true,
+            'highlightItem': item.title,
+          },
+        );
+      } else {
+        Get.snackbar('Error', 'No presentation data found for ${item.title}');
+      }
+    } catch (e) {
+      Get.snackbar('Error', 'Failed to search in presentation categories');
+    }
+  }
+
   /// Find which category contains the given item
   Future<String?> _findCategoryContainingItem(
       String itemTitle, FavoriteType type) async {
@@ -196,6 +247,8 @@ class FavouritesController extends GetxController {
       // Get all categories based on type
       if (type == FavoriteType.clinicalDiagnosis) {
         categories = await ClinicalDiagnosisServices.getMainListItems();
+      } else if (type == FavoriteType.clinicalPresentations) {
+        categories = await ClinicalPresentationsService.getCategories();
       } else {
         categories = await BiochemicalEmergencyService.getMainListItems();
       }
@@ -213,6 +266,15 @@ class FavouritesController extends GetxController {
           } else {
             continue;
           }
+        } else if (type == FavoriteType.clinicalPresentations) {
+          // For clinical presentations, we need to get presentations by category
+          final presentations =
+              await ClinicalPresentationsService.searchPresentations(category);
+          titlesInCategory = presentations
+              .where((p) => p['category']?.toString() == category)
+              .map((p) => p['title']?.toString() ?? '')
+              .toList();
+          isCategory = titlesInCategory.isNotEmpty;
         } else {
           isCategory = await BiochemicalEmergencyService.isCategory(category);
           if (isCategory) {
