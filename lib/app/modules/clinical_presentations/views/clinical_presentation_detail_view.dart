@@ -1,4 +1,5 @@
 import 'package:dr_on_call/app/modules/clinical_presentations/views/mini_widgets/clinical_header.dart';
+import 'package:dr_on_call/config/AppColors.dart';
 import 'package:flutter/material.dart';
 import '../../../widgets/background_container.dart';
 import '../../../widgets/medical_expension_tile.dart';
@@ -114,10 +115,17 @@ class _ClinicalPresentationDetailViewState
         // Special handling for red flags
         if (_isRedFlagKey(key)) {
           sections.add(
-            MedicalExpansionTile(
-              title: '🚨 Red Flags',
-              content: content,
-              isRedFlag: true,
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                color: AppColors.txtWhiteColor,
+              ),
+              child: MedicalExpansionTile(
+                title: '🚨 Red Flags',
+                content: content,
+                isRedFlag: true,
+                isRedContent: true,
+              ),
             ),
           );
         } else {

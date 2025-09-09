@@ -37,17 +37,45 @@ class MedicalExpansionTile extends StatelessWidget {
         children: [
           Padding(
             padding: contentPadding ?? const EdgeInsets.all(16.0),
+            child: _buildContent(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildContent() {
+    // Check if content contains bullet points
+    if (content.contains('•')) {
+      // Split by bullet points and create separate Text widgets
+      final parts = content.split('•').where((part) => part.trim().isNotEmpty);
+
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: parts.map((part) {
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 4.0),
             child: Text(
-              content,
+              '• ${part.trim()}',
               style: AppTextStyles.regular.copyWith(
                 color: isRedContent ? Colors.black : AppColors.txtWhiteColor,
                 fontSize: 13,
               ),
               textAlign: TextAlign.left,
             ),
-          ),
-        ],
-      ),
-    );
+          );
+        }).toList(),
+      );
+    } else {
+      // Regular content without bullet points
+      return Text(
+        content,
+        style: AppTextStyles.regular.copyWith(
+          color: isRedContent ? Colors.black : AppColors.txtWhiteColor,
+          fontSize: 13,
+        ),
+        textAlign: TextAlign.left,
+      );
+    }
   }
 }
