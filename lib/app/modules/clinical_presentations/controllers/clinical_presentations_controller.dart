@@ -16,7 +16,7 @@ class ClinicalPresentationsController extends GetxController {
   final subcategoriesForCategory = <String, List<String>>{}.obs;
   Rx<Map<String, dynamic>> currentPresentation = Rx<Map<String, dynamic>>({});
   // Loading states
-  final isLoading = false.obs;
+  final isLoading = true.obs;
   final isSearching = false.obs;
 
   // Search and selection
@@ -51,7 +51,7 @@ class ClinicalPresentationsController extends GetxController {
     } else {
       loadPresentations();
     }
-    loadFavoriteStates();
+    // Note: loadFavoriteStates() is already called within loadPresentations()
   }
 
   @override
@@ -84,9 +84,15 @@ class ClinicalPresentationsController extends GetxController {
       // Group presentations hierarchically
       _groupPresentationsHierarchically();
 
-      // Extract unique categories
-      final uniqueCategories =
-          await ClinicalPresentationsService.getCategories();
+      // Extract unique categories from the loaded presentations (avoid second Firebase call)
+      final Set<String> categorySet = {};
+      for (var presentation in presentations) {
+        final category = presentation['category'];
+        if (category != null && category.toString().isNotEmpty) {
+          categorySet.add(category.toString());
+        }
+      }
+      final uniqueCategories = categorySet.toList()..sort();
       categories.assignAll(uniqueCategories);
 
       // Load favorite states for the main list items
@@ -191,6 +197,7 @@ class ClinicalPresentationsController extends GetxController {
   }
 
   /// Clear filters
+  /// Clear all filters and return to main categories
   void clearFilters() {
     selectedCategory.value = '';
     searchQuery.value = '';
@@ -223,7 +230,7 @@ class ClinicalPresentationsController extends GetxController {
   }
 
   /// Handle main category tap
-  void onMainCategoryTap(String category) {
+  Future<void> onMainCategoryTap(String category) async {
     selectedMainCategory.value = category;
     final subcategoriesInCategory = subcategoriesForCategory[category] ?? [];
 
@@ -244,7 +251,11 @@ class ClinicalPresentationsController extends GetxController {
       }
     } else {
       // Show subcategories
+      selectedCategory.value =
+          category; // Set the selected category for subcategory context
       currentView.value = 'subcategories';
+      // Load favorites for the subcategories
+      await loadFavoriteStates();
     }
   }
 
@@ -266,6 +277,9 @@ class ClinicalPresentationsController extends GetxController {
   void backToMainCategories() {
     currentView.value = 'categories';
     selectedMainCategory.value = '';
+    selectedCategory.value = '';
+    // Load favorites for main categories
+    loadFavoriteStates();
   }
 
   /// Get subcategories for currently selected main category
@@ -336,20 +350,40 @@ class ClinicalPresentationsController extends GetxController {
     }
   }
 
-  /// Load favorite states for all items
+  /// Load favorite states for current items
   Future<void> loadFavoriteStates() async {
     try {
+      // Determine which items to load favorites for based on current view
+      List<String> items;
+      if (currentView.value == 'subcategories') {
+        items = getCurrentSubcategories();
+      } else {
+        items = mainCategories;
+      }
+
       favoriteStates.clear();
-      for (String item in mainCategories) {
+
+      print('=== Clinical Presentations loadFavoriteStates ===');
+      print('Current view: ${currentView.value}');
+      print('Selected category: ${selectedCategory.value}');
+      print('Selected main category: ${selectedMainCategory.value}');
+      print('Items to load favorites for: ${items.length} items');
+      print('Items: $items');
+
+      for (String item in items) {
+        final category =
+            selectedCategory.value.isEmpty ? 'General' : selectedCategory.value;
         final itemId = FavoritesService.generateItemId(
-            item,
-            selectedCategory.value.isNotEmpty
-                ? selectedCategory.value
-                : 'Standalone',
-            FavoriteType.clinicalPresentations);
+            item, category, FavoriteType.clinicalPresentations);
+        print(
+            'Loading favorite for "$item" with category "$category" -> ID: $itemId');
         final isFav = await FavoritesService.isFavorite(itemId);
         favoriteStates[item] = isFav;
+        print('Favorite state for "$item": $isFav');
       }
+
+      print('Total favorite states loaded: ${favoriteStates.length}');
+      print('=== End loadFavoriteStates ===');
     } catch (e) {
       print('Error loading favorite states: $e');
     }
@@ -358,38 +392,40 @@ class ClinicalPresentationsController extends GetxController {
   /// Toggle favorite status for an item
   Future<void> toggleFavorite(String item) async {
     try {
+      final category =
+          selectedCategory.value.isEmpty ? 'General' : selectedCategory.value;
       final itemId = FavoritesService.generateItemId(
-          item,
-          selectedCategory.value.isNotEmpty
-              ? selectedCategory.value
-              : 'Standalone',
-          FavoriteType.clinicalPresentations);
+          item, category, FavoriteType.clinicalPresentations);
 
-      final isFavorite = favoriteStates[item] ?? false;
+      print('=== Clinical Presentations toggleFavorite ===');
+      print('Item: "$item"');
+      print('Category: "$category"');
+      print('Item ID: "$itemId"');
+      print('Current view: ${currentView.value}');
 
-      if (isFavorite) {
-        // Remove from favorites
-        final success = await FavoritesService.removeFromFavorites(itemId);
-        if (success) {
-          favoriteStates[item] = false;
-        }
+      final success = await FavoritesService.toggleFavorite(
+        itemId: itemId,
+        title: item,
+        category: category,
+        type: FavoriteType.clinicalPresentations,
+      );
+
+      if (success) {
+        // Force UI update by creating a new map
+        final newStates = Map<String, bool>.from(favoriteStates);
+        newStates[item] = !(favoriteStates[item] ?? false);
+        favoriteStates.assignAll(newStates);
+        print('Successfully toggled favorite. New state: ${newStates[item]}');
       } else {
-        // Add to favorites
-        final success = await FavoritesService.addToFavorites(
-          itemId: itemId,
-          title: item,
-          category: selectedCategory.value.isNotEmpty
-              ? selectedCategory.value
-              : 'Standalone',
-          type: FavoriteType.clinicalPresentations,
-          additionalData: {'viewType': currentView.value},
-        );
-        if (success) {
-          favoriteStates[item] = true;
-        }
+        print('Failed to toggle favorite');
       }
     } catch (e) {
       print('Error toggling favorite: $e');
     }
+  }
+
+  /// Check if an item is favorite
+  bool isFavorite(String item) {
+    return favoriteStates[item] ?? false;
   }
 }

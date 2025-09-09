@@ -112,9 +112,58 @@ class ClinicalPresentationsService {
                 print(
                     'JSON content preview: ${presentationsData.toString().substring(0, 500)}...');
               }
+            } else if (presentationsData is Map<String, dynamic>) {
+              // Presentations is a Map with numeric string keys (like "0", "1", "2", etc.)
+              print(
+                  'Presentations is a Map with keys: ${presentationsData.keys.toList()}');
+
+              // Sort keys numerically to maintain order
+              final sortedKeys = presentationsData.keys.toList()
+                ..sort((a, b) {
+                  final aNum = int.tryParse(a) ?? 0;
+                  final bNum = int.tryParse(b) ?? 0;
+                  return aNum.compareTo(bNum);
+                });
+
+              print('Sorted keys: $sortedKeys');
+
+              for (String key in sortedKeys) {
+                dynamic item = presentationsData[key];
+
+                if (item is String) {
+                  // Item is a JSON string, need to parse it
+                  try {
+                    final parsedItem = jsonDecode(item) as Map<String, dynamic>;
+                    print(
+                        'Processing parsed presentation $key: ${parsedItem.keys.toList()}');
+                    print(
+                        'Title: "${parsedItem['title']}", Category: "${parsedItem['category']}"');
+
+                    presentations.add({
+                      'id': '${docSnapshot.id}_$key',
+                      ...parsedItem,
+                    });
+                  } catch (e) {
+                    print('Error parsing presentation item $key: $e');
+                  }
+                } else if (item is Map<String, dynamic>) {
+                  // Item is already a Map
+                  print('Processing presentation $key: ${item.keys.toList()}');
+                  print(
+                      'Title: "${item['title']}", Category: "${item['category']}"');
+
+                  presentations.add({
+                    'id': '${docSnapshot.id}_$key',
+                    ...item,
+                  });
+                } else {
+                  print(
+                      'Unknown presentation item type for key $key: ${item.runtimeType}');
+                }
+              }
             } else {
               print(
-                  'presentations field is neither List nor String. Type: ${presentationsData.runtimeType}');
+                  'presentations field is neither List, String, nor Map. Type: ${presentationsData.runtimeType}');
             }
           } else {
             print(
