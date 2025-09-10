@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDliUNqvyW3cQ-LhyBfVt6181YO00T0WpU',
-    appId: '1:1068365760229:android:1d9b73260503bc1e58b60c',
+    appId: '1:1068365760229:android:9f66fbff61330c9c58b60c',
     messagingSenderId: '1068365760229',
     projectId: 'dr-oncall-c3b6b',
     storageBucket: 'dr-oncall-c3b6b.firebasestorage.app',
@@ -65,4 +65,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'dr-oncall-c3b6b.firebasestorage.app',
     iosBundleId: 'com.codetivelab.drOnCall',
   );
+
 }
