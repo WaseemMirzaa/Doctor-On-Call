@@ -18,15 +18,13 @@ class ClinicalPresentationsView
           onRefresh: () => controller.refreshPresentations(),
           color: Colors.white,
           backgroundColor: Colors.blue,
-          child: SingleChildScrollView(
-            physics: const AlwaysScrollableScrollPhysics(),
-            child: Column(
-              children: [
-                const ClinicalHeader(),
-                const SizedBox(height: 30),
-                const ClinicalList(),
-              ],
-            ),
+          child: Column(
+            children: [
+              const ClinicalHeader(),
+              const SizedBox(height: 20),
+              Expanded(
+                  child: SingleChildScrollView(child: const ClinicalList())),
+            ],
           ),
         ),
       ),

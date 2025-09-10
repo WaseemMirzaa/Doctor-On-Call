@@ -121,7 +121,7 @@ class _ClinicalPresentationDetailViewState
                 color: AppColors.txtWhiteColor,
               ),
               child: MedicalExpansionTile(
-                title: '🚨 Red Flags',
+                title: 'Red Flags',
                 content: content,
                 isRedFlag: true,
                 isRedContent: true,
