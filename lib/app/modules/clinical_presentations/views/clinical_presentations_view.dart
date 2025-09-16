@@ -10,6 +10,7 @@ import '../controllers/clinical_presentations_controller.dart';
 class ClinicalPresentationsView
     extends GetView<ClinicalPresentationsController> {
   const ClinicalPresentationsView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
