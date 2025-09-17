@@ -1,5 +1,5 @@
-import 'package:dr_on_call/app/modules/clinical_presentations/views/mini_widgets/clinical_header.dart';
 import 'package:dr_on_call/config/AppColors.dart';
+import 'package:dr_on_call/app/widgets/custom_header.dart';
 import 'package:flutter/material.dart';
 import '../../../widgets/background_container.dart';
 import '../../../widgets/medical_expension_tile.dart';
@@ -29,17 +29,33 @@ class _ClinicalPresentationDetailViewState
 
   @override
   Widget build(BuildContext context) {
+    // Get the presentation title for the header
+    final presentationTitle =
+        presentation['title']?.toString() ?? 'Clinical Presentation';
+
     return BackgroundContainer(
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              const ClinicalHeader(),
-              ..._buildDynamicSections(presentation)
-            ],
-          ),
+        body: Column(
+          children: [
+            // Custom header showing the subcategory (presentation title)
+            Padding(
+              padding:
+                  const EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
+              child: Column(
+                children: [
+                  CommonTitleSection(
+                    title: presentationTitle,
+                  ),
+                  const SizedBox(height: 20),
+                ],
+              ),
+            ),
+            Expanded(
+                child: SingleChildScrollView(
+                    child: Column(
+                        children: [..._buildDynamicSections(presentation)])))
+          ],
         ),
       ),
     );

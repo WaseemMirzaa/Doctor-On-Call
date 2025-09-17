@@ -36,7 +36,7 @@ class CommonTitleSection extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             description!,
-            textAlign: TextAlign.center,
+            textAlign: TextAlign.start,
             style: AppTextStyles.regular.copyWith(fontSize: 14),
           ),
           if (spacing) const SizedBox(height: 100),

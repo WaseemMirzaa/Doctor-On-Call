@@ -23,34 +23,34 @@ class AboutHeader extends StatelessWidget {
         description: AppText.aboutDesc,
       ),
     );
-    Padding(
-      padding: const EdgeInsets.only(top: 10.0),
-      child: Column(
-        // crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          GestureDetector(
-            onTap: () {
-              Get.back();
-            },
-            child: Padding(
-              padding: const EdgeInsets.only(top: 40.0, left: 25),
-              child: BackIconButton(
-                onTap: onBackTap ?? () => Get.back(),
-              ),
-            ),
-          ),
-          const SizedBox(height: 20),
-          Text(AppText.about, style: AppTextStyles.bold.copyWith(fontSize: 25)),
-          const SizedBox(height: 4),
-          Padding(
-            padding: const EdgeInsets.only(right: 40, left: 40),
-            child: Text(AppText.aboutDesc,
-                textAlign: TextAlign.center,
-                style: AppTextStyles.regular.copyWith(fontSize: 14.5)),
-          ),
-        ],
-      ),
-    );
+    // Padding(
+    //   padding: const EdgeInsets.only(top: 10.0),
+    //   child: Column(
+    //     // crossAxisAlignment: CrossAxisAlignment.start,
+    //     mainAxisAlignment: MainAxisAlignment.center,
+    //     children: [
+    //       GestureDetector(
+    //         onTap: () {
+    //           Get.back();
+    //         },
+    //         child: Padding(
+    //           padding: const EdgeInsets.only(top: 40.0, left: 25),
+    //           child: BackIconButton(
+    //             onTap: onBackTap ?? () => Get.back(),
+    //           ),
+    //         ),
+    //       ),
+    //       const SizedBox(height: 20),
+    //       Text(AppText.about, style: AppTextStyles.bold.copyWith(fontSize: 25)),
+    //       const SizedBox(height: 4),
+    //       Padding(
+    //         padding: const EdgeInsets.only(right: 40, left: 40),
+    //         child: Text(AppText.aboutDesc,
+    //             textAlign: TextAlign.center,
+    //             style: AppTextStyles.regular.copyWith(fontSize: 14.5)),
+    //       ),
+    //     ],
+    //   ),
+    // );
   }
 }

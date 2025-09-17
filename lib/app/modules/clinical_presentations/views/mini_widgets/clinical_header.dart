@@ -19,15 +19,33 @@ class ClinicalHeader extends StatelessWidget {
     final ClinicalPresentationsController controller = Get.find();
 
     return Obx(() {
-      // Dynamic title based on current view
+      // Dynamic title based on current view and selection
       String title;
       switch (controller.currentView.value) {
         case 'subcategories':
-          title = controller.selectedMainCategory.value;
+          // Show the selected main category when viewing its subcategories
+          title = controller.selectedMainCategory.value.isNotEmpty
+              ? controller.selectedMainCategory.value
+              : AppText.clinicalPresentation;
+          break;
+        case 'presentations':
+          // Show subcategory if available, otherwise main category
+          if (controller.selectedCategory.value.isNotEmpty) {
+            title = controller.selectedCategory.value;
+          } else if (controller.selectedMainCategory.value.isNotEmpty) {
+            title = controller.selectedMainCategory.value;
+          } else {
+            title = AppText.clinicalPresentation;
+          }
           break;
         case 'categories':
         default:
-          title = AppText.clinicalPresentation;
+          // Show search results if searching, otherwise default title
+          if (controller.searchQuery.value.isNotEmpty) {
+            title = 'Search Results';
+          } else {
+            title = AppText.clinicalPresentation;
+          }
           break;
       }
 
