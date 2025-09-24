@@ -5,15 +5,18 @@ import '../modules/about_view/views/about_view_view.dart';
 import '../modules/bio_chemical_detail_page/bindings/bio_chemical_detail_page_binding.dart';
 import '../modules/bio_chemical_detail_page/views/bio_chemical_detail_page_view.dart';
 import '../modules/bio_chemical_diagnosis/bindings/bio_chemical_diagnosis_binding.dart';
-import '../modules/bio_chemical_diagnosis/views/bio_chemical_diagnosis_view.dart';
+import '../modules/bio_chemical_diagnosis/views/bio_chemical_diagnosis_main_categories_view.dart';
+import '../modules/bio_chemical_diagnosis/views/bio_chemical_diagnosis_subcategories_view.dart';
 import '../modules/chest_pain/bindings/chest_pain_binding.dart';
 import '../modules/chest_pain/views/chest_pain_view.dart';
 import '../modules/clinical_details/bindings/clinical_details_binding.dart';
 import '../modules/clinical_details/views/clinical_details_view.dart';
 import '../modules/clinical_diagnosis/bindings/clinical_diagnosis_binding.dart';
-import '../modules/clinical_diagnosis/views/clinical_diagnosis_view.dart';
+import '../modules/clinical_diagnosis/views/clinical_diagnosis_main_categories_view.dart';
+import '../modules/clinical_diagnosis/views/clinical_diagnosis_subcategories_view.dart';
 import '../modules/clinical_presentations/bindings/clinical_presentations_binding.dart';
-import '../modules/clinical_presentations/views/clinical_presentations_view.dart';
+import '../modules/clinical_presentations/views/clinical_main_categories_view.dart';
+import '../modules/clinical_presentations/views/clinical_subcategories_view.dart';
 import '../modules/clinical_presentations/views/clinical_presentation_detail_view.dart';
 import '../modules/favourites/bindings/favourites_binding.dart';
 import '../modules/favourites/views/favourites_view.dart';
@@ -90,16 +93,21 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.CLINICAL_PRESENTATIONS,
-      page: () => const ClinicalPresentationsView(),
+      page: () => const ClinicalMainCategoriesView(),
+      binding: ClinicalPresentationsBinding(),
+      transition: Transition.fade,
+      transitionDuration: Duration(milliseconds: 300),
+    ),
+    GetPage(
+      name: _Paths.CLINICAL_SUBCATEGORIES,
+      page: () => const ClinicalSubcategoriesView(),
       binding: ClinicalPresentationsBinding(),
       transition: Transition.fade,
       transitionDuration: Duration(milliseconds: 300),
     ),
     GetPage(
       name: _Paths.CLINICAL_PRESENTATION_DETAIL,
-      page: () => ClinicalPresentationDetailView(
-        presentation: Get.arguments as Map<String, dynamic>,
-      ),
+      page: () => ClinicalPresentationDetailView(),
       binding: ClinicalPresentationsBinding(),
       transition: Transition.fade,
       transitionDuration: Duration(milliseconds: 300),
@@ -120,7 +128,14 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.CLINICAL_DIAGNOSIS,
-      page: () => const ClinicalDiagnosisView(),
+      page: () => const ClinicalDiagnosisMainCategoriesView(),
+      binding: ClinicalDiagnosisBinding(),
+      transition: Transition.fade,
+      transitionDuration: Duration(milliseconds: 300),
+    ),
+    GetPage(
+      name: _Paths.CLINICAL_DIAGNOSIS_SUBCATEGORIES,
+      page: () => const ClinicalDiagnosisSubcategoriesView(),
       binding: ClinicalDiagnosisBinding(),
       transition: Transition.fade,
       transitionDuration: Duration(milliseconds: 300),
@@ -134,7 +149,14 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.BIO_CHEMICAL_DIAGNOSIS,
-      page: () => const BioChemicalDiagnosisView(),
+      page: () => const BioChemicalDiagnosisMainCategoriesView(),
+      binding: BioChemicalDiagnosisBinding(),
+      transition: Transition.fade,
+      transitionDuration: Duration(milliseconds: 300),
+    ),
+    GetPage(
+      name: _Paths.BIO_CHEMICAL_DIAGNOSIS_SUBCATEGORIES,
+      page: () => const BioChemicalDiagnosisSubcategoriesView(),
       binding: BioChemicalDiagnosisBinding(),
       transition: Transition.fade,
       transitionDuration: Duration(milliseconds: 300),

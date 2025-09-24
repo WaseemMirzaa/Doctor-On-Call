@@ -1,14 +1,18 @@
 import 'dart:convert';
+import 'package:dr_on_call/app/services/clinical_presentations_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../services/clinical_diagnosis.dart';
 import '../../../services/biochemical_emergency_service.dart';
 import '../../../routes/app_pages.dart';
-import '../../../modules/clinical_diagnosis/model/clinical_diagnosis.dart';
-import '../../../modules/bio_chemical_diagnosis/model/biochemical_emergencies.dart';
 
-enum SearchFilter { all, clinicalDiagnosis, biochemicalEmergency }
+enum SearchFilter {
+  all,
+  clinicalDiagnosis,
+  biochemicalEmergency,
+  clinicalPresentations
+}
 
 class SearchResultItem {
   final String id;
@@ -165,7 +169,12 @@ class SearchController extends GetxController {
         final biochemicalResults = await _searchBiochemicalEmergencies(query);
         results.addAll(biochemicalResults);
       }
-
+      if (selectedFilter.value == SearchFilter.all ||
+          selectedFilter.value == SearchFilter.clinicalPresentations) {
+        final clinicalPresentationResults =
+            await _searchClinicalPresentations(query);
+        results.addAll(clinicalPresentationResults);
+      }
       searchResults.value = results;
     } catch (e) {
       print('Error performing search: $e');
@@ -253,6 +262,49 @@ class SearchController extends GetxController {
     }
   }
 
+  /// Search in clinical presentations data
+  Future<List<SearchResultItem>> _searchClinicalPresentations(
+      String query) async {
+    try {
+      final allPresentations =
+          await ClinicalPresentationsService.getAllClinicalPresentations();
+      final results = <SearchResultItem>[];
+      final addedCategories = <String>{};
+
+      for (final presentation in allPresentations) {
+        // Add individual presentation items
+        if ((presentation['title']?.toString() ?? '')
+            .toLowerCase()
+            .contains(query.toLowerCase())) {
+          results.add(SearchResultItem(
+            id: '${presentation['category']}_${presentation['title']}',
+            title: presentation['title']?.toString() ?? 'Unknown',
+            category: presentation['category']?.toString() ?? 'Unknown',
+            type: SearchFilter.clinicalPresentations,
+          ));
+        }
+
+        // Add category items if category name matches and not already added
+        final categoryName = presentation['category']?.toString() ?? '';
+        if (categoryName.toLowerCase().contains(query.toLowerCase()) &&
+            !addedCategories.contains(categoryName)) {
+          results.add(SearchResultItem(
+            id: 'category_clinical_presentations_$categoryName',
+            title: categoryName,
+            category: 'Category',
+            type: SearchFilter.clinicalPresentations,
+          ));
+          addedCategories.add(categoryName);
+        }
+      }
+
+      return results;
+    } catch (e) {
+      print('Error searching clinical presentations: $e');
+      return [];
+    }
+  }
+
   /// Add item to search history
   Future<void> addToSearchHistory(SearchResultItem item) async {
     // Remove if already exists
@@ -289,6 +341,9 @@ class SearchController extends GetxController {
           break;
         case SearchFilter.biochemicalEmergency:
           await _navigateToBiochemicalDetails(item);
+          break;
+        case SearchFilter.clinicalPresentations:
+          await _navigateToClinicalPresentationsDetails(item);
           break;
         case SearchFilter.all:
           // This shouldn't happen for individual items
@@ -392,6 +447,50 @@ class SearchController extends GetxController {
     searchController.clear();
     searchResults.clear();
     searchQuery.value = '';
+  }
+
+  /// Navigate to clinical presentations details
+  Future<void> _navigateToClinicalPresentationsDetails(
+      SearchResultItem item) async {
+    try {
+      // Check if this is a category item
+      if (item.id.startsWith('category_clinical_presentations_')) {
+        // Navigate to clinical presentations screen with category
+        Get.toNamed(
+          Routes.CLINICAL_PRESENTATIONS,
+          arguments: {
+            'selectedCategory': item.title,
+            'showCategoryView': true,
+          },
+        );
+        return;
+      }
+
+      // Load presentation data by title
+      final presentation =
+          await ClinicalPresentationsService.getPresentationByTitle(item.title);
+
+      if (presentation != null) {
+        Get.toNamed(
+          Routes.CLINICAL_PRESENTATION_DETAIL,
+          arguments: {
+            'presentation': presentation,
+            'from': 'search',
+          },
+        );
+      } else {
+        // Navigate to clinical presentations screen with category
+        Get.toNamed(
+          Routes.CLINICAL_PRESENTATIONS,
+          arguments: {
+            'selectedCategory': item.category,
+            'showCategoryView': true,
+          },
+        );
+      }
+    } catch (e) {
+      Get.snackbar('Error', 'Failed to load clinical presentations details');
+    }
   }
 
   /// Get display items (search results or history)

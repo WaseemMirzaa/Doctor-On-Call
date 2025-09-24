@@ -55,6 +55,28 @@ class ClinicalHeader extends StatelessWidget {
           children: [
             CommonTitleSection(
               title: title,
+              onBackTap: () {
+                // Smart navigation based on current view
+                switch (controller.currentView.value) {
+                  case 'subcategories':
+                    // From subcategories, go back to main categories
+                    controller.backToMainCategories();
+                    break;
+                  case 'presentations':
+                    // From presentations, go back to subcategories or main categories
+                    if (controller.selectedMainCategory.value.isNotEmpty) {
+                      controller.backToSubcategories();
+                    } else {
+                      controller.backToMainCategories();
+                    }
+                    break;
+                  case 'categories':
+                  default:
+                    // From main categories, go back to home
+                    Get.back();
+                    break;
+                }
+              },
             ),
             const SizedBox(height: 20),
           ],

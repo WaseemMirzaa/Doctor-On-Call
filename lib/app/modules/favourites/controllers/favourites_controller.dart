@@ -91,30 +91,38 @@ class FavouritesController extends GetxController {
   /// Search for item in clinical diagnosis categories and navigate to category view
   Future<void> _searchInClinicalCategories(FavoriteItem item) async {
     try {
+      print('=== Clinical Diagnosis Search Debug ===');
+      print('Searching for item: "${item.title}"');
+
       // Check if the item title is a category
       final isCategory = await ClinicalDiagnosisServices.isCategory(item.title);
+      print('Is category: $isCategory');
 
       if (isCategory) {
-        // Navigate to clinical diagnosis screen with this category selected
+        print(
+            'Navigating to subcategories screen for category: "${item.title}"');
+        // Navigate to clinical diagnosis subcategories screen to show subcategories list
         Get.toNamed(
-          Routes.CLINICAL_DIAGNOSIS,
+          Routes.CLINICAL_DIAGNOSIS_SUBCATEGORIES,
           arguments: {
-            'selectedCategory': item.title,
-            'showCategoryView': true,
+            'mainCategory': item.title,
           },
         );
       } else {
+        print('Not a category - searching for category containing item');
         // Search for which category contains this item
         final categoryName = await _findCategoryContainingItem(
             item.title, FavoriteType.clinicalDiagnosis);
+        print('Found containing category: $categoryName');
 
         if (categoryName != null) {
-          // Navigate to clinical diagnosis screen with the found category
+          print(
+              'Navigating to subcategories screen for found category: "$categoryName"');
+          // Navigate to clinical diagnosis subcategories screen with the found category
           Get.toNamed(
-            Routes.CLINICAL_DIAGNOSIS,
+            Routes.CLINICAL_DIAGNOSIS_SUBCATEGORIES,
             arguments: {
-              'selectedCategory': categoryName,
-              'showCategoryView': true,
+              'mainCategory': categoryName,
               'highlightItem': item.title,
             },
           );
@@ -123,6 +131,7 @@ class FavouritesController extends GetxController {
         }
       }
     } catch (e) {
+      print('Error in _searchInClinicalCategories: $e');
       Get.snackbar('Error', 'Failed to search in clinical categories');
     }
   }
@@ -155,31 +164,39 @@ class FavouritesController extends GetxController {
   /// Search for item in biochemical emergency categories and navigate to category view
   Future<void> _searchInBiochemicalCategories(FavoriteItem item) async {
     try {
+      print('=== Biochemical Emergency Search Debug ===');
+      print('Searching for item: "${item.title}"');
+
       // Check if the item title is a category
       final isCategory =
           await BiochemicalEmergencyService.isCategory(item.title);
+      print('Is category: $isCategory');
 
       if (isCategory) {
-        // Navigate to biochemical emergency screen with this category selected
+        print(
+            'Navigating to subcategories screen for category: "${item.title}"');
+        // Navigate to biochemical diagnosis subcategories screen to show subcategories list
         Get.toNamed(
-          Routes.BIO_CHEMICAL_DIAGNOSIS,
+          Routes.BIO_CHEMICAL_DIAGNOSIS_SUBCATEGORIES,
           arguments: {
-            'selectedCategory': item.title,
-            'showCategoryView': true,
+            'mainCategory': item.title,
           },
         );
       } else {
+        print('Not a category - searching for category containing item');
         // Search for which category contains this item
         final categoryName = await _findCategoryContainingItem(
             item.title, FavoriteType.biochemicalEmergency);
+        print('Found containing category: $categoryName');
 
         if (categoryName != null) {
-          // Navigate to biochemical emergency screen with the found category
+          print(
+              'Navigating to subcategories screen for found category: "$categoryName"');
+          // Navigate to biochemical diagnosis subcategories screen with the found category
           Get.toNamed(
-            Routes.BIO_CHEMICAL_DIAGNOSIS,
+            Routes.BIO_CHEMICAL_DIAGNOSIS_SUBCATEGORIES,
             arguments: {
-              'selectedCategory': categoryName,
-              'showCategoryView': true,
+              'mainCategory': categoryName,
               'highlightItem': item.title,
             },
           );
@@ -188,6 +205,7 @@ class FavouritesController extends GetxController {
         }
       }
     } catch (e) {
+      print('Error in _searchInBiochemicalCategories: $e');
       Get.snackbar('Error', 'Failed to search in biochemical categories');
     }
   }
@@ -195,20 +213,55 @@ class FavouritesController extends GetxController {
   /// Navigate to clinical presentation details
   Future<void> _navigateToClinicalPresentationDetails(FavoriteItem item) async {
     try {
-      // First try to load presentation data by title
-      final presentation =
-          await ClinicalPresentationsService.getPresentationByTitle(item.title);
+      print('=== Favorites Navigation Debug ===');
+      print('Item title: "${item.title}"');
+      print('Item category: "${item.category}"');
+      print('Item type: ${item.type}');
 
-      if (presentation != null) {
+      // FIRST check if the item is a main category - this takes priority
+      final allCategories = await ClinicalPresentationsService.getCategories();
+      print('All available categories: $allCategories');
+      print('Checking if "${item.title}" is in categories...');
+
+      final isMainCategory = allCategories.contains(item.title);
+      print('Is main category: $isMainCategory');
+
+      if (isMainCategory) {
+        print(
+            'Navigating to subcategories screen for main category: "${item.title}"');
+        // Navigate to subcategories screen to show subcategories list
         Get.toNamed(
-          Routes.CLINICAL_PRESENTATION_DETAIL,
-          arguments: presentation,
+          Routes.CLINICAL_SUBCATEGORIES,
+          arguments: {
+            'mainCategory': item.title,
+          },
         );
       } else {
-        // If not found as individual item, navigate to presentations screen with the category
-        await _searchInPresentationCategories(item);
+        print('Not a main category - checking for individual presentation');
+
+        // If not a main category, try to load presentation data by title
+        final presentation =
+            await ClinicalPresentationsService.getPresentationByTitle(
+                item.title);
+
+        if (presentation != null) {
+          print(
+              'Found presentation for "${item.title}" - navigating to detail view');
+          Get.toNamed(
+            Routes.CLINICAL_PRESENTATION_DETAIL,
+            arguments: {
+              'presentation': presentation,
+              'from': 'favourites',
+            },
+          );
+        } else {
+          print('No presentation found - searching in presentation categories');
+          // If not found as individual item or main category, search in categories
+          await _searchInPresentationCategories(item);
+        }
       }
     } catch (e) {
+      print('Error in _navigateToClinicalPresentationDetails: $e');
       Get.snackbar('Error', 'Failed to load clinical presentation details');
     }
   }
@@ -221,12 +274,11 @@ class FavouritesController extends GetxController {
           item.title, FavoriteType.clinicalPresentations);
 
       if (categoryName != null) {
-        // Navigate to clinical presentations screen with the found category
+        // Navigate to clinical presentations subcategories screen to show subcategories list
         Get.toNamed(
-          Routes.CLINICAL_PRESENTATIONS,
+          Routes.CLINICAL_SUBCATEGORIES,
           arguments: {
-            'selectedCategory': categoryName,
-            'showCategoryView': true,
+            'mainCategory': categoryName,
             'highlightItem': item.title,
           },
         );

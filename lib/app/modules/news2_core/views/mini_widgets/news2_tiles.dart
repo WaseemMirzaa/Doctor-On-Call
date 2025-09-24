@@ -221,8 +221,15 @@ class News2Tiles extends StatelessWidget {
         textController = TextEditingController();
     }
 
+    // Create a focus node for the text field
+    final FocusNode focusNode = FocusNode();
+
     return GestureDetector(
-      onTap: () => onSymptomTap(symptom),
+      onTap: () {
+        onSymptomTap(symptom);
+        // Focus the text field when the row is tapped
+        focusNode.requestFocus();
+      },
       child: Container(
         height: 60,
         decoration: BoxDecoration(
@@ -234,29 +241,51 @@ class News2Tiles extends StatelessWidget {
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
-          child: TextFormField(
-            keyboardType: symptom == AppText.temperature
-                ? TextInputType.numberWithOptions(decimal: true)
-                : TextInputType.number,
-            controller: textController,
-            style: AppTextStyles.medium.copyWith(
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
-              color: AppColors.txtWhiteColor,
-            ),
-            decoration: InputDecoration(
-              hintText: symptom,
-              hintStyle: AppTextStyles.medium.copyWith(
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
-                color: AppColors.txtWhiteColor,
+          child: Row(
+            children: [
+              // Symptom label on the left
+              Expanded(
+                flex: 2,
+                child: Text(
+                  symptom,
+                  style: AppTextStyles.medium.copyWith(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.txtWhiteColor,
+                  ),
+                ),
               ),
-              border: InputBorder.none,
-              contentPadding: const EdgeInsets.symmetric(vertical: 15.0),
-            ),
-            onChanged: (value) {
-              onSelectionChanged([value]);
-            },
+              // Input field on the right
+              Expanded(
+                flex: 1,
+                child: TextFormField(
+                  focusNode: focusNode,
+                  keyboardType: symptom == AppText.temperature
+                      ? TextInputType.numberWithOptions(decimal: true)
+                      : TextInputType.number,
+                  controller: textController,
+                  textAlign: TextAlign.right,
+                  style: AppTextStyles.medium.copyWith(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.txtWhiteColor,
+                  ),
+                  decoration: InputDecoration(
+                    hintText: "Enter value",
+                    hintStyle: AppTextStyles.medium.copyWith(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      color: AppColors.txtWhiteColor.withOpacity(0.6),
+                    ),
+                    border: InputBorder.none,
+                    contentPadding: const EdgeInsets.symmetric(vertical: 15.0),
+                  ),
+                  onChanged: (value) {
+                    onSelectionChanged([value]);
+                  },
+                ),
+              ),
+            ],
           ),
         ),
       ),

@@ -222,7 +222,12 @@ class ClinicalPresentationsController extends GetxController {
       // Navigate to detail page with the presentation data
       Get.toNamed(
         Routes.CLINICAL_PRESENTATION_DETAIL,
-        arguments: presentation,
+        arguments: {
+          'presentation': presentation,
+          'fromView': currentView.value,
+          'selectedMainCategory': selectedMainCategory.value,
+          'selectedCategory': selectedCategory.value,
+        },
       );
     } catch (e) {
       print('Error handling presentation tap: $e');
@@ -280,6 +285,13 @@ class ClinicalPresentationsController extends GetxController {
     selectedCategory.value = '';
     // Load favorites for main categories
     loadFavoriteStates();
+  }
+
+  /// Navigate back to subcategories from presentations view
+  void backToSubcategories() {
+    currentView.value = 'subcategories';
+    selectedCategory.value = '';
+    // Keep the selectedMainCategory to maintain subcategory context
   }
 
   /// Get subcategories for currently selected main category

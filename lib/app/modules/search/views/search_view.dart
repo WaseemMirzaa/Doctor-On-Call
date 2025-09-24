@@ -129,6 +129,9 @@ class SearchView extends GetView<search.SearchController> {
             case search.SearchFilter.biochemicalEmergency:
               filterText = 'Biochemical Emergency';
               break;
+            case search.SearchFilter.clinicalPresentations:
+              filterText = 'Clinical Presentations';
+              break;
             case search.SearchFilter.all:
               filterText = '';
               break;

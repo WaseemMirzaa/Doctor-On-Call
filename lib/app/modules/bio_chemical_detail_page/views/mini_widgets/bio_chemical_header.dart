@@ -35,6 +35,10 @@ class BioChemicalHeader extends StatelessWidget {
 
         return CommonTitleSection(
           title: title,
+          onBackTap: () {
+            // Smart back navigation - go back to the previous view
+            Get.back();
+          },
         );
       }),
     );

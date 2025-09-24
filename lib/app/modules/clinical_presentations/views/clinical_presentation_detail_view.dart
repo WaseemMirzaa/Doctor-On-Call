@@ -1,16 +1,12 @@
 import 'package:dr_on_call/config/AppColors.dart';
 import 'package:dr_on_call/app/widgets/custom_header.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../../widgets/background_container.dart';
 import '../../../widgets/medical_expension_tile.dart';
 
 class ClinicalPresentationDetailView extends StatefulWidget {
-  final Map<String, dynamic> presentation;
-
-  const ClinicalPresentationDetailView({
-    super.key,
-    required this.presentation,
-  });
+  const ClinicalPresentationDetailView({super.key});
 
   @override
   State<ClinicalPresentationDetailView> createState() =>
@@ -20,11 +16,14 @@ class ClinicalPresentationDetailView extends StatefulWidget {
 class _ClinicalPresentationDetailViewState
     extends State<ClinicalPresentationDetailView> {
   late Map<String, dynamic> presentation;
+  late Map<String, dynamic> navigationContext;
 
   @override
   void initState() {
     super.initState();
-    presentation = widget.presentation;
+    final arguments = Get.arguments as Map<String, dynamic>;
+    presentation = arguments['presentation'] as Map<String, dynamic>;
+    navigationContext = arguments;
   }
 
   @override
@@ -46,6 +45,28 @@ class _ClinicalPresentationDetailViewState
                 children: [
                   CommonTitleSection(
                     title: presentationTitle,
+                    onBackTap: () {
+                      // Smart back navigation based on where the user came from
+                      final fromView = navigationContext['from'] as String?;
+
+                      // Navigate based on the view we came from
+                      switch (fromView) {
+                        case 'subcategories':
+                          // Go back to subcategories screen
+                          Get.back();
+                          break;
+                        case 'recent':
+                        case 'favourites':
+                          // For recent and favourites, just go back normally
+                          Get.back();
+                          break;
+                        case 'categories':
+                        default:
+                          // Go back to main categories
+                          Get.back();
+                          break;
+                      }
+                    },
                   ),
                   const SizedBox(height: 20),
                 ],

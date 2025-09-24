@@ -36,6 +36,16 @@ class ClinicalDiagnosisHeader extends StatelessWidget {
 
         return CommonTitleSection(
           title: title,
+          onBackTap: () {
+            // Smart navigation based on current view
+            if (controller.isInCategoryView.value) {
+              // From category view, go back to main list
+              controller.goBackToMainList();
+            } else {
+              // From main list, go back to home
+              Get.back();
+            }
+          },
         );
       }),
     );

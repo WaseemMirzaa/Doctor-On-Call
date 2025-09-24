@@ -27,7 +27,7 @@ class MedicalExpansionTile extends StatelessWidget {
         expandedAlignment: Alignment.centerLeft,
         title: Text(title,
             style: AppTextStyles.medium.copyWith(
-              fontSize: 17,
+              fontSize: 18,
               fontWeight: FontWeight.w500,
               color: isRedFlag ? Colors.red : AppColors.txtOrangeColor,
             )),
@@ -59,7 +59,7 @@ class MedicalExpansionTile extends StatelessWidget {
               '• ${part.trim()}',
               style: AppTextStyles.regular.copyWith(
                 color: isRedContent ? Colors.black : AppColors.txtWhiteColor,
-                fontSize: 13,
+                fontSize: 17,
               ),
               textAlign: TextAlign.left,
             ),
@@ -72,7 +72,7 @@ class MedicalExpansionTile extends StatelessWidget {
         content,
         style: AppTextStyles.regular.copyWith(
           color: isRedContent ? Colors.black : AppColors.txtWhiteColor,
-          fontSize: 13,
+          fontSize: 17,
         ),
         textAlign: TextAlign.left,
       );
