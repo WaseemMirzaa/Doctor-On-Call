@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../config/AppTextStyle.dart';
+import '../utils/text_utils.dart';
 import 'back_icon_button.dart';
 
 class CommonTitleSection extends StatelessWidget {
@@ -28,7 +29,7 @@ class CommonTitleSection extends StatelessWidget {
           onTap: onBackTap ?? () => Get.back(),
         ),
         Text(
-          title,
+          title.formatTitleCase,
           textAlign: TextAlign.center,
           style: AppTextStyles.bold.copyWith(fontSize: 25),
         ),

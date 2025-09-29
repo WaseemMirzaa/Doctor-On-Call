@@ -2,6 +2,7 @@ import 'package:dr_on_call/app/widgets/filter_items.dart';
 import 'package:dr_on_call/config/AppColors.dart';
 import 'package:dr_on_call/config/AppIcons.dart';
 import 'package:dr_on_call/config/AppTextStyle.dart';
+import 'package:dr_on_call/app/utils/text_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -171,7 +172,7 @@ class _SymptomSelectionWidgetState extends State<SymptomSelectionWidget> {
                                 children: [
                                   Expanded(
                                     child: Text(
-                                      symptom,
+                                      symptom.formatTitleCase,
                                       style: AppTextStyles.bold.copyWith(
                                           fontSize: 18,
                                           fontWeight: FontWeight.w500,

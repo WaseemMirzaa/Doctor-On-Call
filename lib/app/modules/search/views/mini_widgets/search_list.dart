@@ -6,6 +6,7 @@ import 'package:get/get_core/src/get_main.dart';
 import '../../../../../config/AppText.dart';
 import '../../../../../config/AppColors.dart';
 import '../../../../../config/AppTextStyle.dart';
+import '../../../../utils/text_utils.dart';
 
 import '../../controllers/search_controller.dart' as search;
 
@@ -117,7 +118,7 @@ class SearchList extends StatelessWidget {
                     children: [
                       // Title
                       Text(
-                        item.title,
+                        item.title.formatTitleCase,
                         style: AppTextStyles.medium.copyWith(
                           fontSize: 20,
                           fontWeight: FontWeight.w500,
