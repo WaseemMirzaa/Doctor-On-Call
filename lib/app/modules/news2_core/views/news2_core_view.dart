@@ -13,16 +13,19 @@ class News2CoreView extends GetView<News2CoreController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BackgroundContainer(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              News2Header(),
-              SizedBox(
-                height: 30,
-              ),
-              News2List(),
-            ],
-          ),
+        child: Column(
+          children: [
+            News2Header(),
+            SizedBox(
+              height: 30,
+            ),
+            // News2List(),
+            Expanded(
+                child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: News2List(),
+            )),
+          ],
         ),
       ),
     );
