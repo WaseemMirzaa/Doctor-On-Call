@@ -147,14 +147,16 @@ class News2Calculator {
   }
 }
 
-/// Enhanced NEWS2 Calculator with AVPU+C scoring
+/// Enhanced NEWS2 Calculator with AVPU+C and Oxygen Therapy scoring
 class EnhancedNews2Calculator extends News2Calculator {
   final News2Calculator baseCalculator;
   final int consciousnessScore;
+  final int oxygenScore;
 
   EnhancedNews2Calculator({
     required this.baseCalculator,
     required this.consciousnessScore,
+    required this.oxygenScore,
   }) : super(
           respiratoryRate: baseCalculator.respiratoryRate,
           oxygenSaturation: baseCalculator.oxygenSaturation,
@@ -187,10 +189,8 @@ class EnhancedNews2Calculator extends News2Calculator {
     // Enhanced Level of Consciousness scoring (AVPU+C)
     totalScore += consciousnessScore;
 
-    // Supplemental Oxygen scoring
-    if (onSupplementalOxygen) {
-      totalScore += 2;
-    }
+    // Enhanced Oxygen Therapy scoring
+    totalScore += oxygenScore;
 
     return totalScore;
   }
@@ -204,7 +204,7 @@ class EnhancedNews2Calculator extends News2Calculator {
       'Heart Rate': _getHeartRateScore(heartRate),
       'Temperature': _getTemperatureScore(temperature),
       'Level of Consciousness (AVPU)': consciousnessScore,
-      'Supplemental Oxygen': onSupplementalOxygen ? 2 : 0,
+      'Oxygen Therapy': oxygenScore,
     };
   }
 }

@@ -155,47 +155,105 @@ class News2Tiles extends StatelessWidget {
           ));
     }
 
+    // Handle oxygen requirement with checkbox and dropdown
     if (symptom == AppText.oxygenRequirement) {
-      return Obx(() => GestureDetector(
-            onTap: () {
-              controller.toggleOxygenRequirement();
-              onSymptomTap(symptom);
-            },
-            child: Container(
-              height: 60,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(
-                  color: const Color(0xFFEEC643),
-                  width: 1,
+      return Obx(() => Column(
+            children: [
+              // Checkbox for Oxygen Requirement
+              GestureDetector(
+                onTap: () {
+                  controller.toggleOxygenRequirement();
+                  onSymptomTap(symptom);
+                },
+                child: Container(
+                  height: 60,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                      color: const Color(0xFFEEC643),
+                      width: 1,
+                    ),
+                    color: controller.onSupplementalOxygen.value
+                        ? const Color(0xFF0A1A3F)
+                        : null,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          symptom,
+                          style: AppTextStyles.medium.copyWith(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.txtWhiteColor,
+                          ),
+                        ),
+                        Icon(
+                          controller.onSupplementalOxygen.value
+                              ? Icons.check_box
+                              : Icons.check_box_outline_blank,
+                          color: AppColors.txtOrangeColor,
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-                color: controller.onSupplementalOxygen.value
-                    ? const Color(0xFF0A1A3F)
-                    : null,
               ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      symptom,
-                      style: AppTextStyles.medium.copyWith(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.txtWhiteColor,
+              // Oxygen Therapy Type Dropdown (shown when checkbox is checked)
+              if (controller.onSupplementalOxygen.value) ...[
+                const SizedBox(height: 20),
+                Container(
+                  height: 60,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                      color: const Color(0xFFEEC643),
+                      width: 1,
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        value: controller.selectedOxygenType.value,
+                        isExpanded: true,
+                        dropdownColor: const Color(0xFF0A1A3F),
+                        style: AppTextStyles.medium.copyWith(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.txtWhiteColor,
+                        ),
+                        icon: const Icon(
+                          Icons.arrow_drop_down,
+                          color: AppColors.txtOrangeColor,
+                        ),
+                        items: controller.oxygenTypeOptions.keys
+                            .map((String type) {
+                          return DropdownMenuItem<String>(
+                            value: type,
+                            child: Text(
+                              type,
+                              style: AppTextStyles.medium.copyWith(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                                color: AppColors.txtWhiteColor,
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                        onChanged: (String? newValue) {
+                          if (newValue != null) {
+                            controller.setOxygenType(newValue);
+                          }
+                        },
                       ),
                     ),
-                    Icon(
-                      controller.onSupplementalOxygen.value
-                          ? Icons.check_box
-                          : Icons.check_box_outline_blank,
-                      color: AppColors.txtOrangeColor,
-                    ),
-                  ],
+                  ),
                 ),
-              ),
-            ),
+              ],
+            ],
           ));
     }
 
