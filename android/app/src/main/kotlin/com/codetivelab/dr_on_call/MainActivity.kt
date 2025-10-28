@@ -1,4 +1,4 @@
-package com.codetivelab.drOnCall
+package com.codetivelab.dr_on_call
 
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
