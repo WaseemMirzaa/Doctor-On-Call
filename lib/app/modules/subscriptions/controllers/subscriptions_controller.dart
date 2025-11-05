@@ -35,17 +35,20 @@ class SubscriptionsController extends GetxController {
     try {
       isLoading.value = true;
 
-      // Use dummy data for now (RevenueCat not configured yet)
-      // When RevenueCat is configured, uncomment the lines below:
-      // await loadOfferings();
-      // await loadLifetimeProduct();
-      // await checkPremiumStatus();
+      // Load offerings and product info
+      await loadOfferings();
+      await loadLifetimeProduct();
+      await checkPremiumStatus();
 
-      // Dummy mode - just set default price
-      lifetimePrice.value = '€9.99';
-      isPremiumUser.value = false;
+      // Set default price if product not loaded
+      if (lifetimePrice.value.isEmpty || lifetimePrice.value == '€9.99') {
+        lifetimePrice.value = '€9.99';
+      }
     } catch (e) {
       print('❌ Error initializing RevenueCat: $e');
+      // Fallback to default price on error
+      lifetimePrice.value = '€9.99';
+      isPremiumUser.value = false;
     } finally {
       isLoading.value = false;
     }
@@ -104,16 +107,6 @@ class SubscriptionsController extends GetxController {
     try {
       isLoading.value = true;
 
-      // Dummy mode - show message that RevenueCat is not configured
-      Get.snackbar(
-        'Coming Soon',
-        'In-app purchases will be available soon. Please check back later.',
-        snackPosition: SnackPosition.BOTTOM,
-        duration: const Duration(seconds: 3),
-      );
-
-      // When RevenueCat is configured, uncomment the code below:
-      /*
       Get.snackbar(
         'Processing',
         'Please wait while we process your purchase...',
@@ -142,9 +135,13 @@ class SubscriptionsController extends GetxController {
           snackPosition: SnackPosition.BOTTOM,
         );
       }
-      */
     } catch (e) {
       print('❌ Purchase error: $e');
+      Get.snackbar(
+        'Error',
+        'An error occurred during purchase. Please try again.',
+        snackPosition: SnackPosition.BOTTOM,
+      );
     } finally {
       isLoading.value = false;
     }
@@ -155,16 +152,6 @@ class SubscriptionsController extends GetxController {
     try {
       isLoading.value = true;
 
-      // Dummy mode - show message
-      Get.snackbar(
-        'Coming Soon',
-        'Purchase restoration will be available once in-app purchases are configured.',
-        snackPosition: SnackPosition.BOTTOM,
-        duration: const Duration(seconds: 3),
-      );
-
-      // When RevenueCat is configured, uncomment the code below:
-      /*
       Get.snackbar(
         'Restoring',
         'Checking for previous purchases...',
@@ -191,10 +178,20 @@ class SubscriptionsController extends GetxController {
             snackPosition: SnackPosition.BOTTOM,
           );
         }
+      } else {
+        Get.snackbar(
+          'Error',
+          'Unable to restore purchases. Please try again.',
+          snackPosition: SnackPosition.BOTTOM,
+        );
       }
-      */
     } catch (e) {
       print('❌ Restore error: $e');
+      Get.snackbar(
+        'Error',
+        'An error occurred while restoring purchases.',
+        snackPosition: SnackPosition.BOTTOM,
+      );
     } finally {
       isLoading.value = false;
     }

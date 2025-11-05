@@ -4,8 +4,10 @@ import 'package:purchases_flutter/purchases_flutter.dart';
 
 /// RevenueCat Service for managing in-app purchases and subscriptions
 class RevenueCatService {
-  static const String _apiKeyAndroid = 'YOUR_ANDROID_API_KEY_HERE';
-  static const String _apiKeyIOS = 'YOUR_IOS_API_KEY_HERE';
+  // RevenueCat API Keys
+  static const String _apiKeyAndroid =
+      'goog_oBJqPqJNJqJqJqJqJqJqJqJqJq'; // TODO: Replace with your actual Android API key
+  static const String _apiKeyIOS = 'appl_SfXmqqesrJRUNocKMMTqjbcyHjV';
 
   // Product IDs - These must match what you configure in RevenueCat Dashboard
   static const String oneTimePurchaseId = 'dr_oncall_lifetime_999';
@@ -16,11 +18,15 @@ class RevenueCatService {
   /// Initialize RevenueCat SDK
   static Future<void> initialize() async {
     try {
-      // Skip initialization if API keys are not set (dummy mode)
-      if (_apiKeyAndroid == 'YOUR_ANDROID_API_KEY_HERE' ||
-          _apiKeyIOS == 'YOUR_IOS_API_KEY_HERE') {
-        print('⚠️ RevenueCat running in dummy mode - API keys not configured');
-        return;
+      // Check if API keys are configured
+      if (_apiKeyAndroid.startsWith('goog_oBJ') ||
+          _apiKeyAndroid == 'YOUR_ANDROID_API_KEY_HERE') {
+        print(
+            '⚠️ RevenueCat Android API key not configured - running in limited mode');
+        // Continue with iOS if available
+        if (GetPlatform.isAndroid) {
+          return;
+        }
       }
 
       PurchasesConfiguration configuration;
