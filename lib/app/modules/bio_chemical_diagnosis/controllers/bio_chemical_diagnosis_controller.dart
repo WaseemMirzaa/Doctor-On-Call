@@ -3,6 +3,8 @@ import '../../../services/biochemical_emergency_service.dart';
 import '../../../services/recents_service.dart';
 import '../../../services/favorites_service.dart';
 import '../model/biochemical_emergencies.dart';
+import '../../../helpers/subscription_access_helper.dart';
+import '../../../routes/app_pages.dart';
 
 class BioChemicalDiagnosisController extends GetxController {
   // Observable lists for data
@@ -151,6 +153,26 @@ class BioChemicalDiagnosisController extends GetxController {
     } finally {
       isLoadingEmergencies.value = false;
     }
+  }
+
+  /// Navigate to detail page with subscription check
+  Future<bool> navigateToDetailPage(String title) async {
+    final hasAccess = await SubscriptionAccessHelper.checkAccessAndNavigate(
+      routeName: Routes.BIO_CHEMICAL_DETAIL_PAGE,
+      arguments: {
+        'title': title,
+        'emergencies': emergencies.toList(),
+      },
+      contentType: 'biochemical',
+    );
+
+    if (hasAccess) {
+      // Show warnings if needed
+      await SubscriptionAccessHelper.showRemainingViewsWarning();
+      await SubscriptionAccessHelper.showTrialExpiryWarning();
+    }
+
+    return hasAccess;
   }
 
   /// Store recent activity for biochemical emergency

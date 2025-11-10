@@ -136,14 +136,8 @@ class BioChemicalList extends StatelessWidget {
           // Check if it was a standalone title (emergency loaded)
           if (controller.emergencies.isNotEmpty &&
               !controller.isInCategoryView.value) {
-            // Navigate to detail page for standalone emergency
-            Get.toNamed(
-              Routes.BIO_CHEMICAL_DETAIL_PAGE,
-              arguments: {
-                'title': item,
-                'emergencies': controller.emergencies.toList(),
-              },
-            );
+            // Navigate to detail page with subscription check
+            controller.navigateToDetailPage(item);
           }
           // If it was a category, the view will automatically update to show titles
         });
@@ -214,14 +208,8 @@ class BioChemicalList extends StatelessWidget {
       onSymptomTap: (title) {
         controller.loadEmergencyByTitle(title).then((_) {
           if (controller.emergencies.isNotEmpty) {
-            Get.toNamed(
-              Routes.BIO_CHEMICAL_DETAIL_PAGE,
-              arguments: {
-                'title': title,
-                'category': controller.selectedCategory.value,
-                'emergencies': controller.emergencies.toList(),
-              },
-            );
+            // Navigate with subscription check
+            controller.navigateToDetailPage(title);
           }
         });
       },

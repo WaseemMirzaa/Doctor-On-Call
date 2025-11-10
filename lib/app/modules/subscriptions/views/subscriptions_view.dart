@@ -25,7 +25,9 @@ class SubscriptionsView extends GetView<SubscriptionsController> {
 
                         // Free Trial Card (Current Plan)
                         Obx(() => PlanCard(
-                              title: AppText.trial,
+                              title: controller.isPremiumUser.value
+                                  ? AppText.trial
+                                  : controller.currentPlan.value,
                               subtitle: AppText.plan,
                               features: [
                                 AppText.accessToEmergencyCondition,
@@ -72,6 +74,40 @@ class SubscriptionsView extends GetView<SubscriptionsController> {
                             ),
                           ),
                         ),
+
+                        const SizedBox(height: 10),
+
+                        // Expire Trial Button (for testing)
+                        Obx(() => !controller.isPremiumUser.value
+                            ? Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 30.0),
+                                child: OutlinedButton(
+                                  onPressed: () =>
+                                      controller.expireTrialForTesting(),
+                                  style: OutlinedButton.styleFrom(
+                                    foregroundColor: Colors.orange,
+                                    side: BorderSide(color: Colors.orange),
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 20, vertical: 12),
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Icon(Icons.warning_amber_rounded,
+                                          size: 18),
+                                      SizedBox(width: 8),
+                                      Text(
+                                        'Expire Trial (Testing)',
+                                        style: AppTextStyles.medium.copyWith(
+                                          fontSize: 13,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )
+                            : SizedBox.shrink()),
 
                         const SizedBox(height: 10),
 

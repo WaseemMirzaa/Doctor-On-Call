@@ -10,7 +10,7 @@ class RevenueCatService {
   static const String _apiKeyIOS = 'appl_SfXmqqesrJRUNocKMMTqjbcyHjV';
 
   // Product IDs - These must match what you configure in RevenueCat Dashboard
-  static const String oneTimePurchaseId = 'dr_oncall_lifetime_999';
+  static const String oneTimePurchaseId = 'one_time_fee';
 
   // Entitlement identifier (configured in RevenueCat Dashboard)
   static const String premiumEntitlementId = 'premium';

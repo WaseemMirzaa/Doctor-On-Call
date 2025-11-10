@@ -136,14 +136,8 @@ class ClinicalDiagnosisList extends StatelessWidget {
           // Check if it was a standalone title (diagnosis loaded)
           if (controller.diagnoses.isNotEmpty &&
               !controller.isInCategoryView.value) {
-            // Navigate to detail page for standalone diagnosis
-            Get.toNamed(
-              Routes.CLINICAL_DETAILS,
-              arguments: {
-                'title': item,
-                'diagnoses': controller.diagnoses.toList(),
-              },
-            );
+            // Navigate to detail page with subscription check
+            controller.navigateToDetailPage(item);
           }
           // If it was a category, the view will automatically update to show titles
         });
@@ -212,14 +206,8 @@ class ClinicalDiagnosisList extends StatelessWidget {
       onSymptomTap: (title) {
         controller.loadDiagnosisByTitle(title).then((_) {
           if (controller.diagnoses.isNotEmpty) {
-            Get.toNamed(
-              Routes.CLINICAL_DETAILS,
-              arguments: {
-                'title': title,
-                'category': controller.selectedCategory.value,
-                'diagnoses': controller.diagnoses.toList(),
-              },
-            );
+            // Navigate with subscription check
+            controller.navigateToDetailPage(title);
           }
         });
       },

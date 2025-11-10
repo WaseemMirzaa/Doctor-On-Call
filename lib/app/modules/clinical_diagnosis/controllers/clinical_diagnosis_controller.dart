@@ -3,6 +3,8 @@ import '../../../services/clinical_diagnosis.dart';
 import '../../../services/recents_service.dart';
 import '../../../services/favorites_service.dart';
 import '../model/clinical_diagnosis.dart';
+import '../../../helpers/subscription_access_helper.dart';
+import '../../../routes/app_pages.dart';
 
 class ClinicalDiagnosisController extends GetxController {
   // Observable lists for data
@@ -151,6 +153,26 @@ class ClinicalDiagnosisController extends GetxController {
     } finally {
       isLoadingDiagnoses.value = false;
     }
+  }
+
+  /// Navigate to detail page with subscription check
+  Future<bool> navigateToDetailPage(String title) async {
+    final hasAccess = await SubscriptionAccessHelper.checkAccessAndNavigate(
+      routeName: Routes.CLINICAL_DETAILS,
+      arguments: {
+        'title': title,
+        'diagnoses': diagnoses.toList(),
+      },
+      contentType: 'clinical',
+    );
+
+    if (hasAccess) {
+      // Show warnings if needed
+      await SubscriptionAccessHelper.showRemainingViewsWarning();
+      await SubscriptionAccessHelper.showTrialExpiryWarning();
+    }
+
+    return hasAccess;
   }
 
   /// Store recent activity for clinical diagnosis

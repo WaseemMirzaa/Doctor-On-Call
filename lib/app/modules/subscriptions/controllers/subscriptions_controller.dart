@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import '../../../services/revenuecat_service.dart';
+import '../../../services/subscription_manager_service.dart';
 
 class SubscriptionsController extends GetxController {
   // Observable states
@@ -11,7 +12,10 @@ class SubscriptionsController extends GetxController {
   final customerInfo = Rxn<CustomerInfo>();
 
   // Price display
-  final lifetimePrice = '€9.99'.obs;
+  final lifetimePrice = '\$9.99'.obs;
+
+  // Current plan display
+  final currentPlan = 'Free Trial'.obs;
 
   @override
   void onInit() {
@@ -41,13 +45,13 @@ class SubscriptionsController extends GetxController {
       await checkPremiumStatus();
 
       // Set default price if product not loaded
-      if (lifetimePrice.value.isEmpty || lifetimePrice.value == '€9.99') {
-        lifetimePrice.value = '€9.99';
+      if (lifetimePrice.value.isEmpty || lifetimePrice.value == '\$9.99') {
+        lifetimePrice.value = '\$9.99';
       }
     } catch (e) {
       print('❌ Error initializing RevenueCat: $e');
       // Fallback to default price on error
-      lifetimePrice.value = '€9.99';
+      lifetimePrice.value = '\$9.99';
       isPremiumUser.value = false;
     } finally {
       isLoading.value = false;
@@ -96,9 +100,21 @@ class SubscriptionsController extends GetxController {
       final info = await RevenueCatService.getCustomerInfo();
       customerInfo.value = info;
 
+      // Save premium status to local storage
+      await SubscriptionManagerService.setPremiumStatus(hasPremium);
+
+      // Update current plan display
+      currentPlan.value = await SubscriptionManagerService.getCurrentPlan();
+
       print('Premium status: $hasPremium');
     } catch (e) {
       print('❌ Error checking premium status: $e');
+
+      // Fallback to local storage
+      final localPremiumStatus =
+          await SubscriptionManagerService.isPremiumUser();
+      isPremiumUser.value = localPremiumStatus;
+      currentPlan.value = await SubscriptionManagerService.getCurrentPlan();
     }
   }
 
@@ -200,5 +216,38 @@ class SubscriptionsController extends GetxController {
   /// Refresh offerings and status
   Future<void> refresh() async {
     await _initializeRevenueCat();
+  }
+
+  /// Expire trial for testing purposes
+  Future<void> expireTrialForTesting() async {
+    try {
+      await SubscriptionManagerService.expireTrial();
+
+      // Update current plan display
+      currentPlan.value = await SubscriptionManagerService.getCurrentPlan();
+
+      // Get current status
+      final viewCount = await SubscriptionManagerService.getContentViewCount();
+      final isInTrial = await SubscriptionManagerService.isInFreeTrial();
+      final remainingViews =
+          await SubscriptionManagerService.getRemainingFreeViews();
+
+      print(
+          '🧪 Trial expired! InTrial=$isInTrial, ViewCount=$viewCount, RemainingViews=$remainingViews');
+
+      Get.snackbar(
+        'Trial Expired',
+        'Your free trial has been expired for testing. You now have $remainingViews free views remaining.',
+        snackPosition: SnackPosition.BOTTOM,
+        duration: Duration(seconds: 4),
+      );
+    } catch (e) {
+      print('❌ Error expiring trial: $e');
+      Get.snackbar(
+        'Error',
+        'Failed to expire trial',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
   }
 }

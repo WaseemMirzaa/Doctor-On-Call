@@ -3,6 +3,7 @@ import '../../../services/clinical_presentations_service.dart';
 import '../../../services/recents_service.dart';
 import '../../../services/favorites_service.dart';
 import '../../../routes/app_pages.dart';
+import '../../../helpers/subscription_access_helper.dart';
 
 class ClinicalPresentationsController extends GetxController {
   // Observable lists
@@ -212,23 +213,30 @@ class ClinicalPresentationsController extends GetxController {
       final title = presentation['title']?.toString() ?? '';
       final category = presentation['category']?.toString() ?? '';
 
-      // Store in recent activities
-      await RecentsService.addRecentActivity(
-        title: title,
-        category: category,
-        type: 'clinical_presentation',
-      );
-
-      // Navigate to detail page with the presentation data
-      Get.toNamed(
-        Routes.CLINICAL_PRESENTATION_DETAIL,
+      // Check subscription access before navigating
+      final hasAccess = await SubscriptionAccessHelper.checkAccessAndNavigate(
+        routeName: Routes.CLINICAL_PRESENTATION_DETAIL,
         arguments: {
           'presentation': presentation,
           'fromView': currentView.value,
           'selectedMainCategory': selectedMainCategory.value,
           'selectedCategory': selectedCategory.value,
         },
+        contentType: 'clinical_presentation',
       );
+
+      // Only store in recent activities if access was granted
+      if (hasAccess) {
+        await RecentsService.addRecentActivity(
+          title: title,
+          category: category,
+          type: 'clinical_presentation',
+        );
+
+        // Show warnings if needed
+        await SubscriptionAccessHelper.showRemainingViewsWarning();
+        await SubscriptionAccessHelper.showTrialExpiryWarning();
+      }
     } catch (e) {
       print('Error handling presentation tap: $e');
     }
