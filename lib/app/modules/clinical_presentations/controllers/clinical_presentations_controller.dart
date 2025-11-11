@@ -383,27 +383,27 @@ class ClinicalPresentationsController extends GetxController {
 
       favoriteStates.clear();
 
-      print('=== Clinical Presentations loadFavoriteStates ===');
-      print('Current view: ${currentView.value}');
-      print('Selected category: ${selectedCategory.value}');
-      print('Selected main category: ${selectedMainCategory.value}');
-      print('Items to load favorites for: ${items.length} items');
-      print('Items: $items');
+      // print('=== Clinical Presentations loadFavoriteStates ===');
+      // print('Current view: ${currentView.value}');
+      // print('Selected category: ${selectedCategory.value}');
+      // print('Selected main category: ${selectedMainCategory.value}');
+      // print('Items to load favorites for: ${items.length} items');
+      // print('Items: $items');
 
       for (String item in items) {
         final category =
             selectedCategory.value.isEmpty ? 'General' : selectedCategory.value;
         final itemId = FavoritesService.generateItemId(
             item, category, FavoriteType.clinicalPresentations);
-        print(
-            'Loading favorite for "$item" with category "$category" -> ID: $itemId');
+        // print(
+        //     'Loading favorite for "$item" with category "$category" -> ID: $itemId');
         final isFav = await FavoritesService.isFavorite(itemId);
         favoriteStates[item] = isFav;
-        print('Favorite state for "$item": $isFav');
+        // print('Favorite state for "$item": $isFav');
       }
 
-      print('Total favorite states loaded: ${favoriteStates.length}');
-      print('=== End loadFavoriteStates ===');
+      // print('Total favorite states loaded: ${favoriteStates.length}');
+      // print('=== End loadFavoriteStates ===');
     } catch (e) {
       print('Error loading favorite states: $e');
     }

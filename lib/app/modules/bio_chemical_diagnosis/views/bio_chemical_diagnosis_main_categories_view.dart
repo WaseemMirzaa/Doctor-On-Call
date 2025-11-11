@@ -92,17 +92,7 @@ class BioChemicalDiagnosisMainCategoriesView
             // It's a standalone title - navigate directly to detail
             await controller.loadEmergencyByTitle(item);
             if (controller.emergencies.isNotEmpty) {
-              Get.toNamed(
-                '/bio-chemical-detail-page',
-                arguments: {
-                  'title': item,
-                  'emergencies': controller.emergencies.toList(),
-                  'navigationContext': {
-                    'from': 'categories',
-                    'mainCategory': item,
-                  },
-                },
-              );
+              await controller.navigateToDetailPage(item);
             }
           }
         },

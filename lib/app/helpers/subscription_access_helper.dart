@@ -1,3 +1,4 @@
+import 'package:dr_on_call/app/widgets/access_limit_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../routes/app_pages.dart';
@@ -13,28 +14,31 @@ class SubscriptionAccessHelper {
     required String
         contentType, // 'clinical_presentation', 'biochemical', 'clinical'
   }) async {
+    // Print detailed status for debugging
+    await SubscriptionManagerService.printCurrentStatus();
+
     // Get current status for debugging
     final isPremium = await SubscriptionManagerService.isPremiumUser();
     final isInTrial = await SubscriptionManagerService.isInFreeTrial();
-    final currentViewCount =
-        await SubscriptionManagerService.getContentViewCount();
+    final dailyCount = await SubscriptionManagerService.getDailyAccessCount();
 
     print(
-        '🔍 Access Check: Premium=$isPremium, InTrial=$isInTrial, ViewCount=$currentViewCount');
+        '🔍 Access Check: Premium=$isPremium, InTrial=$isInTrial, DailyCount=$dailyCount');
 
     // Check if user can access content
     final canAccess = await SubscriptionManagerService.canAccessContent();
     print('🔍 Can Access: $canAccess');
 
     if (canAccess) {
-      // Navigate to the detail page first
-      Get.toNamed(routeName, arguments: arguments);
-
-      // Increment view count for non-premium users AFTER navigation
-      if (!isPremium && !isInTrial) {
-        // User is using free views - increment counter
-        await SubscriptionManagerService.incrementViewCount();
+      // Increment daily access count for trial users BEFORE navigation
+      if (!isPremium && isInTrial) {
+        await SubscriptionManagerService.incrementDailyAccessCount();
+        final newCount = await SubscriptionManagerService.getDailyAccessCount();
+        print('✅ Daily access count incremented: $dailyCount → $newCount');
       }
+
+      // Navigate to the detail page
+      Get.toNamed(routeName, arguments: arguments);
 
       return true;
     } else {
@@ -46,57 +50,10 @@ class SubscriptionAccessHelper {
   }
 
   /// Show subscription prompt dialog
-  static void _showSubscriptionPrompt(String contentType) {
-    Get.dialog(
-      AlertDialog(
-        title: const Text('Subscription Required'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Your free trial has expired and you\'ve used all 3 free views.',
-              style: TextStyle(fontSize: 14),
-            ),
-            const SizedBox(height: 12),
-            const Text(
-              'Subscribe now to get:',
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            const Text('• Unlimited access to all content'),
-            const Text('• All clinical presentations'),
-            const Text('• All biochemical emergencies'),
-            const Text('• All clinical diagnosis'),
-            const Text('• NEWS2 Calculator'),
-            const SizedBox(height: 8),
-            const Text(
-              'One-time payment of \$9.99 - No recurring fees!',
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-                color: Colors.green,
-              ),
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Get.back(),
-            child: const Text('Cancel'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Get.back(); // Close dialog
-              Get.toNamed(
-                  Routes.SUBSCRIPTIONS); // Navigate to subscription page
-            },
-            child: const Text('Subscribe Now'),
-          ),
-        ],
-      ),
-      barrierDismissible: true,
-    );
+  static void _showSubscriptionPrompt(String contentType) async {
+    await SubscriptionManagerService.getRemainingTrialDays();
+
+    showAccessLimitDialog();
   }
 
   /// Show trial expiry warning (when trial is about to expire)
@@ -125,14 +82,14 @@ class SubscriptionAccessHelper {
     final isPremium = await SubscriptionManagerService.isPremiumUser();
     final isInTrial = await SubscriptionManagerService.isInFreeTrial();
 
-    if (!isPremium && !isInTrial) {
-      final remainingViews =
-          await SubscriptionManagerService.getRemainingFreeViews();
+    if (!isPremium && isInTrial) {
+      final remainingToday =
+          await SubscriptionManagerService.getRemainingDailyAccesses();
 
-      if (remainingViews > 0 && remainingViews <= 2) {
+      if (remainingToday > 0 && remainingToday <= 2) {
         Get.snackbar(
-          'Limited Views Remaining',
-          'You have $remainingViews view${remainingViews > 1 ? 's' : ''} remaining. Subscribe for unlimited access!',
+          'Limited Items Remaining Today',
+          'You have $remainingToday item${remainingToday > 1 ? 's' : ''} remaining today. Subscribe for unlimited access!',
           snackPosition: SnackPosition.BOTTOM,
           duration: const Duration(seconds: 4),
           mainButton: TextButton(
@@ -153,8 +110,8 @@ class SubscriptionAccessHelper {
     final isInTrial = await SubscriptionManagerService.isInFreeTrial();
     final remainingDays =
         await SubscriptionManagerService.getRemainingTrialDays();
-    final remainingViews =
-        await SubscriptionManagerService.getRemainingFreeViews();
+    final remainingToday =
+        await SubscriptionManagerService.getRemainingDailyAccesses();
     final statusMessage =
         await SubscriptionManagerService.getAccessStatusMessage();
 
@@ -162,7 +119,7 @@ class SubscriptionAccessHelper {
       'isPremium': isPremium,
       'isInTrial': isInTrial,
       'remainingDays': remainingDays,
-      'remainingViews': remainingViews,
+      'remainingToday': remainingToday,
       'statusMessage': statusMessage,
       'canAccess': await SubscriptionManagerService.canAccessContent(),
     };

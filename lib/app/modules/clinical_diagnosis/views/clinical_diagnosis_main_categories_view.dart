@@ -92,17 +92,7 @@ class ClinicalDiagnosisMainCategoriesView
             // It's a standalone title - navigate directly to detail
             await controller.loadDiagnosisByTitle(item);
             if (controller.diagnoses.isNotEmpty) {
-              Get.toNamed(
-                '/clinical-details',
-                arguments: {
-                  'title': item,
-                  'diagnoses': controller.diagnoses.toList(),
-                  'navigationContext': {
-                    'from': 'categories',
-                    'mainCategory': item,
-                  },
-                },
-              );
+              await controller.navigateToDetailPage(item);
             }
           }
         },

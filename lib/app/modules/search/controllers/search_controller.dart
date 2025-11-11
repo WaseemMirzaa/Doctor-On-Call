@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../services/clinical_diagnosis.dart';
 import '../../../services/biochemical_emergency_service.dart';
 import '../../../routes/app_pages.dart';
+import '../../../helpers/subscription_access_helper.dart';
 
 enum SearchFilter {
   all,
@@ -375,13 +376,14 @@ class SearchController extends GetxController {
           await ClinicalDiagnosisServices.getEmergencyByTitle(item.title);
 
       if (diagnosis != null) {
-        Get.toNamed(
-          Routes.CLINICAL_DETAILS,
+        await SubscriptionAccessHelper.checkAccessAndNavigate(
+          routeName: Routes.CLINICAL_DETAILS,
           arguments: {
             'title': item.title,
             'category': item.category,
             'diagnoses': [diagnosis],
           },
+          contentType: 'clinical',
         );
       } else {
         // Navigate to clinical diagnosis screen with category
@@ -419,13 +421,14 @@ class SearchController extends GetxController {
           await BiochemicalEmergencyService.getEmergencyByTitle(item.title);
 
       if (emergency != null) {
-        Get.toNamed(
-          Routes.BIO_CHEMICAL_DETAIL_PAGE,
+        await SubscriptionAccessHelper.checkAccessAndNavigate(
+          routeName: Routes.BIO_CHEMICAL_DETAIL_PAGE,
           arguments: {
             'title': item.title,
             'category': item.category,
             'emergencies': [emergency],
           },
+          contentType: 'biochemical',
         );
       } else {
         // Navigate to biochemical diagnosis screen with category
@@ -471,12 +474,13 @@ class SearchController extends GetxController {
           await ClinicalPresentationsService.getPresentationByTitle(item.title);
 
       if (presentation != null) {
-        Get.toNamed(
-          Routes.CLINICAL_PRESENTATION_DETAIL,
+        await SubscriptionAccessHelper.checkAccessAndNavigate(
+          routeName: Routes.CLINICAL_PRESENTATION_DETAIL,
           arguments: {
             'presentation': presentation,
             'from': 'search',
           },
+          contentType: 'clinical_presentation',
         );
       } else {
         // Navigate to clinical presentations screen with category

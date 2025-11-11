@@ -89,8 +89,8 @@ class ClinicalSubcategoriesView
         showHeartIcon: true,
         padding: const EdgeInsets.all(16.0),
         spacing: 8.0,
-        onSymptomTap: (subcategory) {
-          // Navigate to detail view
+        onSymptomTap: (subcategory) async {
+          // Navigate to detail view with access control
           final categoryPresentations =
               controller.groupedPresentations[mainCategory] ?? [];
           final presentation = categoryPresentations.firstWhere(
@@ -99,14 +99,8 @@ class ClinicalSubcategoriesView
           );
 
           if (presentation.isNotEmpty) {
-            Get.toNamed('/clinical-presentation-detail', arguments: {
-              'presentation': presentation,
-              'navigationContext': {
-                'from': 'subcategories',
-                'mainCategory': mainCategory,
-                'subcategory': subcategory,
-              },
-            });
+            // Use the controller's method which includes access control
+            await controller.onPresentationTap(presentation);
           }
         },
       );

@@ -1,5 +1,6 @@
 import 'package:dr_on_call/app/modules/clinical_presentations/controllers/clinical_presentations_controller.dart';
 import 'package:dr_on_call/app/routes/app_pages.dart';
+import 'package:dr_on_call/app/helpers/subscription_access_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -119,13 +120,14 @@ class RecentList extends StatelessWidget {
             if (type == 'biochemical') {
               await bioController.loadEmergencyByTitle(title);
               if (bioController.emergencies.isNotEmpty) {
-                Get.toNamed(
-                  Routes.BIO_CHEMICAL_DETAIL_PAGE,
+                await SubscriptionAccessHelper.checkAccessAndNavigate(
+                  routeName: Routes.BIO_CHEMICAL_DETAIL_PAGE,
                   arguments: {
                     'title': title,
                     'category': category,
                     'emergencies': bioController.emergencies.toList(),
                   },
+                  contentType: 'biochemical',
                 );
               } else {
                 Get.snackbar("No Data", "No emergency found for '$title'");
@@ -133,13 +135,14 @@ class RecentList extends StatelessWidget {
             } else if (type == 'clinical') {
               await clinicalController.loadDiagnosisByTitle(title);
               if (clinicalController.diagnoses.isNotEmpty) {
-                Get.toNamed(
-                  Routes.CLINICAL_DETAILS,
+                await SubscriptionAccessHelper.checkAccessAndNavigate(
+                  routeName: Routes.CLINICAL_DETAILS,
                   arguments: {
                     'title': title,
                     'category': category,
                     'diagnoses': clinicalController.diagnoses.toList(),
                   },
+                  contentType: 'clinical',
                 );
               } else {
                 Get.snackbar("No Data", "No diagnosis found for '$title'");
@@ -147,9 +150,10 @@ class RecentList extends StatelessWidget {
             } else if (type == "clinical_presentation") {
               await presentationController.loadPresentationByTitle(title);
               if (presentationController.presentations.isNotEmpty) {
-                Get.toNamed(
-                  Routes.CLINICAL_PRESENTATION_DETAIL,
+                await SubscriptionAccessHelper.checkAccessAndNavigate(
+                  routeName: Routes.CLINICAL_PRESENTATION_DETAIL,
                   arguments: presentationController.currentPresentation.value,
+                  contentType: 'clinical_presentation',
                 );
               } else {
                 Get.snackbar("Unknown Type", "Type '$type' not supported.");

@@ -4,6 +4,7 @@ import '../../../services/clinical_diagnosis.dart';
 import '../../../services/biochemical_emergency_service.dart';
 import '../../../services/clinical_presentations_service.dart';
 import '../../../routes/app_pages.dart';
+import '../../../helpers/subscription_access_helper.dart';
 
 class FavouritesController extends GetxController {
   final favorites = <FavoriteItem>[].obs;
@@ -71,13 +72,14 @@ class FavouritesController extends GetxController {
           await ClinicalDiagnosisServices.getEmergencyByTitle(item.title);
 
       if (diagnosis != null) {
-        Get.toNamed(
-          Routes.CLINICAL_DETAILS,
+        await SubscriptionAccessHelper.checkAccessAndNavigate(
+          routeName: Routes.CLINICAL_DETAILS,
           arguments: {
             'title': item.title,
             'category': item.category,
             'diagnoses': [diagnosis], // Wrap single diagnosis in a list
           },
+          contentType: 'clinical',
         );
       } else {
         // If not found as individual item, search in categories and navigate to category view
@@ -144,13 +146,14 @@ class FavouritesController extends GetxController {
           await BiochemicalEmergencyService.getEmergencyByTitle(item.title);
 
       if (emergency != null) {
-        Get.toNamed(
-          Routes.BIO_CHEMICAL_DETAIL_PAGE,
+        await SubscriptionAccessHelper.checkAccessAndNavigate(
+          routeName: Routes.BIO_CHEMICAL_DETAIL_PAGE,
           arguments: {
             'title': item.title,
             'category': item.category,
             'emergencies': [emergency], // Wrap single emergency in a list
           },
+          contentType: 'biochemical',
         );
       } else {
         // If not found as individual item, search in categories and navigate to category view
@@ -247,12 +250,13 @@ class FavouritesController extends GetxController {
         if (presentation != null) {
           print(
               'Found presentation for "${item.title}" - navigating to detail view');
-          Get.toNamed(
-            Routes.CLINICAL_PRESENTATION_DETAIL,
+          await SubscriptionAccessHelper.checkAccessAndNavigate(
+            routeName: Routes.CLINICAL_PRESENTATION_DETAIL,
             arguments: {
               'presentation': presentation,
               'from': 'favourites',
             },
+            contentType: 'clinical_presentation',
           );
         } else {
           print('No presentation found - searching in presentation categories');

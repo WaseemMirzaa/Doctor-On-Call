@@ -76,7 +76,7 @@ class ClinicalMainCategoriesView
         showHeartIcon: true,
         padding: const EdgeInsets.all(16.0),
         spacing: 8.0,
-        onSymptomTap: (category) {
+        onSymptomTap: (category) async {
           // Check if this category has subcategories or should go directly to detail
           final categoryPresentations =
               controller.groupedPresentations[category] ?? [];
@@ -89,16 +89,10 @@ class ClinicalMainCategoriesView
               .toList();
 
           if (sameTitlePresentations.isNotEmpty) {
-            // Navigate directly to detail screen
-            Get.toNamed('/clinical-presentation-detail', arguments: {
-              'presentation': sameTitlePresentations.first,
-              'navigationContext': {
-                'from': 'categories',
-                'mainCategory': category,
-              },
-            });
+            // Use access control helper before navigating to detail
+            await controller.onPresentationTap(sameTitlePresentations.first);
           } else {
-            // Navigate to subcategories screen
+            // Navigate to subcategories screen (no access control needed for browsing)
             controller.selectedMainCategory.value = category;
             Get.toNamed('/clinical-subcategories', arguments: {
               'mainCategory': category,

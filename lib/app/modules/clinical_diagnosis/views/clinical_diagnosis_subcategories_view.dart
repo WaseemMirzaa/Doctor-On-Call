@@ -90,19 +90,7 @@ class ClinicalDiagnosisSubcategoriesView
           // Navigate to detail view
           await controller.loadDiagnosisByTitle(title);
           if (controller.diagnoses.isNotEmpty) {
-            Get.toNamed(
-              '/clinical-details',
-              arguments: {
-                'title': title,
-                'category': mainCategory,
-                'diagnoses': controller.diagnoses.toList(),
-                'navigationContext': {
-                  'from': 'subcategories',
-                  'mainCategory': mainCategory,
-                  'subcategory': title,
-                },
-              },
-            );
+            await controller.navigateToDetailPage(title);
           }
         },
       );

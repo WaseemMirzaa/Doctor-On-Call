@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app/routes/app_pages.dart';
 import 'app/services/revenuecat_service.dart';
+import 'app/services/subscription_manager_service.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -34,6 +35,9 @@ void main() async {
 
     // Initialize RevenueCat
     await RevenueCatService.initialize();
+
+    // Initialize trial if needed
+    await SubscriptionManagerService.initializeTrialIfNeeded();
 
     // Optional: Precache image if needed later
     final bindingContext = WidgetsBinding.instance;
