@@ -1,9 +1,8 @@
 import 'package:dr_on_call/app/widgets/background_container.dart';
-import 'package:dr_on_call/config/AppColors.dart';
 import 'package:dr_on_call/config/AppText.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../../config/AppTextStyle.dart';
 import '../../controllers/about_view_controller.dart';
@@ -26,36 +25,48 @@ class LegalSection extends StatelessWidget {
           SizedBox(
             height: 20,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                AppText.privacyAndPolicy,
-                style: AppTextStyles.regular.copyWith(fontSize: 15),
-              ),
-              Icon(
-                Icons.keyboard_arrow_right,
-                color: Colors.white,
-                size: 25,
-              ),
-            ],
+          InkWell(
+            onTap: () {
+              launchUrl(Uri.parse(
+                  'https://dr-oncall-c3b6b.web.app/#/privacy-policy'));
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  AppText.privacyAndPolicy,
+                  style: AppTextStyles.regular.copyWith(fontSize: 15),
+                ),
+                Icon(
+                  Icons.keyboard_arrow_right,
+                  color: Colors.white,
+                  size: 25,
+                ),
+              ],
+            ),
           ),
           SizedBox(
             height: 20,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                AppText.termsOfServices,
-                style: AppTextStyles.regular.copyWith(fontSize: 15),
-              ),
-              Icon(
-                Icons.keyboard_arrow_right,
-                color: Colors.white,
-                size: 25,
-              ),
-            ],
+          InkWell(
+            onTap: () {
+              launchUrl(Uri.parse(
+                  "https://dr-oncall-c3b6b.web.app/#/terms-of-service"));
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  AppText.termsOfServices,
+                  style: AppTextStyles.regular.copyWith(fontSize: 15),
+                ),
+                Icon(
+                  Icons.keyboard_arrow_right,
+                  color: Colors.white,
+                  size: 25,
+                ),
+              ],
+            ),
           ),
           SizedBox(
             height: 20,

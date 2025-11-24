@@ -57,6 +57,7 @@ void main() async {
         theme: ThemeData(
           fontFamily: 'IBMPlexSans',
         ),
+        debugShowCheckedModeBanner: false,
         title: "Application",
         initialRoute: isLoggedIn ? Routes.HOME : AppPages.INITIAL,
         getPages: AppPages.routes,
