@@ -9,10 +9,11 @@ class SubscriptionsController extends GetxController {
   final isPremiumUser = false.obs;
   final offerings = Rxn<Offerings>();
   final lifetimeProduct = Rxn<StoreProduct>();
+  final lifetimePackage = Rxn<Package>();
   final customerInfo = Rxn<CustomerInfo>();
 
   // Price display
-  final lifetimePrice = '\$9.99'.obs;
+  final lifetimePrice = '\$0'.obs;
 
   // Current plan display
   final currentPlan = 'Free Trial'.obs;
@@ -39,19 +40,19 @@ class SubscriptionsController extends GetxController {
     try {
       isLoading.value = true;
 
-      // Load offerings and product info
+      // Load offerings and package info
       await loadOfferings();
-      await loadLifetimeProduct();
+      await loadLifetimePackage();
       await checkPremiumStatus();
 
-      // Set default price if product not loaded
+      // Set default price if package not loaded
       if (lifetimePrice.value.isEmpty || lifetimePrice.value == '\$9.99') {
         lifetimePrice.value = '\$9.99';
       }
     } catch (e) {
       print('❌ Error initializing RevenueCat: $e');
       // Fallback to default price on error
-      lifetimePrice.value = '\$9.99';
+      lifetimePrice.value = '\$0';
       isPremiumUser.value = false;
     } finally {
       isLoading.value = false;
@@ -73,8 +74,32 @@ class SubscriptionsController extends GetxController {
     }
   }
 
-  /// Load lifetime product
-  Future<void> loadLifetimeProduct() async {
+  /// Load lifetime package from offerings
+  /// This automatically handles platform-specific products
+  Future<void> loadLifetimePackage() async {
+    try {
+      final package = await RevenueCatService.getLifetimePackage();
+
+      if (package != null) {
+        lifetimePackage.value = package;
+        lifetimeProduct.value = package.storeProduct;
+        lifetimePrice.value = package.storeProduct.priceString;
+        print('✅ Loaded lifetime package: ${package.storeProduct.priceString}');
+        print('   Product ID: ${package.storeProduct.identifier}');
+      } else {
+        print('⚠️ Could not load lifetime package, trying fallback...');
+        // Fallback to direct product loading if offering not configured
+        await loadLifetimeProductFallback();
+      }
+    } catch (e) {
+      print('❌ Error loading lifetime package: $e');
+      // Try fallback method
+      await loadLifetimeProductFallback();
+    }
+  }
+
+  /// Fallback method to load lifetime product directly (legacy support)
+  Future<void> loadLifetimeProductFallback() async {
     try {
       final product = await RevenueCatService.getProductById(
         RevenueCatService.oneTimePurchaseId,
@@ -83,10 +108,10 @@ class SubscriptionsController extends GetxController {
       if (product != null) {
         lifetimeProduct.value = product;
         lifetimePrice.value = product.priceString;
-        print('✅ Loaded lifetime product: ${product.priceString}');
+        print('✅ Loaded lifetime product (fallback): ${product.priceString}');
       }
     } catch (e) {
-      print('❌ Error loading lifetime product: $e');
+      print('❌ Error loading lifetime product (fallback): $e');
     }
   }
 
@@ -130,9 +155,26 @@ class SubscriptionsController extends GetxController {
         duration: const Duration(seconds: 2),
       );
 
-      final info = await RevenueCatService.purchaseProduct(
-        RevenueCatService.oneTimePurchaseId,
-      );
+      CustomerInfo? info;
+
+      // Try package-based purchase first (recommended approach)
+      if (lifetimePackage.value != null) {
+        print(
+            '🛒 Purchasing via package: ${lifetimePackage.value!.identifier}');
+        info = await RevenueCatService.purchasePackage(lifetimePackage.value!);
+      } else {
+        // Fallback to new offering-based method
+        print('🛒 Purchasing via offering method');
+        info = await RevenueCatService.purchaseLifetime();
+
+        // If that fails, try legacy direct product purchase
+        if (info == null && lifetimeProduct.value != null) {
+          print('🛒 Fallback to direct product purchase');
+          info = await RevenueCatService.purchaseProduct(
+            RevenueCatService.oneTimePurchaseId,
+          );
+        }
+      }
 
       if (info != null) {
         customerInfo.value = info;
@@ -216,6 +258,16 @@ class SubscriptionsController extends GetxController {
   /// Refresh offerings and status
   Future<void> refresh() async {
     await _initializeRevenueCat();
+  }
+
+  /// Get platform-specific product information
+  String getPlatformInfo() {
+    if (lifetimePackage.value != null) {
+      final pkg = lifetimePackage.value!;
+      final platform = GetPlatform.isAndroid ? 'Play Store' : 'App Store';
+      return 'Platform: $platform\nProduct: ${pkg.storeProduct.identifier}\nPrice: ${pkg.storeProduct.priceString}';
+    }
+    return 'No package loaded';
   }
 
   /// Expire trial for testing purposes

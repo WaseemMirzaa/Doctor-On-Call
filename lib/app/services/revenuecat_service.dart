@@ -6,10 +6,14 @@ import 'package:purchases_flutter/purchases_flutter.dart';
 class RevenueCatService {
   // RevenueCat API Keys
   static const String _apiKeyAndroid =
-      'goog_oBJqPqJNJqJqJqJqJqJqJqJqJq'; // TODO: Replace with your actual Android API key
+      'goog_jKOTlHYRGqPxhuqqOMWwyOEzdyZ'; // TODO: Replace with your actual Android API key
   static const String _apiKeyIOS = 'appl_SfXmqqesrJRUNocKMMTqjbcyHjV';
 
-  // Product IDs - These must match what you configure in RevenueCat Dashboard
+  // Offering identifier - same for both platforms
+  static const String lifetimeOfferingId = 'lifetime';
+
+  // Product IDs - Platform specific (configured in RevenueCat Dashboard)
+  // These are the actual product IDs in Play Store and App Store
   static const String oneTimePurchaseId = 'one_time_fee';
 
   // Entitlement identifier (configured in RevenueCat Dashboard)
@@ -91,6 +95,67 @@ class RevenueCatService {
     }
   }
 
+  /// Get the lifetime package from offerings
+  /// This handles the same offering identifier with different platform-specific products
+  static Future<Package?> getLifetimePackage() async {
+    try {
+      final offerings = await Purchases.getOfferings();
+
+      // First try to get the offering by identifier
+      Offering? lifetimeOffering;
+
+      // Check if there's a specific offering with our identifier
+      if (offerings.all.containsKey(lifetimeOfferingId)) {
+        lifetimeOffering = offerings.all[lifetimeOfferingId];
+        print('✅ Found lifetime offering by identifier: $lifetimeOfferingId');
+      } else if (offerings.current != null) {
+        // Fallback to current offering
+        lifetimeOffering = offerings.current;
+        print('✅ Using current offering as lifetime offering');
+      }
+
+      if (lifetimeOffering == null ||
+          lifetimeOffering.availablePackages.isEmpty) {
+        print('⚠️ No lifetime offering found');
+        return null;
+      }
+
+      // Get the lifetime package (usually the first or a specific package type)
+      // RevenueCat will automatically provide the correct platform-specific product
+      Package? lifetimePackage;
+
+      // Try to find lifetime or annual package
+      for (var package in lifetimeOffering.availablePackages) {
+        print(
+            '📦 Available package: ${package.identifier} - ${package.storeProduct.identifier}');
+
+        // Look for lifetime package type first
+        if (package.packageType == PackageType.lifetime) {
+          lifetimePackage = package;
+          break;
+        }
+        // Or match by product identifier
+        if (package.storeProduct.identifier == oneTimePurchaseId) {
+          lifetimePackage = package;
+          break;
+        }
+      }
+
+      // If no specific match, use the first package
+      lifetimePackage ??= lifetimeOffering.availablePackages.first;
+
+      print(
+          '✅ Selected lifetime package: ${lifetimePackage.identifier} - ${lifetimePackage.storeProduct.priceString}');
+      print(
+          '   Platform: ${GetPlatform.isAndroid ? "Android" : "iOS"}, Product ID: ${lifetimePackage.storeProduct.identifier}');
+
+      return lifetimePackage;
+    } catch (e) {
+      print('❌ Error getting lifetime package: $e');
+      return null;
+    }
+  }
+
   /// Purchase a package
   static Future<CustomerInfo?> purchasePackage(Package package) async {
     try {
@@ -168,7 +233,32 @@ class RevenueCatService {
     }
   }
 
-  /// Purchase product by ID (for one-time purchases)
+  /// Purchase lifetime access using the offering/package system
+  /// This properly handles platform-specific products within the same offering
+  static Future<CustomerInfo?> purchaseLifetime() async {
+    try {
+      final package = await getLifetimePackage();
+      if (package == null) {
+        print('❌ Lifetime package not found');
+        return null;
+      }
+
+      print('🛒 Purchasing lifetime package: ${package.identifier}');
+      final purchaserInfo = await purchasePackage(package);
+
+      if (purchaserInfo != null) {
+        print('✅ Lifetime purchase successful');
+      }
+
+      return purchaserInfo;
+    } catch (e) {
+      print('❌ Error purchasing lifetime: $e');
+      return null;
+    }
+  }
+
+  /// Purchase product by ID (for one-time purchases) - Legacy method
+  /// Note: Consider using purchaseLifetime() for better offering support
   static Future<CustomerInfo?> purchaseProduct(String productId) async {
     try {
       final product = await getProductById(productId);

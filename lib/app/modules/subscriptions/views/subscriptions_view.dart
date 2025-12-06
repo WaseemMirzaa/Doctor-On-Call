@@ -2,9 +2,11 @@ import 'package:dr_on_call/app/modules/subscriptions/views/mini_widgets/subscrip
 import 'package:dr_on_call/app/widgets/background_container.dart';
 import 'package:dr_on_call/config/AppText.dart';
 import 'package:dr_on_call/config/AppTextStyle.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../controllers/subscriptions_controller.dart';
 import 'mini_widgets/plan_card.dart';
@@ -78,48 +80,87 @@ class SubscriptionsView extends GetView<SubscriptionsController> {
                         const SizedBox(height: 10),
 
                         // Expire Trial Button (for testing)
-                        Obx(() => !controller.isPremiumUser.value
-                            ? Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 30.0),
-                                child: OutlinedButton(
-                                  onPressed: () =>
-                                      controller.expireTrialForTesting(),
-                                  style: OutlinedButton.styleFrom(
-                                    foregroundColor: Colors.orange,
-                                    side: BorderSide(color: Colors.orange),
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 20, vertical: 12),
-                                  ),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Icon(Icons.warning_amber_rounded,
-                                          size: 18),
-                                      SizedBox(width: 8),
-                                      Text(
-                                        'Expire Trial (Testing)',
-                                        style: AppTextStyles.medium.copyWith(
-                                          fontSize: 13,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              )
-                            : SizedBox.shrink()),
+                        // Obx(() => !controller.isPremiumUser.value
+                        //     ? Padding(
+                        //         padding: const EdgeInsets.symmetric(
+                        //             horizontal: 30.0),
+                        //         child: OutlinedButton(
+                        //           onPressed: () =>
+                        //               controller.expireTrialForTesting(),
+                        //           style: OutlinedButton.styleFrom(
+                        //             foregroundColor: Colors.orange,
+                        //             side: BorderSide(color: Colors.orange),
+                        //             padding: EdgeInsets.symmetric(
+                        //                 horizontal: 20, vertical: 12),
+                        //           ),
+                        //           child: Row(
+                        //             mainAxisSize: MainAxisSize.min,
+                        //             children: [
+                        //               Icon(Icons.warning_amber_rounded,
+                        //                   size: 18),
+                        //               SizedBox(width: 8),
+                        //               Text(
+                        //                 'Expire Trial (Testing)',
+                        //                 style: AppTextStyles.medium.copyWith(
+                        //                   fontSize: 13,
+                        //                 ),
+                        //               ),
+                        //             ],
+                        //           ),
+                        //         ),
+                        //       )
+                        //     : SizedBox.shrink()),
 
                         const SizedBox(height: 10),
 
                         // Terms and Privacy
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                          child: Text(
-                            'By purchasing, you agree to our Terms of Service and Privacy Policy',
+                          child: RichText(
                             textAlign: TextAlign.center,
-                            style: AppTextStyles.regular.copyWith(
-                              fontSize: 11,
-                              color: Colors.grey,
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: 'By purchasing, you agree to our ',
+                                  style: AppTextStyles.regular.copyWith(
+                                    fontSize: 11,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: 'Terms of Service',
+                                  style: AppTextStyles.regular.copyWith(
+                                    fontSize: 11,
+                                    color: Colors.grey,
+                                    decoration: TextDecoration.underline,
+                                  ),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      launchUrl(Uri.parse(
+                                          "https://dr-oncall-c3b6b.web.app/#/terms-of-service"));
+                                    },
+                                ),
+                                TextSpan(
+                                  text: ' and ',
+                                  style: AppTextStyles.regular.copyWith(
+                                    fontSize: 11,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: 'Privacy Policy',
+                                  style: AppTextStyles.regular.copyWith(
+                                    fontSize: 11,
+                                    color: Colors.grey,
+                                    decoration: TextDecoration.underline,
+                                  ),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      launchUrl(Uri.parse(
+                                          'https://dr-oncall-c3b6b.web.app/#/privacy-policy'));
+                                    },
+                                ),
+                              ],
                             ),
                           ),
                         ),
