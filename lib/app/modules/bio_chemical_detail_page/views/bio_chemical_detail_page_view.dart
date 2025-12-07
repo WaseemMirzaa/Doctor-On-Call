@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
+import '../../../../config/AppImages.dart';
 import '../../../widgets/background_container.dart';
 import '../controllers/bio_chemical_detail_page_controller.dart';
 
@@ -14,14 +15,15 @@ class BioChemicalDetailPageView
   Widget build(BuildContext context) {
     return Scaffold(
       body: BackgroundContainer(
-          child: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          children: [
-            BioChemicalHeader(),
-            Expanded(child: BioChemicalSection()),
-          ],
-        ),
+          child: Column(
+        children: [
+          BioChemicalHeader(),
+          Expanded(
+              child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: BioChemicalSection(),
+          )),
+        ],
       )),
     );
   }

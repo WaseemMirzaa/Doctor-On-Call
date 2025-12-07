@@ -1,9 +1,7 @@
-import 'package:dr_on_call/config/AppTextStyle.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../../../config/AppColors.dart';
-import '../../../../../config/AppText.dart';
-import '../../../../widgets/back_icon_button.dart';
+import '../../../../widgets/custom_header.dart';
+import '../../controllers/bio_chemical_detail_page_controller.dart';
 
 class BioChemicalHeader extends StatelessWidget {
   final VoidCallback? onBackTap;
@@ -15,40 +13,34 @@ class BioChemicalHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<BioChemicalDetailPageController>();
+
     return Padding(
-      padding: const EdgeInsets.only(top: 10.0),
-      child: Column(
-        // crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          GestureDetector(
-            onTap: () {
-              Get.back();
-            },
-            child: Padding(
-              padding: const EdgeInsets.only(top: 25.0, left: 15),
-              child: BackIconButton(
-                onTap: onBackTap ?? () => Get.back(),
-              ),
-            ),
-          ),
-          const SizedBox(height: 20),
-          Text(AppText.acuteHeartFailure,
-              style: AppTextStyles.bold.copyWith(fontSize: 25)),
-          const SizedBox(height: 4),
-          // Padding(
-          //   padding: const EdgeInsets.only(right: 23.0, left: 23.0),
-          //   child: Text(
-          //     Apptext.forgotDecs,
-          //     textAlign: TextAlign.center,
-          //     style: const TextStyle(
-          //       color: AppColors.txtWhiteColor,
-          //       fontSize: 13,
-          //     ),
-          //   ),
-          // ),
-        ],
-      ),
+      padding: const EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
+      child: Obx(() {
+        // Get the current emergency data
+        final emergency = controller.currentEmergency;
+
+        print('DEBUG Header: Emergency data: ${emergency?.title ?? 'null'}');
+        print(
+            'DEBUG Header: Emergencies count: ${controller.emergencies.length}');
+
+        // Use the emergency title if available, otherwise show a default
+        String title = 'Biochemical Emergency';
+        if (emergency != null && emergency.title.isNotEmpty) {
+          title = emergency.title;
+        }
+
+        print('DEBUG Header: Using title: $title');
+
+        return CommonTitleSection(
+          title: title,
+          onBackTap: () {
+            // Smart back navigation - go back to the previous view
+            Get.back();
+          },
+        );
+      }),
     );
   }
 }

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import '../../../../../config/AppColors.dart';
 import '../../../../../config/AppText.dart';
 import '../../../../widgets/back_icon_button.dart';
+import '../../../../widgets/custom_header.dart';
 
 class News2Header extends StatelessWidget {
   final VoidCallback? onBackTap;
@@ -16,26 +17,9 @@ class News2Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 15.0),
-      child: Column(
-        // crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          GestureDetector(
-            onTap: () {
-              Get.back();
-            },
-            child: Padding(
-              padding: const EdgeInsets.only(top: 35.0, left: 5),
-              child: BackIconButton(
-                onTap: onBackTap ?? () => Get.back(),
-              ),
-            ),
-          ),
-          const SizedBox(height: 20),
-          Text(AppText.news2Score2,
-              style: AppTextStyles.bold.copyWith(fontSize: 25)),
-        ],
+      padding: const EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
+      child: CommonTitleSection(
+        title: AppText.news2Score2,
       ),
     );
   }

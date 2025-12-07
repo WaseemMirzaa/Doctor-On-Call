@@ -24,9 +24,10 @@ class MedicalExpansionTile extends StatelessWidget {
     return Theme(
       data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
       child: ExpansionTile(
+        expandedAlignment: Alignment.centerLeft,
         title: Text(title,
             style: AppTextStyles.medium.copyWith(
-              fontSize: 17,
+              fontSize: 18,
               fontWeight: FontWeight.w500,
               color: isRedFlag ? Colors.red : AppColors.txtOrangeColor,
             )),
@@ -36,17 +37,45 @@ class MedicalExpansionTile extends StatelessWidget {
         children: [
           Padding(
             padding: contentPadding ?? const EdgeInsets.all(16.0),
-            child: Text(
-              content,
-              style: AppTextStyles.regular.copyWith(
-                color: isRedContent ? Colors.red : AppColors.txtWhiteColor,
-                fontSize: 13,
-              ),
-              textAlign: TextAlign.left,
-            ),
+            child: _buildContent(),
           ),
         ],
       ),
     );
+  }
+
+  Widget _buildContent() {
+    // Check if content contains bullet points
+    if (content.contains('•')) {
+      // Split by bullet points and create separate Text widgets
+      final parts = content.split('•').where((part) => part.trim().isNotEmpty);
+
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: parts.map((part) {
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 4.0),
+            child: Text(
+              '• ${part.trim()}',
+              style: AppTextStyles.regular.copyWith(
+                color: isRedContent ? Colors.black : AppColors.txtWhiteColor,
+                fontSize: 17,
+              ),
+              textAlign: TextAlign.left,
+            ),
+          );
+        }).toList(),
+      );
+    } else {
+      // Regular content without bullet points
+      return Text(
+        content,
+        style: AppTextStyles.regular.copyWith(
+          color: isRedContent ? Colors.black : AppColors.txtWhiteColor,
+          fontSize: 17,
+        ),
+        textAlign: TextAlign.left,
+      );
+    }
   }
 }

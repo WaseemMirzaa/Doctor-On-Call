@@ -1,0 +1,2033 @@
+[
+    {
+  "category":"Cardiovascular Emergencies",
+  "title": "Acute Heart Failure",
+  "definition": {
+    "criteria": "- Rapid onset or worsening of heart failure symptoms",
+    "notes": [
+      "- Can be new (de novo) or acute decompensation of chronic heart failure",
+      "- Pulmonary congestion \u00b1 systemic hypoperfusion"
+    ]
+  },
+  "symptoms": [
+    "- Severe shortness of breath (especially at rest)",
+    "- Orthopnoea (needs pillows to sleep)",
+    "- Paroxysmal nocturnal dyspnoea (waking up breathless)",
+    "- Fatigue",
+    "- Pink, frothy sputum (if pulmonary oedema)"
+  ],
+  "signs": [
+    "- Tachycardia",
+    "- Tachypnoea",
+    "- Hypoxia",
+    "- Bilateral lung crackles (basal crepitations)",
+    "- Raised JVP",
+    "- Peripheral oedema",
+    "- Cool peripheries (if cardiogenic shock)"
+  ],
+  "investigations": [
+    "- ECG (arrhythmias, ischaemia)",
+    "- Bloods: Troponin, BNP/NT-proBNP, U&E, FBC, LFTs",
+    "- CXR: Pulmonary oedema, cardiomegaly",
+    "- Echocardiography (to assess LV function)",
+    "- ABG if hypoxic"
+  ],
+  "diagnosis": [
+    "- Clinical history + examination",
+    "- Elevated BNP/NT-proBNP",
+    "- Imaging (CXR, Echocardiography)"
+  ],
+  "management_emergency": [
+    "- Oxygen only if SpO2 < 94%",
+    "- Diuretics: Furosemide 40-80 mg IV bolus (may require higher doses)",
+    "- Nitrates: GTN spray (400-800 mcg sublingually) or IV infusion",
+    "- Non-invasive ventilation (CPAP or BiPAP) if severe hypoxia",
+    "- Treat underlying cause (arrhythmia, MI, infection)",
+    "- Consider inotropes (e.g., Dobutamine) if cardiogenic shock"
+  ],
+  "red_flags": [
+    "- Cardiogenic shock (hypotension + hypoperfusion)",
+    "- Respiratory failure requiring intubation",
+    "- Worsening renal function"
+  ],
+  "prognosis_disposition": [
+    "Admit to monitored bed or ICU if severe",
+    {
+        "step": "Long-term medications:",
+        "details": [
+            "ACE inhibitors",
+            "Beta-blockers",
+            "Aldosterone antagonists",
+            "SGLT2 inhibitors (e.g., dapagliflozin)"
+        ]
+    }
+]
+
+},
+{
+  "category":"Cardiovascular Emergencies",
+  "title": "Aortic Dissection",
+  "definition": {
+    "criteria": "- A tear in the aortic intima leading to separation of the layers of the aortic wall",
+    "notes": [
+      "- Can rapidly lead to aortic rupture or organ ischemia"
+    ]
+  },
+  "symptoms": [
+    "- Sudden onset severe chest pain (\"tearing\" or \"ripping\" pain)",
+    "- Pain may radiate to the back",
+    "- Syncope",
+    "- Shortness of breath",
+    "- Neurological symptoms if arteries are involved"
+  ],
+  "signs": [
+    "- Unequal blood pressures between arms",
+    "- Pulse deficits",
+    "- New diastolic murmur (aortic regurgitation)",
+    "- Signs of shock (hypotension, tachycardia)",
+    "- Neurological deficits if stroke-like symptoms"
+  ],
+  "investigations": [
+    "- ECG: May show ischemia or be normal",
+    "- Chest X-ray: Widened mediastinum",
+    "- Bloods: Crossmatch, D-dimer (can be elevated)",
+    "- CT Angiography: Diagnostic test of choice",
+    "- Transesophageal echocardiography (if unstable)"
+  ],
+  "diagnosis": [
+   
+    "- Based on imaging (CT Angiography preferred)",
+    "- High clinical suspicion based on symptoms + signs"
+  ],
+  "management_emergency": [
+    {
+        "step": "Immediate blood pressure control:",
+        "details": [
+            "IV beta-blocker (e.g., Labetalol 20 mg IV over 2 min)",
+            "Aim systolic BP 100-120 mmHg"
+        ]
+    },
+    "Pain control with opioids (e.g., morphine)",
+    "Emergency cardiothoracic surgery consult (especially for Type A dissection)"
+]
+,
+  "red_flags": [
+    "- Hypotension (sign of rupture)",
+    "- Neurological deficits",
+    "- End-organ ischemia (renal failure, bowel ischemia)"
+  ],
+  "prognosis_disposition": [
+    "- High mortality if not treated urgently",
+    "- Best outcomes with rapid diagnosis, blood pressure control, and surgery"
+  ]
+},
+{
+  "category":"Cardiovascular Emergencies",
+  "title": "Atrial Fibrillation (AF)",
+  "definition": {
+    "criteria": "- Irregular, often rapid heart rhythm originating from the atria",
+    "notes": [
+      "- Loss of coordinated atrial contraction"
+    ]
+  },
+  "symptoms": [
+    "- Palpitations",
+    "- Breathlessness",
+    "- Chest discomfort",
+    "- Dizziness or syncope",
+    "- Fatigue"
+  ],
+  "signs": [
+    "- Irregularly irregular pulse",
+    "- Tachycardia",
+    "- Signs of heart failure (e.g., pulmonary oedema)",
+    "- Possible hypotension"
+  ],
+  "investigations": [
+    "- ECG: No distinct P waves, irregular RR intervals",
+    "- Bloods: Thyroid function tests, U&E, FBC, cardiac enzymes if chest pain",
+    "- Echocardiography: Assess for structural heart disease",
+    "- CXR if heart failure suspected"
+  ],
+  "diagnosis": [
+    "- Clinical history and examination",
+    "- Confirm diagnosis with ECG"
+    
+  ],
+ "management_emergency": [
+    "If haemodynamically unstable: immediate DC cardioversion",
+    {
+        "step": "If stable:",
+        "details": [
+            "Rate control: Beta-blockers (e.g., Metoprolol 2.5-5 mg IV), or calcium channel blockers",
+            "Anticoagulation assessment: Use CHA2DS2-VASc score",
+            "Consider chemical cardioversion (e.g., amiodarone 300 mg IV)"
+        ]
+    }
+],
+
+  "red_flags": [
+    "- Haemodynamic instability",
+    "- Signs of acute heart failure",
+    "- Risk of stroke if not anticoagulated"
+  ],
+  "prognosis_disposition": [
+    "- Good with rate/rhythm control and anticoagulation",
+    "- Risk of recurrence",
+    "- Long-term anticoagulation to reduce stroke risk"
+  ]
+},
+{
+  "category":"Cardiovascular Emergencies",
+  "title": "Deep Vein Thrombosis (DVT)",
+  "definition": {
+    "criteria": "- Formation of a thrombus (blood clot) in a deep vein, commonly in the legs",
+    "notes": [
+      "- Can lead to pulmonary embolism if clot dislodges"
+    ]
+  },
+  "symptoms": [
+    "- Unilateral leg swelling",
+    "- Pain or tenderness in the calf or thigh",
+    "- Warmth over the affected area",
+    "- Redness or discoloration"
+  ],
+  "signs": [
+    "- Unilateral leg swelling and erythema",
+    "- Tenderness along the vein",
+    "- Calf circumference difference >3 cm compared to the other leg",
+    "- Positive Homan's sign (pain on dorsiflexion, not reliable)"
+  ],
+  "investigations": [
+    "- D-dimer (if low pre-test probability)",
+    "- Compression venous Doppler ultrasound (first-line diagnostic test)",
+    "- Wells score to assess pre-test probability"
+  ],
+  "diagnosis": [
+    "- Based on clinical probability (Wells score) and confirmatory Doppler ultrasound"
+  ],
+  "management_emergency": [
+    {
+      "step": "- Anticoagulation (start immediately if high suspicion even before confirmation):",
+      "details": ["- Low Molecular Weight Heparin (LMWH): Enoxaparin 1 mg/kg SC BD",
+    
+    "- Or Direct Oral Anticoagulants (DOACs) like rivaroxaban/apixaban"]
+    },
+    
+    "- Elevate affected limb",
+    "- Analgesia for pain"
+  ],
+  "red_flags": [
+    "- Phlegmasia cerulea dolens (massive DVT leading to limb ischemia)",
+    "- Pulmonary embolism development"
+  ],
+  "prognosis_disposition": [
+    "- Generally good with anticoagulation",
+    "- Risk of post-thrombotic syndrome",
+    "- Requires long-term anticoagulation based on risk factors"
+  ]
+},
+{
+  "category":"Cardiovascular Emergencies",
+  "title": "Ruptured Abdominal Aortic Aneurysm (AAA)",
+  "definition": {
+    "criteria": "Life-threatening rupture of an abdominal aortic aneurysm",
+    "notes": [
+      "Leads to massive intra-abdominal or retroperitoneal bleeding"
+    ]
+  },
+  "symptoms": [
+    "Sudden onset severe abdominal, back, or flank pain",
+    "Collapse or syncope",
+    "Nausea, vomiting",
+    "Pulsatile abdominal mass (if felt)"
+  ],
+  "signs": [
+    "Hypotension",
+    "Tachycardia",
+    "Pallor and signs of shock",
+    "Tender, pulsatile abdominal mass (may be absent if large retroperitoneal bleed)",
+    "Abdominal distension"
+  ],
+  "investigations": [
+    "Bedside abdominal ultrasound: Rapid detection of AAA",
+    "CT angiography: Confirm diagnosis if patient is stable enough",
+    "Bloods: Crossmatch, FBC, U&E, coagulation profile"
+  ],
+  "diagnosis": [
+    "High clinical suspicion with hypotension, abdominal/back pain, and pulsatile mass",
+    "Confirm with bedside imaging"
+  ],
+  "management_emergency": [
+    "Immediate transfer to surgery (vascular surgery team)",
+    "Large bore IV access (2x 14-16G cannulas)",
+    "Fluid resuscitation (permissive hypotension: target systolic BP ~90 mmHg)",
+    "Crossmatch blood urgently",
+    "Analgesia (e.g., morphine)",
+    "Avoid delaying surgery for investigations"
+  ],
+  "red_flags": [
+    "Profound hypotension",
+    "Rapidly expanding abdominal girth",
+    "Altered mental status from shock"
+  ],
+  "prognosis_disposition": [
+    "Very high mortality if not operated immediately",
+    "Better outcomes if diagnosed pre-hospital and taken straight to theatre"
+  ]
+},
+{
+  "category":"Cardiovascular Emergencies",
+  "title": "Supraventricular Tachycardia (SVT)",
+  "definition": {
+    "criteria": "Rapid heart rhythm originating above the ventricles (atrium or AV node)",
+    "notes": [
+      "Narrow complex tachycardia (>100 bpm)"
+    ]
+  },
+  "symptoms": [
+    "Sudden onset palpitations",
+    "Dizziness or lightheadedness",
+    "Chest discomfort",
+    "Shortness of breath",
+    "Anxiety"
+  ],
+  "signs": [
+    "Rapid regular pulse (typically 150-250 bpm)",
+    "Possible hypotension if prolonged",
+    "Signs of heart failure if severe"
+  ],
+  "investigations": [
+    "ECG: Regular narrow complex tachycardia",
+    "Bloods: Electrolytes, cardiac enzymes if chest pain",
+    "Consider echocardiography if structural heart disease suspected"
+  ],
+  "diagnosis": [
+    "Clinical presentation + ECG confirmation",
+    "Narrow QRS complex tachycardia without obvious P waves"
+  ],
+  "management_emergency": [
+    "If haemodynamically unstable: immediate synchronized DC cardioversion",
+    
+    {
+      "step": "If stable:",
+      "details": [
+        "Vagal manoeuvres (Valsalva, carotid sinus massage)",
+        "Adenosine 6 mg IV bolus rapidly, repeat 12 mg IV if needed",
+        "Beta-blockers or calcium channel blockers if adenosine fails"
+      ]
+    }
+  ],
+  "red_flags": [
+    "Haemodynamic instability",
+    "Chest pain or signs of myocardial infarction",
+    "Heart failure symptoms"
+  ],
+  "prognosis_disposition": [
+    "Excellent with acute treatment",
+    "May need long-term strategies (e.g., catheter ablation) if recurrent"
+  ]
+},
+{
+  "category":"Endocrinology Emergencies",
+  "title": "Hypoglycemia",
+  "definition": {
+    "criteria": "Blood glucose level below 4.0 mmol/L",
+    "notes": [
+      "Can result from excess insulin, missed meals, or increased physical activity"
+    ]
+  },
+  "symptoms": [
+    "Sweating",
+    "Tremor",
+    "Palpitations",
+    "Hunger",
+    "Confusion",
+    "Irritability or aggression",
+    "Drowsiness or seizures in severe cases"
+  ],
+  "signs": [
+    "Tachycardia",
+    "Pallor",
+    "Diaphoresis (sweating)",
+    "Neurological deficits (if severe)",
+    "Altered consciousness"
+  ],
+  "investigations": [
+    "Capillary blood glucose measurement (bedside finger-prick test)",
+    "Blood sample for laboratory glucose",
+    "Look for underlying causes: insulin overdose, sepsis, adrenal insufficiency"
+  ],
+  "diagnosis": [
+    "Blood glucose <4.0 mmol/L",
+    "Relief of symptoms after glucose administration confirms diagnosis (Whipple's triad)"
+  ],
+  "management_emergency": [
+    "If conscious and able to swallow: give 15-20g of fast-acting carbohydrate orally (e.g., glucose tablets, sugary drink)",
+    {
+      "step": "If unconscious or unable to swallow:",
+      "details": [
+        "IV glucose (e.g., 75-100 mL of 20% dextrose)",
+        "IM glucagon 1 mg if IV access unavailable"
+        
+      ]
+    },
+    "Recheck glucose in 10-15 minutes and repeat treatment if needed",
+    "Identify and treat underlying cause"
+  ],
+  "red_flags": [
+    "Seizures",
+    "Coma",
+    "Prolonged hypoglycemia leading to permanent brain injury"
+  ],
+  "prognosis_disposition": [
+    "Excellent with prompt recognition and treatment",
+    "Risk of recurrence if underlying cause not corrected"
+  ]
+},
+{
+  "category":"Endocrinology Emergencies",
+  "title": "Diabetic Ketoacidosis (DKA)",
+  "definition": {
+    "criteria": "Life-threatening complication of diabetes mellitus (typically type 1)",
+    "notes": [
+      "Characterized by hyperglycemia, metabolic acidosis, and ketonaemia"
+    ]
+  },
+  "symptoms": [
+    "Polyuria and polydipsia",
+    "Nausea and vomiting",
+    "Abdominal pain",
+    "Confusion or altered mental status",
+    "Weakness",
+    "Kussmaul respiration (deep rapid breathing)"
+  ],
+  "signs": [
+    "Dehydration signs: dry mucous membranes, hypotension, tachycardia",
+    "Fruity (ketotic) breath smell",
+    "Abdominal tenderness",
+    "Reduced level of consciousness in severe cases"
+  ],
+  "investigations": [
+    "Blood glucose: elevated (>11 mmol/L)",
+    "Blood ketones: elevated (>3.0 mmol/L) or positive urinary ketones",
+    "Arterial or venous blood gas: metabolic acidosis (pH <7.3, bicarbonate <15 mmol/L)",
+    "U&E: monitor electrolytes (especially potassium)"
+  ],
+  "diagnosis": [
+    "Based on the triad: hyperglycemia, acidosis, and ketonaemia"
+  
+  ],
+  "management_emergency": [
+    "IV fluid resuscitation (0.9% saline initially)",
+    "Fixed-rate insulin infusion (0.1 unit/kg/hour)",
+    "Potassium replacement as needed (based on serum levels)",
+    "Monitor blood glucose, ketones, and electrolytes closely (hourly)",
+    "Identify and treat underlying cause (infection, missed insulin, etc.)"
+  ],
+  "red_flags": [
+    "Severe acidosis (pH <7.0)",
+    "Altered mental status or coma",
+    "Hypokalemia or hyperkalemia",
+    "Cerebral edema (especially in children)"
+  ],
+  "prognosis_disposition": [
+    "Good with early and appropriate treatment",
+    "Risk of mortality if delayed or complicated by cerebral edema, arrhythmias, or sepsis"
+  ]
+},
+{
+  "category":"Gastrointestinal Emergencies",
+  "title": "Acute Appendicitis",
+  "definition": {
+    "criteria": "Inflammation of the appendix, usually caused by obstruction (e.g., fecalith)",
+    "notes": [
+      "Most common surgical emergency in young adults"
+    ]
+  },
+  "symptoms": [
+    "Periumbilical pain migrating to right lower quadrant (RLQ)",
+    "Anorexia",
+    "Nausea and vomiting",
+    "Low-grade fever"
+  ],
+  "signs": [
+    "Tenderness at McBurney's point (RLQ)",
+    "Rebound tenderness",
+    "Rovsing's sign (RLQ pain on palpation of the left lower quadrant)",
+    "Psoas sign (pain on hip extension)",
+    "Fever and tachycardia"
+  ],
+  "investigations": [
+    "Full blood count (raised WBC)",
+    "CRP (raised)",
+    "Urinalysis (to exclude urinary causes)",
+    "Ultrasound abdomen (first-line in children and pregnancy)",
+    "CT abdomen/pelvis (gold standard in adults)"
+  ],
+  "diagnosis": [
+    "Clinical diagnosis supported by imaging (CT or ultrasound)",
+    "Alvarado score can aid clinical suspicion"
+  ],
+  "management_emergency": [
+    "Nil by mouth",
+    "IV fluids",
+    "IV antibiotics (e.g., piperacillin-tazobactam or amoxicillin-clavulanate)",
+    "Urgent surgical consultation for appendectomy (laparoscopic preferred)",
+    "Analgesia for pain control"
+  ],
+  "red_flags": [
+    "Perforation leading to peritonitis",
+    "Abscess formation",
+    "Sepsis"
+  ],
+  "prognosis_disposition": [
+    "Excellent prognosis with early surgical intervention",
+    "Increased morbidity and hospital stay if perforation occurs"
+  ]
+},
+{
+  "category":"Gastrointestinal Emergencies",
+  "title": "Acute Cholecystitis",
+  "definition": {
+    "criteria": "Acute inflammation of the gallbladder, usually due to obstruction of the cystic duct by gallstones."
+  },
+  "symptoms": [
+    "Right upper quadrant (RUQ) pain",
+    "Fever",
+    "Nausea and vomiting",
+    "Murphy's sign positive",
+    "Referred pain to right shoulder"
+  ],
+  "investigations": [
+    "FBC: Leukocytosis",
+    "LFTs: Mildly raised ALP and bilirubin",
+    "Ultrasound abdomen: Gallbladder wall thickening, stones, pericholecystic fluid",
+    "CRP raised"
+  ],
+  "management_emergency": [
+    "NPO (nil by mouth)",
+    "IV fluids",
+    "IV antibiotics (e.g., cefuroxime + metronidazole)",
+    "Analgesia (e.g., paracetamol or morphine)",
+    "Surgical referral for cholecystectomy (early or delayed)"
+  ],
+  "red_flags": [
+    "Signs of sepsis",
+    "Jaundice (suggesting choledocholithiasis)",
+    "Peritonism or rebound tenderness",
+    "Hypotension or altered mental status"
+  ]
+},
+{
+  "category":"Gastrointestinal Emergencies",
+  "title": "Bowel Obstruction",
+  "definition": {
+    "criteria": "Mechanical or functional obstruction of the intestines, preventing normal movement of contents",
+    "notes": [
+      "Can be small bowel or large bowel obstruction"
+    ]
+  },
+  "symptoms": [
+    "Colicky abdominal pain",
+    "Abdominal distension",
+    "Vomiting (earlier in small bowel obstruction)",
+    "Absolute constipation (no passage of stool or gas)"
+  ],
+  "signs": [
+    "Abdominal distension",
+    "Visible peristalsis (early stages)",
+    "High-pitched bowel sounds (early) or absent bowel sounds (late/peritonitis)",
+    "Tenderness or peritonism (if strangulation or perforation)"
+  ],
+  "investigations": [
+    "Abdominal X-ray: dilated loops of bowel with air-fluid levels",
+    "CT abdomen and pelvis: confirms obstruction, identifies cause (tumor, hernia, adhesions)",
+    "Bloods: FBC, U&E, lactate (elevated lactate suggests ischemia)"
+  ],
+  "diagnosis": [
+    "Clinical suspicion plus radiological confirmation (CT or X-ray)"
+  ],
+  "management_emergency": [
+    "Nil by mouth",
+    "IV fluids for resuscitation",
+    "Nasogastric tube for decompression",
+    "Broad-spectrum IV antibiotics if strangulation suspected",
+    {
+      "step": "Surgical consultation:",
+      "details": [
+        "Emergency surgery if strangulated, ischemic, or perforated bowel",
+        "Conservative management (drip and suck) if stable partial obstruction"
+      ]
+    }
+  ],
+  "red_flags": [
+    "Signs of bowel strangulation (fever, tachycardia, peritonitis)",
+    "Hypotension and sepsis",
+    "Bowel perforation (free air under diaphragm)"
+  ],
+  "prognosis_disposition": [
+    "Good if treated early",
+    "Risk of bowel ischemia, perforation, and death if delayed treatment"
+  ]
+},
+{
+  "category":"Gastrointestinal Emergencies",
+  "title": "Cholangitis",
+  "definition": {
+    "criteria": "Infection and inflammation of the biliary tree, usually secondary to biliary obstruction (e.g. gallstones)",
+    "notes": [
+      "Medical emergency due to risk of sepsis and multi-organ failure"
+    ]
+  },
+  "symptoms": [
+    "Fever with chills (rigors)",
+    "Right upper quadrant (RUQ) abdominal pain",
+    "Jaundice",
+    "Nausea and vomiting"
+  ],
+  "signs": [
+    "Fever",
+    "Jaundice (icterus)",
+    "RUQ tenderness",
+    "Hypotension and confusion (suggesting severe/septic cholangitis)"
+  ],
+  "investigations": [
+    "Bloods: Elevated WBC, CRP, abnormal LFTs (especially raised bilirubin and ALP)",
+    "Blood cultures",
+    "Abdominal ultrasound: dilated bile ducts, gallstones",
+    "MRCP (Magnetic Resonance Cholangiopancreatography) if diagnosis uncertain"
+  ],
+  "diagnosis": [
+    "Clinical diagnosis based on Charcot's triad: Fever + Jaundice + RUQ pain",
+    "Confirm with imaging (ultrasound or MRCP)"
+   
+  ],
+  "management_emergency": [
+    "IV fluids for resuscitation",
+    "Broad-spectrum IV antibiotics (e.g., piperacillin-tazobactam)",
+    "Urgent biliary drainage (usually ERCP - Endoscopic Retrograde Cholangiopancreatography)",
+    "Analgesia for pain"
+  ],
+  "red_flags": [
+    "Hypotension and shock",
+    "Altered mental status",
+    "Signs of septic shock (lactic acidosis, organ dysfunction)"
+  ],
+  "prognosis_disposition": [
+    "Good with early intervention (antibiotics + drainage)",
+    "High mortality if delayed treatment",
+    "Risk of recurrent cholangitis if underlying cause not treated"
+  ]
+},
+{
+  "category":"Gastrointestinal Emergencies",
+  "title": "Pancreatitis",
+  "definition": {
+    "criteria": "Inflammation of the pancreas, commonly caused by gallstones or alcohol",
+    "notes": [
+      "Can range from mild to life-threatening severe pancreatitis"
+    ]
+  },
+  "symptoms": [
+    "Severe epigastric pain (often radiates to the back)",
+    "Nausea and vomiting",
+    "Fever",
+    "Anorexia"
+  ],
+  "signs": [
+    "Epigastric tenderness",
+    "Guarding or abdominal rigidity (if severe)",
+    "Tachycardia",
+    "Hypotension (if severe inflammation or sepsis)",
+    "Cullen's sign (periumbilical bruising)",
+    "Grey-Turner's sign (flank bruising) in severe hemorrhagic pancreatitis"
+  ],
+  "investigations": [
+    "Serum amylase or lipase (elevated; lipase more specific)",
+    "Full blood count, U&E, LFTs, CRP",
+    "Ultrasound abdomen (to detect gallstones)",
+    "CT abdomen (to assess severity and complications)"
+  ],
+  "diagnosis": [
+    "Clinical presentation plus elevated pancreatic enzymes (lipase or amylase >3x normal)",
+    "Imaging supportive if needed"
+  ],
+  "management_emergency": [
+    "Supportive care: IV fluids, oxygen",
+    "Nil by mouth initially (to rest pancreas)",
+    "Analgesia (e.g., IV opioids)",
+    "Treat underlying cause (e.g., ERCP for gallstone pancreatitis)",
+    "Antibiotics only if infection suspected (e.g., pancreatic necrosis)"
+  ],
+  "red_flags": [
+    "Hypotension, hypoxia, sepsis",
+    "Multi-organ failure",
+    "Pancreatic necrosis or abscess"
+  ],
+  "prognosis_disposition": [
+    "Mild cases recover well with supportive care",
+    "Severe cases have significant mortality (20-30% if necrotising)",
+    "Risk of chronic pancreatitis with repeated episodes"
+  ]
+},
+{
+  "category":"Gastrointestinal Emergencies",
+  "title": "Perforated Peptic Ulcer",
+  "definition": {
+    "criteria": "Full-thickness ulceration of the stomach or duodenal wall leading to leakage of gastrointestinal contents into the peritoneal cavity",
+    "notes": [
+      "Medical and surgical emergency"
+    ]
+  },
+  "symptoms": [
+    "Sudden, severe epigastric pain",
+    "Pain may radiate to the shoulder (due to diaphragmatic irritation)",
+    "Nausea and vomiting",
+    "History of dyspepsia or peptic ulcer disease"
+  ],
+  "signs": [
+    "Rigid abdomen (\"board-like rigidity\")",
+    "Generalized peritonitis (rebound tenderness, guarding)",
+    "Tachycardia",
+    "Hypotension (if sepsis or shock develops)"
+  ],
+  "investigations": [
+    "Erect chest X-ray (look for free air under the diaphragm)",
+    "Abdominal X-ray if chest X-ray inconclusive",
+    "CT abdomen with contrast (more sensitive)",
+    "Bloods: FBC, U&E, LFTs, CRP, amylase (to rule out pancreatitis)"
+  ],
+  "diagnosis": [
+    "Clinical suspicion plus imaging evidence of pneumoperitoneum (free air)"
+  ],
+  "management_emergency": [
+    "Nil by mouth",
+    "IV fluid resuscitation",
+    "Broad-spectrum IV antibiotics (e.g., piperacillin-tazobactam)",
+    "IV proton pump inhibitor (e.g., omeprazole)",
+    "Urgent surgical consultation for laparotomy or laparoscopic repair"
+  ],
+  "red_flags": [
+    "Septic shock",
+    "Multiorgan failure",
+    "Delay in surgery >24 hours increases mortality"
+  ],
+  "prognosis_disposition": [
+    "Good prognosis with prompt surgery and antibiotics",
+    "High risk of complications if treatment delayed"
+  ]
+},
+{
+   "category":"Gastrointestinal Emergencies",
+  "title": "Upper Gastrointestinal Bleed (Upper GI Bleed)",
+  "definition": {
+    "criteria": "Bleeding proximal to the ligament of Treitz (esophagus, stomach, duodenum)",
+    "notes": [
+      "Common causes: peptic ulcers, esophageal varices, gastritis"
+    ]
+  },
+  "symptoms": [
+    "Hematemesis (vomiting blood, fresh or coffee-ground)",
+    "Melena (black, tarry stools)",
+    "Hematochezia (rare, massive upper GI bleed)",
+    "Dizziness, weakness, syncope"
+  ],
+  "signs": [
+    "Hypotension, tachycardia (hypovolemia)",
+    "Pallor",
+    "Abdominal tenderness (variable)",
+    "Stigmata of chronic liver disease (in variceal bleeding)"
+  ],
+  "investigations": [
+    "Full blood count (anemia)",
+    "U&E (may show elevated urea)",
+    "Coagulation profile",
+    "Group and crossmatch blood",
+    "Upper GI endoscopy (diagnostic and therapeutic)",
+    "ECG if older or cardiac risk factors"
+  ],
+  "diagnosis": [
+    "Clinical suspicion plus confirmation by upper GI endoscopy"
+   
+  ],
+  "management_emergency": [
+    "Resuscitation first: IV fluids (crystalloids), oxygen",
+    "Blood transfusion if needed (Hb <70 g/L or symptomatic)",
+    "IV proton pump inhibitor (e.g., omeprazole 80 mg bolus then infusion)",
+    "If variceal bleed suspected: IV octreotide + antibiotics (e.g., ceftriaxone)",
+    "Urgent endoscopy within 24 hours (sooner if hemodynamically unstable)",
+    "Endoscopic therapy: clipping, banding, sclerotherapy as appropriate"
+  ],
+  "red_flags": [
+    "Shock unresponsive to fluids",
+    "Massive ongoing bleeding",
+    "Signs of perforation (severe pain, peritonitis)"
+  ],
+  "prognosis_disposition": [
+    "Good prognosis with early intervention",
+    "High risk of rebleeding without proper treatment",
+    "Higher mortality in variceal bleeds and elderly patients"
+  ]
+},
+{
+  "category":"Gynaecological Emergencies",
+  "title": "Abortion (Spontaneous/Missed)",
+  "definition": {
+    "criteria": "Spontaneous Abortion: Natural loss of pregnancy before 20 weeks",
+    "notes": [
+      "Missed Abortion: Fetal death without expulsion of products of conception"
+    ]
+  },
+  "symptoms": [
+    "May be asymptomatic (especially missed abortion)",
+    "Vaginal bleeding",
+    "Abdominal cramping",
+    "Loss of pregnancy symptoms (e.g., nausea)"
+  ],
+  "signs": [
+    "Speculum exam: closed cervix (in missed abortion), possible bleeding",
+    "No fetal heart activity on ultrasound (in missed abortion)",
+    "Soft, non-tender uterus unless complicated by infection"
+  ],
+  "investigations": [
+    "Urine pregnancy test",
+    "Serum beta-hCG (quantitative)",
+    "Transvaginal ultrasound (absent fetal heartbeat, empty gestational sac)"
+  ],
+  "diagnosis": [
+    "Based on ultrasound findings + clinical history",
+    "Absence of fetal cardiac activity after confirmed intrauterine pregnancy"
+  ],
+  "management_emergency": [
+    "Expectant management (allow spontaneous expulsion)",
+    "Medical management (misoprostol)",
+    "Surgical management (ERPC - evacuation of retained products of conception)",
+    "Anti-D immunoglobulin if Rh-negative"
+  ],
+  "red_flags": [
+    "Heavy bleeding",
+    "Signs of infection (fever, foul vaginal discharge)",
+    "Severe abdominal pain"
+  ],
+  "prognosis_disposition": [
+    "Good prognosis physically after management",
+    "Important to offer psychological support and follow-up"
+  ]
+},
+{
+  "category":"Gynaecological Emergencies",
+  "title": "Eclampsia",
+  "definition": {
+    "criteria": "Life-threatening complication of pre-eclampsia",
+    "notes": [
+      "Characterized by new-onset seizures in a woman with pre-eclampsia"
+    ]
+  },
+  "symptoms": [
+    "Seizures (generalized tonic-clonic)",
+    "Severe headache",
+    "Visual disturbances (blurred vision, flashing lights)",
+    "Epigastric or RUQ pain",
+    "Decreased consciousness post-seizure"
+  ],
+  "signs": [
+    "Hypertension",
+    "Proteinuria",
+    "Hyperreflexia and clonus",
+    "Signs of multiorgan dysfunction (pulmonary edema, liver dysfunction, low platelets)"
+  ],
+  "investigations": [
+    "Clinical diagnosis (based on history and examination)",
+    "Bloods: FBC, U&E, LFTs, clotting profile",
+    "Urine dipstick for proteinuria",
+    "CT head if atypical features (to rule out other causes of seizures)"
+  ],
+  "diagnosis": [
+    "New-onset seizure in a woman with signs of pre-eclampsia after 20 weeks gestation or postpartum"
+  ],
+  "management_emergency": [
+    "Emergency ABCDE assessment",
+    "Oxygen therapy",
+    "Seizure management with IV magnesium sulfate (loading dose 4g IV over 5-10 min, then infusion 1g/hour)",
+    "Antihypertensive therapy (e.g., labetalol)",
+    "Urgent delivery of the fetus after maternal stabilization (usually by cesarean section)"
+  ],
+  "red_flags": [
+    "Recurrent seizures",
+    "Respiratory depression (due to magnesium toxicity)",
+    "Severe hypertension leading to stroke",
+    "Multiorgan failure"
+  ],
+  "prognosis_disposition": [
+    "Good maternal and fetal outcomes with prompt recognition and management",
+    "Significant mortality and morbidity if untreated"
+  ]
+},
+{
+  "category":"Gynaecological Emergencies",
+  "title": "Ectopic Pregnancy",
+  "definition": {
+    "criteria": "Implantation of a fertilized ovum outside the uterine cavity, most commonly in the fallopian tube",
+    "notes": [
+      "Can rupture, causing life-threatening hemorrhage"
+    ]
+  },
+  "symptoms": [
+    "Lower abdominal pain (unilateral or generalized)",
+    "Vaginal bleeding (often lighter than menstrual bleeding)",
+    "Amenorrhea (missed period)",
+    "Dizziness or syncope (if rupture occurs)"
+  ],
+  "signs": [
+    "Abdominal tenderness, sometimes with rebound",
+    "Cervical motion tenderness",
+    "Adnexal mass or tenderness on pelvic examination",
+    "Signs of shock if rupture (hypotension, tachycardia)"
+  ],
+  "investigations": [
+    "Urine pregnancy test (positive)",
+    "Serum beta-hCG (quantitative)",
+    "Transvaginal ultrasound (absence of intrauterine pregnancy + adnexal mass)",
+    "Full blood count (anemia if bleeding)"
+  ],
+  "diagnosis": [
+    "Positive pregnancy test + absence of intrauterine pregnancy on ultrasound",
+    "High clinical suspicion in symptomatic patients"
+  ],
+  "management_emergency": [
+    
+    {
+      "step": "If unstable or signs of rupture:",
+      "details": [
+        "Immediate surgical intervention (laparoscopy/laparotomy)"
+      ]
+    },
+    {
+      "step": "If stable and early ectopic:",
+      "details": [
+        "Methotrexate IM (medical management if criteria met)"
+        
+      ]
+    },
+    "Rh(D) immunoglobulin for Rh-negative women",
+    "Close follow-up with serial beta-hCG if managed medically"
+  ],
+  "red_flags": [
+    "Hemodynamic instability (hypotension, tachycardia)",
+    "Severe abdominal pain",
+    "Signs of intraperitoneal bleeding (shoulder tip pain)"
+  ],
+  "prognosis_disposition": [
+    "Excellent prognosis with early diagnosis and treatment",
+    "Risk of future ectopic pregnancy increased"
+  ]
+},
+{
+  "category":"Gynaecological Emergencies",
+  "title": "Miscarriage (Threatened, Inevitable, Complete, Incomplete)",
+  "definition": {
+    "criteria": "Spontaneous loss of pregnancy before 24 weeks of gestation",
+    "notes": [
+      "Types include threatened, inevitable, incomplete, and complete miscarriage"
+    ]
+  },
+  "symptoms": [
+    "Vaginal bleeding (variable amount)",
+    "Lower abdominal cramping",
+    "Passage of tissue (in incomplete/complete miscarriage)",
+    "Loss of pregnancy symptoms (nausea, breast tenderness)"
+  ],
+  "signs": [
+    "Speculum exam: bleeding from cervical os, possible visible tissue",
+    "Bimanual exam: open or closed cervical os",
+    "Uterine tenderness possible"
+  ],
+  "investigations": [
+    "Urine pregnancy test",
+    "Serum beta-hCG (quantitative)",
+    "Transvaginal ultrasound (assess fetal viability and retained products)",
+    "Full blood count (to assess blood loss)"
+  ],
+  "diagnosis": [
+    "Based on clinical presentation + ultrasound findings",
+    {
+      "steps":"Types:",
+      "detail":[
+    "Threatened: bleeding but closed cervix, viable fetus",
+    "Inevitable: bleeding + open cervix, no expulsion yet",
+    "Incomplete: partial expulsion of products",
+    "Complete: all products expelled, uterus empty"
+      ]
+    }
+  ],
+  "management_emergency": [
+    "Threatened miscarriage: observation, reassurance, rest",
+    {
+      "step": "Inevitable/incomplete miscarriage:",
+      "details": [
+        "Expectant management (natural expulsion)",
+        "Medical management (misoprostol)",
+        "Surgical management (evacuation of retained products of conception - ERPC)"
+       
+      ]
+    },
+   "Anti-D immunoglobulin for Rh-negative women",
+   "Analgesia for pain"
+  ],
+
+  "red_flags": [
+    "Heavy vaginal bleeding",
+    "Signs of sepsis (fever, offensive vaginal discharge)",
+    "Severe abdominal pain"
+  ],
+  "prognosis_disposition": [
+    "Varies with type",
+    "Threatened miscarriage may continue to full-term pregnancy",
+    "Generally good prognosis after complete evacuation"
+  ]
+},
+{
+  "category":"Gynaecological Emergencies",
+  "title": "Ovarian Cyst Rupture",
+  "definition": {
+    "criteria": "Rupture of an ovarian cyst causing leakage of cyst contents into the peritoneal cavity",
+    "notes": [
+      "Can cause pain and internal bleeding"
+    ]
+  },
+  "symptoms": [
+    "Sudden onset unilateral lower abdominal pain",
+    "Pain may be sharp or stabbing",
+    "Light vaginal bleeding",
+    "Nausea or dizziness (if significant bleeding)"
+  ],
+  "signs": [
+    "Abdominal tenderness, often localized to one side",
+    "Rebound tenderness",
+    "Signs of peritoneal irritation if significant hemorrhage",
+    "Hypotension and tachycardia if massive bleeding"
+  ],
+  "investigations": [
+    "Urine pregnancy test (to rule out ectopic pregnancy)",
+    "Transvaginal ultrasound (may show cyst, free fluid in pelvis)",
+    "Full blood count (to assess for anemia)",
+    "Beta-hCG if pregnancy status uncertain"
+  ],
+  "diagnosis": [
+    "Based on clinical history, examination, and ultrasound findings",
+    "Exclusion of ectopic pregnancy essential"
+  ],
+  "management_emergency": [
+    {
+      "step": "If hemodynamically stable and minimal bleeding:",
+      "details": [
+        "Conservative management: analgesia, observation"
+      ]
+    },
+    {
+      "step": "If hemodynamically unstable or ongoing significant bleeding:",
+      "details": [
+        "Surgical intervention (laparoscopy or laparotomy)"
+      ]
+    }
+  ],
+  "red_flags": [
+    "Signs of shock (hypotension, tachycardia)",
+    "Significant hemoperitoneum on imaging"
+  ],
+  "prognosis_disposition": [
+    "Good prognosis with conservative management if bleeding minimal",
+    "Surgical outcomes excellent if needed"
+  ]
+},
+{
+  "category":"Gynaecological Emergencies",
+  "title": "Pre-eclampsia",
+  "definition": {
+    "criteria": "Hypertension (>140/90 mmHg) and proteinuria (>300 mg/24h) developing after 20 weeks of gestation",
+    "notes": [
+      "Can lead to serious maternal and fetal complications"
+    ]
+  },
+  "symptoms": [
+    "Headache",
+    "Visual disturbances (blurred vision, flashing lights)",
+    "Epigastric or right upper quadrant pain",
+    "Swelling of face, hands, or feet (edema)",
+    "Nausea or vomiting"
+  ],
+  "signs": [
+    "Hypertension",
+    "Proteinuria",
+    "Edema",
+    "Hyperreflexia or clonus (severe cases)",
+    "Signs of organ dysfunction (e.g., pulmonary edema, low platelets)"
+  ],
+  "investigations": [
+    "Blood pressure measurement",
+    "Urine dipstick or 24-hour urine collection (proteinuria)",
+    "Blood tests: FBC, U&E, LFTs, clotting profile",
+    "Fetal monitoring: CTG (cardiotocography)"
+  ],
+  "diagnosis": [
+    "New hypertension and proteinuria after 20 weeks gestation",
+    "Or hypertension plus organ dysfunction (e.g., elevated liver enzymes, low platelets)"
+  ],
+  "management_emergency": [
+    "Admission to hospital for monitoring",
+    "Antihypertensives(e.g Labetalol first-line; alternatives include nifedipine, methyldopa)",
+    "Magnesium sulfate IV for seizure prophylaxis if severe",
+    "Corticosteroids if early delivery anticipated (<34 weeks gestation)",
+    "Delivery is the definitive treatment (timing depends on severity and gestational age)"
+  ],
+  "red_flags": [
+    "Severe hypertension (>160/110 mmHg)",
+    "Signs of impending eclampsia (seizures, visual disturbances, headache)",
+    "HELLP syndrome (Hemolysis, Elevated Liver enzymes, Low Platelets)"
+  ],
+  "prognosis_disposition": [
+    "Good if recognized early and managed properly",
+    "Risk of recurrence in future pregnancies",
+    "Maternal and fetal morbidity and mortality if not treated"
+  ]
+},
+{
+  "category":"Haematology Emergencies",
+  "title": "Severe Anaemia",
+  "definition": {
+    "criteria": "A significant reduction in hemoglobin concentration, typically defined as Hb <70 g/L in adults (or <80 g/L in patients with cardiovascular disease), requiring urgent evaluation and management."
+  },
+  "symptoms": [
+    "Fatigue and weakness",
+    "Shortness of breath on exertion or at rest",
+    "Dizziness or fainting",
+    "Tachycardia, palpitations",
+    "Pale or cold skin",
+    "Chest pain or angina (in severe cases)"
+  ],
+  "investigations": [
+    "Full blood count (low Hb, MCV, reticulocyte count)",
+    "Iron studies (serum ferritin, transferrin saturation)",
+    "B12 and folate levels",
+    "U&E, LFTs",
+    "Coagulation profile",
+    "Stool occult blood (if GI bleed suspected)",
+    "Chest X-ray or ECG if cardiorespiratory symptoms",
+    "Consider haematinics and haemolysis screen"
+  ],
+  "management_emergency": [
+    "Oxygen therapy if hypoxic",
+    "IV fluids if hypotensive",
+    "Blood transfusion (typically if Hb < 70 g/L or symptomatic)",
+    "Treat underlying cause (e.g., GI bleeding, haemolysis, bone marrow failure)",
+    "Iron/B12/folate supplementation if deficient",
+    "Monitor vitals and Hb response post-transfusion"
+  ],
+  "red_flags": [
+    "Syncope or pre-syncope",
+    "Ongoing bleeding",
+    "Chest pain or ECG changes",
+    "New or worsening heart failure symptoms",
+    "Hb <50 g/L or falling rapidly"
+  ]
+},
+{
+  "category":"Infectious Disease Emergencies",
+  "title": "Meningitis/Encephalitis",
+  "definition": {
+    "criteria": "Meningitis: Inflammation of the meninges, usually due to infection (bacterial or viral)",
+    "notes": [
+      "Encephalitis: Inflammation of the brain parenchyma, often viral in origin"
+    ]
+  },
+  "symptoms": [
+    "Fever",
+    "Headache",
+    "Neck stiffness",
+    "Photophobia",
+    "Altered mental status (especially in encephalitis)",
+    "Seizures (more common in encephalitis)"
+  ],
+  "signs": [
+    "Positive Kernig's sign (pain on extending the knee when the hip is flexed)",
+    "Positive Brudzinski's sign (involuntary hip/knee flexion when neck flexed)",
+    "Confusion, agitation (in encephalitis)",
+    "Focal neurological signs (more common in encephalitis)",
+    "Rash (meningococcal meningitis)"
+  ],
+  "investigations": [
+    "Blood cultures",
+    "Lumbar puncture (LP) for cerebrospinal fluid (CSF) analysis (unless contraindicated)",
+    "CT brain before LP if raised intracranial pressure suspected",
+    "CSF: Gram stain, culture, glucose, protein, viral PCR",
+    "Blood tests: FBC, CRP, U&E"
+    
+  ],
+  "diagnosis": [
+    "Clinical suspicion plus CSF analysis",
+    "Encephalitis confirmed with brain MRI and CSF viral PCR"
+  ],
+  "management_emergency": [
+    "Empiric IV antibiotics immediately (e.g., ceftriaxone 2 g IV BD)",
+    "Add IV acyclovir if encephalitis suspected",
+    "Dexamethasone IV if bacterial meningitis suspected",
+    "Supportive care: fluids, oxygen, seizure control if needed",
+    "Isolation if meningococcal disease suspected"
+  ],
+  "red_flags": [
+    "Signs of raised intracranial pressure (e.g., bradycardia, hypertension, irregular breathing)",
+    "Seizures",
+    "Rapid deterioration in consciousness"
+  ],
+  "prognosis_disposition": [
+    "Mortality depends on prompt treatment",
+    "Risk of long-term neurological deficits, particularly in encephalitis",
+    "Vaccination can prevent some types (e.g., meningococcal, pneumococcal vaccines)"
+  ]
+},
+{
+  "category":"Infectious Disease Emergencies",
+  "title": "Sepsis",
+  "definition": {
+    "criteria": "Life-threatening organ dysfunction caused by a dysregulated host response to infection",
+    "notes": [
+      "Identified clinically by the presence of infection plus signs of organ dysfunction"
+    ]
+  },
+  "symptoms": [
+    "Fever or hypothermia",
+    "Chills, rigors",
+    "Confusion or altered mental state",
+    "Shortness of breath",
+    "Reduced urine output"
+  ],
+  "signs": [
+    "Hypotension",
+    "Tachycardia",
+    "Tachypnoea",
+    "Hypoxia",
+    "Mottled skin or cyanosis",
+    "Capillary refill time >2 seconds"
+  ],
+  "investigations": [
+    "Blood cultures before antibiotics",
+    "Full blood count, U&E, LFTs, CRP, lactate",
+    "Blood gases (to check for acidosis, lactate)",
+    "Urinalysis, chest X-ray, wound swabs if relevant",
+    "Source imaging (CT abdomen, etc.) if needed"
+  ],
+  "diagnosis": [
+    "Clinical suspicion of infection plus evidence of organ dysfunction (e.g., high lactate, hypotension)",
+    "qSOFA score (quick SOFA): RR >=22, altered mentation, SBP <=100 mmHg"
+  ],
+  "management_emergency": [
+    "Immediate administration of broad-spectrum IV antibiotics (within 1 hour)",
+    "IV fluid resuscitation: 30 mL/kg crystalloids for hypotension or lactate >=4 mmol/L",
+    "Oxygen supplementation if hypoxic",
+    "Source control (e.g., drain abscess, remove infected lines)",
+    "Vasopressors (e.g., norepinephrine) if hypotension persists after fluids"
+  ],
+  "red_flags": [
+    "Persistent hypotension despite fluids",
+    "Rising lactate",
+    "Signs of multiple organ failure (renal, respiratory, cardiac)"
+  ],
+  "prognosis_disposition": [
+    "Mortality depends on severity and timeliness of intervention",
+    "Early recognition and treatment significantly improve outcomes"
+  ]
+},
+{
+  "category":"Neurological Emergencies",
+  "title": "Head Injury",
+  "definition": {
+    "criteria": "Any trauma to the scalp, skull, or brain. Can range from minor concussion to life-threatening traumatic brain injury (TBI)."
+  },
+  "symptoms": [
+    "Loss of consciousness",
+    "Vomiting",
+    "Seizures",
+    "Confusion or memory loss",
+    "Scalp wound or skull deformity",
+    "Unequal pupils or focal neurological deficit"
+  ],
+  "investigations": [
+    "Glasgow Coma Scale (GCS) assessment",
+    "CT head (based on NICE criteria)",
+    "Bloods: FBC, coagulation, U&E",
+    "C-spine X-ray or CT if neck injury suspected",
+    "Monitor vitals and neurological status regularly"
+  ],
+  "management_emergency": [
+    "ABC assessment and cervical spine immobilisation",
+    "High-flow oxygen",
+    "Control bleeding",
+    "IV fluids if hypotensive",
+    "Neurosurgical referral if CT abnormal or signs of raised ICP",
+    "Admit if GCS <15, seizures, or other concerns"
+  ],
+  "red_flags": [
+    "GCS < 13 at any point",
+    "Seizures post-injury",
+    "Suspected skull fracture or CSF leak",
+    "Focal neurological signs",
+    "More than one episode of vomiting"
+  ],
+  "ct_head_indications": [
+    "GCS <13 on initial assessment",
+    "GCS <15 at 2 hours post-injury",
+    "Suspected open or depressed skull fracture",
+    "Any sign of basal skull fracture (e.g., Battle's sign, raccoon eyes, CSF leak)",
+    "Post-traumatic seizure",
+    "Focal neurological deficit",
+    ">1 episode of vomiting after head injury",
+    "Amnesia >30 minutes before impact",
+    "Dangerous mechanism (e.g., fall >1m or 5 stairs, high-speed RTC)",
+    "Coagulopathy (e.g., on warfarin or DOACs)",
+    "Age >65 with head injury and any fall"
+  ]
+},
+{
+  "category":"Neurological Emergencies",
+  "title": "Status Epilepticus",
+  "definition": {
+    "criteria": "A medical emergency where a seizure lasts more than 5 minutes or when seizures occur back-to-back without full recovery in between."
+  },
+  "symptoms": [
+    "Continuous or repeated seizures",
+    "Loss of consciousness",
+    "Cyanosis or labored breathing",
+    "Tongue biting, incontinence",
+    "Post-ictal confusion (if recovering between episodes)"
+  ],
+  "investigations": [
+    "Blood glucose (rule out hypoglycemia)",
+    "Serum electrolytes, calcium, magnesium",
+    "Antiepileptic drug levels (if known epileptic)",
+    "Toxicology screen",
+    "ECG",
+    "Neuroimaging (CT/MRI) if first episode or trauma suspected",
+    "EEG if non-convulsive status suspected"
+  ],
+  "management_emergency": [
+    "Immediate ABC assessment",
+    "High-flow oxygen",
+    "IV access and blood tests",
+    "First-line :IV lorazepam 4 mg (repeat after 10 minutes if no response)",
+    "Second-line :IV phenytoin or levetiracetam loading",
+    "Third-line :Anaesthesia with midazolam/propofol and ICU admission",
+    "Treat underlying cause"
+  ],
+  "red_flags": [
+    "Seizure > 30 minutes",
+    "Unresponsive to first and second-line treatment",
+    "Respiratory depression",
+    "Suspected non-convulsive status in altered patients"
+  ]
+},
+{
+  "category":"Neurological Emergencies",
+  "title": "Stroke (Ischemic and Hemorrhagic)",
+  "definition": {
+    "criteria": [
+      "Ischemic Stroke: Blockage of a cerebral artery leading to brain ischemia and infarction",
+      "Hemorrhagic Stroke: Bleeding into brain tissue due to vessel rupture"
+    ]
+  },
+  "symptoms": [
+    "Sudden onset focal neurological deficits (weakness, numbness)",
+    "Dysphasia or aphasia",
+    "Visual loss (hemianopia)",
+    "Vertigo, imbalance",
+    "Severe headache (especially in hemorrhagic stroke)"
+  ],
+  "signs": [
+    "Unilateral weakness or facial droop",
+    "Speech disturbance",
+    "Altered level of consciousness (more common in hemorrhagic)",
+    "Raised intracranial pressure signs: vomiting, bradycardia, hypertension (Cushing's reflex)"
+  ],
+  "investigations": [
+    "Non-contrast CT head (first-line to differentiate ischemic vs hemorrhagic)",
+    "MRI brain (more sensitive but slower)",
+    "Bloods: FBC, clotting profile, glucose, U&E",
+    "ECG: Assess for atrial fibrillation",
+    "Carotid Doppler ultrasound if carotid disease suspected"
+  ],
+  "diagnosis": [
+    "Clinical assessment and confirmed by imaging (non-contrast CT initially)"
+  ],
+
+  "management_emergency":[
+    {
+    
+    "step":"Ischemic Stroke",
+    
+    "details":[
+      "Thrombolysis with alteplase within 4.5 hours if eligible",
+      "Mechanical thrombectomy for large vessel occlusion",
+      "Antiplatelet (Aspirin 300 mg PO after hemorrhage excluded)"
+    ]},
+
+    {
+      "step":"Hemorrhagic Stroke",
+    
+    "details":[
+      
+      "Neurosurgical consultation",
+      "Manage blood pressure (target SBP <140 mmHg)",
+      "Reverse anticoagulation if applicable"
+    ]
+    },
+
+    "Supportive Care: Oxygen ,Glucose control,Hydration"
+
+    
+  ],
+
+  "red_flags": [
+    "Rapid deterioration of consciousness",
+    "Signs of increased intracranial pressure",
+    "Large infarcts or brainstem involvement"
+  ],
+  "prognosis_disposition": [
+    "Variable depending on size and location of stroke",
+    "Better outcomes with early intervention",
+    "Risk of long-term disability or death"
+  ]
+},
+{
+  "category":"Neurological Emergencies",
+  "title": "Subarachnoid Hemorrhage (SAH)",
+  "definition": {
+    "criteria": "Bleeding into the subarachnoid space, most commonly due to rupture of a cerebral aneurysm.",
+    "notes": [
+      "It is a neurological emergency."
+    ]
+  },
+  "symptoms": [
+    "Sudden, severe 'thunderclap' headache",
+    "Nausea and vomiting",
+    "Neck stiffness or photophobia",
+    "Loss of consciousness",
+    "Seizures",
+    "Focal neurological deficits"
+  ],
+  "investigations": [
+    "Non-contrast CT head (within 6 hours ideally)",
+    "Lumbar puncture (if CT is negative and suspicion remains) for xanthochromia",
+    "CT/MR angiography to identify aneurysm",
+    "ECG (may show ST-T changes)",
+    "Blood tests (FBC, clotting, U&E)"
+  ],
+  "management_emergency": [
+    "Immediate neurology/neurosurgery referral",
+    "Blood pressure control (target SBP < 160 mmHg)",
+    "Nimodipine 60 mg PO q4h to prevent vasospasm",
+    "Monitor and treat hydrocephalus or raised ICP",
+    "Analgesia and antiemetics",
+    "Surgical/endovascular intervention for aneurysm repair"
+  ],
+  "red_flags": [
+    "Sudden onset severe headache with loss of consciousness",
+    "Neurological deterioration",
+    "Signs of raised ICP (papilledema, vomiting, altered mental status)",
+    "Rebleeding or vasospasm"
+  ]
+},
+{
+  "category":"Neurological Emergencies",
+  "title": "Transient Ischemic Attack (TIA)",
+  "definition": {
+    "criteria": "Brief, reversible episode of neurological dysfunction caused by ischemia",
+    "notes": [
+      "No permanent infarction (symptoms resolve within 24 hours, usually within minutes)"
+    ]
+  },
+  "symptoms": [
+    "Sudden onset unilateral weakness or numbness",
+    "Dysphasia (difficulty speaking)",
+    "Visual disturbances (e.g., amaurosis fugax)",
+    "Dizziness or loss of balance",
+    "Confusion"
+  ],
+  "signs": [
+    "May be normal by the time of examination",
+    "Focal neurological deficits (transient)",
+    "Carotid bruit may be present"
+  ],
+  "investigations": [
+    "Non-contrast CT head (to exclude stroke/bleed)",
+    "MRI brain (more sensitive for ischemia)",
+    "Carotid Doppler ultrasound (to check for stenosis)",
+    "ECG (look for atrial fibrillation)",
+    "Bloods: glucose, lipids, FBC, U&E"
+  ],
+  "diagnosis": [
+    "Clinical diagnosis based on history",
+    "Confirm no evidence of stroke or bleed on imaging"
+  ],
+  "management_emergency": [
+    {
+    "steps":"Antiplatelet therapy:",
+    "details":[
+    "Aspirin 300 mg PO immediately, then 75 mg daily"]
+    },
+    "Manage underlying risk factors (hypertension, diabetes, AF)",
+    "High-risk patients (ABCD2 score >=4) need urgent specialist assessment (within 24h)",
+    "Carotid endarterectomy if significant stenosis (>70%)"
+  ],
+  "red_flags": [
+    "Persistent neurological deficits (indicating actual stroke)",
+    "New-onset atrial fibrillation (high stroke risk)",
+    "High ABCD2 score (>=6)"
+  ],
+  "prognosis_disposition": [
+    "High risk of stroke within the next 48 hours",
+    "Good prognosis with early treatment and risk factor modification"
+  ]
+},
+{
+  "category":"Ophthalmology Emergencies",
+  "title": "Acute Angle-Closure Glaucoma",
+  "definition": {
+    "criteria": "A sudden rise in intraocular pressure (IOP) due to closure of the anterior chamber angle, obstructing aqueous humour outflow.",
+    "notes": [
+      "It is a vision-threatening ophthalmic emergency."
+    ]
+  },
+  "symptoms": [
+    "Sudden onset severe eye pain",
+    "Blurred vision and halos around lights",
+    "Nausea and vomiting",
+    "Red eye with a mid-dilated, non-reactive pupil",
+    "Hard eye on palpation",
+    "Decreased visual acuity"
+  ],
+  "investigations": [
+    "Measure intraocular pressure (IOP)",
+    "Slit lamp examination",
+    "Gonioscopy (if available)",
+    "Fundoscopy may show cupping",
+    "Urgent ophthalmology referral required"
+  ],
+  "management_emergency": [
+    "Immediate ophthalmology consultation",
+    "IV acetazolamide 500 mg stat",
+    "Topical beta-blocker (e.g., timolol)",
+    "Topical pilocarpine (only once IOP begins to reduce)",
+    "IV mannitol in refractory cases",
+    "Definitive treatment: laser peripheral iridotomy (performed by specialist)"
+  ],
+  "red_flags": [
+    "Visual loss and eye pain unrelieved by analgesia",
+    "Vomiting accompanying eye pain",
+    "Unilateral red eye with mid-dilated pupil",
+    "Known history of glaucoma or risk factors (e.g., hyperopia, family history)"
+  ]
+},
+{
+  "category":"Ophthalmology Emergencies",
+  "title": "Central Retinal Artery Occlusion (CRAO)",
+  "definition": {
+    "criteria": "A sudden, painless, monocular loss of vision due to occlusion of the central retinal artery, often by an embolus or thrombus."
+  },
+  "symptoms": [
+    "Sudden, painless loss of vision in one eye",
+    "Visual acuity reduced to counting fingers or worse",
+    "Relative afferent pupillary defect (RAPD)",
+    "Pale retina with 'cherry-red spot' at the macula on fundoscopy"
+  ],
+  "investigations": [
+    "Urgent ophthalmology referral",
+    "Fundoscopy: cherry-red spot, retinal pallor",
+    "ESR, CRP (if GCA suspected)",
+    "Carotid Doppler ultrasound",
+    "ECG (check for atrial fibrillation)",
+    "Echocardiogram",
+    "Blood glucose, cholesterol, FBC, clotting screen"
+  ],
+  "management_emergency": [
+    "Ocular massage to dislodge embolus",
+    "Acetazolamide IV or oral to reduce IOP",
+    "Anterior chamber paracentesis (in specialist care)",
+    "Urgent referral to ophthalmology within 4-6 hours",
+    "Long-term: manage vascular risk factors, anticoagulation if AF present"
+  ],
+  "red_flags": [
+    "Visual loss lasting longer than 6 hours (prognosis worsens significantly)",
+    "Symptoms of temporal arteritis (e.g., jaw claudication, scalp tenderness)",
+    "Bilateral vision loss",
+    "Stroke or TIA symptoms"
+  ]
+},
+{
+  "category":"Ophthalmology Emergencies",
+  "title": "Giant Cell Arteritis (GCA)",
+  "definition": {
+    "criteria": "A granulomatous vasculitis affecting large and medium-sized arteries, commonly the temporal arteries, seen in adults over 50.",
+    "notes": [
+      "It is an ophthalmic emergency when associated with visual symptoms."
+    ]
+  },
+  "symptoms": [
+    "New onset temporal headache",
+    "Scalp tenderness (e.g., pain when combing hair)",
+    "Jaw claudication",
+    "Visual disturbance (e.g., transient or permanent vision loss)",
+    "Systemic symptoms: fever, weight loss, fatigue",
+    "Polymyalgia rheumatica symptoms (e.g., shoulder/hip stiffness)"
+  ],
+  "investigations": [
+    "ESR and CRP (markedly elevated)",
+    "Full blood count: normocytic anemia, thrombocytosis",
+    "Temporal artery biopsy (within 1-2 weeks of treatment)",
+    "Ultrasound of temporal arteries ('halo sign')",
+    "Consider MRI or PET-CT in atypical cases"
+  ],
+  "management_emergency": [
+    "Immediate high-dose corticosteroids (e.g., prednisolone 40-60 mg daily)",
+    "If visual symptoms: IV methylprednisolone 500-1000 mg for 3 days",
+    "Do not delay treatment for biopsy",
+    "Bone protection (calcium, vitamin D, bisphosphonates)",
+    "PPI for GI protection"
+  ],
+  "red_flags": [
+    "Sudden painless visual loss",
+    "Symptoms suggestive of stroke or amaurosis fugax",
+    "Constitutional symptoms with elevated inflammatory markers",
+    "New headache in patient >50 years"
+  ]
+},
+{
+  "category":"Ophthalmology Emergencies",
+  "title": "Orbital Cellulitis",
+  "definition": {
+    "criteria": "A serious infection of the soft tissues of the orbit posterior to the orbital septum, often secondary to sinusitis, that can lead to vision loss or intracranial complications."
+  },
+  "symptoms": [
+    "Painful eye movement",
+    "Proptosis (bulging of the eye)",
+    "Eyelid swelling and erythema",
+    "Decreased visual acuity",
+    "Ophthalmoplegia (restricted eye movement)",
+    "Fever and systemic signs"
+  ],
+  "investigations": [
+    "Urgent contrast-enhanced CT orbit and sinuses",
+    "FBC, CRP, blood cultures",
+    "Consider swabs from conjunctiva or sinus drainage",
+    "Lumbar puncture if signs of meningitis",
+    "Ophthalmologic and ENT consultation"
+  ],
+  "management_emergency": [
+    "Admit to hospital",
+    "IV broad-spectrum antibiotics (e.g., ceftriaxone + metronidazole or co-amoxiclav)",
+    "Surgical drainage if abscess is present or worsening",
+    "Monitor vision and signs of intracranial spread",
+    "Treat underlying sinusitis if present"
+  ],
+  "red_flags": [
+    "Vision loss or rapid deterioration",
+    "Relative afferent pupillary defect (RAPD)",
+    "Cavernous sinus thrombosis signs (e.g., bilateral involvement, cranial nerve palsies)",
+    "Mental status changes or meningism"
+  ]
+},
+{
+  "category":"Ophthalmology Emergencies",
+  "title": "Retinal Detachment",
+  "definition": {
+    "criteria": "A separation of the neurosensory retina from the underlying retinal pigment epithelium, leading to vision loss.",
+    "notes": [
+      "It is an ophthalmic emergency."
+    ]
+  },
+  "symptoms": [
+    "Sudden onset of floaters or flashes of light",
+    "Painless loss of vision ('curtain' or shadow across field of vision)",
+    "Visual field defect",
+    "Decreased visual acuity (if macula is involved)"
+  ],
+  "investigations": [
+    "Urgent dilated fundoscopy (may show detached retina as a grey, mobile membrane)",
+    "Slit-lamp exam with indirect ophthalmoscopy",
+    "Ocular ultrasound (if view is obscured)",
+    "Do not perform tonometry if globe rupture suspected"
+  ],
+  "management_emergency": [
+    "Immediate ophthalmology referral",
+    "Positioning: lie with the detached area dependent",
+    "Avoid exertion",
+    "Surgical repair: pneumatic retinopexy, scleral buckle, or vitrectomy depending on type/location"
+  ],
+  "red_flags": [
+    "Sudden increase in floaters/flashes",
+    "Curtain-like visual loss",
+    "Family or personal history of retinal detachment",
+    "High myopia, recent ocular surgery, or trauma"
+  ]
+},
+{
+  "category":"Ophthalmology Emergencies",
+  "title": "Scleritis",
+  "definition": {
+    "criteria": "A painful, destructive inflammatory condition affecting the sclera, often associated with systemic autoimmune diseases."
+  },
+  "symptoms": [
+    "Severe, boring eye pain (often worse at night and with eye movement)",
+    "Redness (deep violaceous hue)",
+    "Photophobia",
+    "Tearing",
+    "Decreased visual acuity",
+    "Tenderness to palpation of the globe"
+  ],
+  "investigations": [
+    "Slit-lamp examination (shows deep scleral inflammation)",
+    "Check for associated anterior uveitis",
+    "Autoimmune workup: ANA, RF, ANCA, ESR/CRP",
+    "Syphilis and TB screening if indicated",
+    "B-scan ultrasound if posterior scleritis suspected"
+  ],
+  "management_emergency": [
+    "Urgent ophthalmology referral",
+    "Oral NSAIDs or systemic corticosteroids",
+    "Immunosuppressive agents (e.g., methotrexate, azathioprine) if autoimmune",
+    "Treat underlying systemic disease",
+    "Avoid topical steroids unless directed by ophthalmology"
+  ],
+  "red_flags": [
+    "Vision loss",
+    "Proptosis or restriction of eye movements (posterior scleritis)",
+    "Suspected necrotising scleritis (can lead to globe perforation)",
+    "Associated with rheumatoid arthritis or granulomatosis with polyangiitis"
+  ]
+},
+{
+  "category":"Ophthalmology Emergencies",
+  "title": "Uveitis",
+  "definition": {
+    "criteria": "Inflammation of the uveal tract (iris, ciliary body, choroid), classified as anterior, intermediate, posterior, or panuveitis depending on the site."
+  },
+  "symptoms": [
+    "Eye pain and redness (especially around the limbus)",
+    "Photophobia",
+    "Blurred vision",
+    "Floaters (if posterior involvement)",
+    "Irregular or small pupil",
+    "Decreased visual acuity"
+  ],
+  "investigations": [
+    "Slit-lamp examination (cells and flare in anterior chamber)",
+    "Fundoscopy if posterior involvement",
+    "Intraocular pressure (may be low or high)",
+    "Consider blood tests: HLA-B27, ANA, ACE, syphilis serology, TB testing",
+    "Consider chest X-ray (sarcoidosis, TB)"
+  ],
+  "management_emergency": [
+    "Urgent ophthalmology referral",
+    "Topical corticosteroids (e.g., prednisolone acetate)",
+    "Cycloplegics (e.g., atropine) to prevent synechiae",
+    "Treat underlying systemic cause (e.g., infection, autoimmune disease)",
+    "Systemic immunosuppressants if recurrent or severe"
+  ],
+  "red_flags": [
+    "Sudden vision loss",
+    "Hypopyon (layered WBCs in anterior chamber)",
+    "Bilateral involvement",
+    "Associated systemic symptoms (e.g., joint pain, skin lesions)"
+  ]
+},
+{
+  "category":"Respiratory Emergencies",
+  "title": "Asthma Exacerbation",
+  "definition": {
+    "criteria": "Acute or subacute worsening of asthma symptoms requiring a change in treatment",
+    "notes": [
+      "Caused by airway inflammation, bronchoconstriction, and mucus production"
+    ]
+  },
+  "symptoms": [
+    "Shortness of breath",
+    "Wheeze",
+    "Chest tightness",
+    "Cough (often worse at night or early morning)",
+    "Difficulty speaking full sentences (in severe cases)"
+  ],
+  "signs": [
+    "Tachypnoea",
+    "Tachycardia",
+    "Widespread wheeze on auscultation",
+    "Use of accessory muscles",
+    "Hypoxia (low SpO2)",
+    "Silent chest in life-threatening asthma (ominous sign)"
+  ],
+  "investigations": [
+    "Peak expiratory flow (PEF) measurement (reduced)",
+    "Pulse oximetry (low oxygen saturation)",
+    "ABG if severe: hypoxia, hypercapnia, acidosis",
+    "Chest X-ray if suspicion of pneumothorax or infection"
+  ],
+  "diagnosis": [
+    "Clinical diagnosis based on history and examination",
+    "Supported by low PEF and hypoxia"
+  ],
+  "management_emergency": [
+    "High flow oxygen to maintain SpO2 94-98%",
+    "Inhaled short-acting beta-agonists (Salbutamol) via nebuliser or MDI with spacer",
+    "Inhaled ipratropium bromide if severe",
+    "Oral or IV corticosteroids (e.g., Prednisolone 40-50 mg PO or Hydrocortisone 100 mg IV)",
+    "Magnesium sulfate IV (2 g over 20 min) if life-threatening",
+    "Consider non-invasive ventilation or intubation if worsening respiratory failure"
+  ],
+  "red_flags": [
+    "Silent chest",
+    "Exhaustion, confusion",
+    "SpO2 <92% despite oxygen",
+    "Rising PaCO2 on ABG (suggests failing ventilation)"
+  ],
+  "prognosis_disposition": [
+    "Good prognosis with prompt treatment",
+    "Risk of recurrence if underlying asthma poorly controlled",
+    "Requires follow-up and preventive inhaler optimisation"
+  ]
+},
+{
+  "category":"Respiratory Emergencies",
+  "title": "Pneumothorax (including Tension Pneumothorax)",
+  "definition": {
+    "criteria": "Pneumothorax: Presence of air in the pleural space causing lung collapse",
+    "notes": [
+      "Tension pneumothorax: Life-threatening accumulation of air under pressure, causing mediastinal shift and hemodynamic compromise"
+    ]
+  },
+  "symptoms": [
+    "Sudden onset pleuritic chest pain",
+    "Shortness of breath",
+    "Anxiety",
+    "If tension pneumothorax: severe dyspnoea, hypotension, cyanosis"
+  ],
+  "signs": [
+    "Reduced or absent breath sounds on affected side",
+    "Hyper-resonant percussion note",
+    "Decreased chest expansion",
+    "Tracheal deviation away from affected side (in tension pneumothorax)",
+    "Distended neck veins (in tension pneumothorax)"
+  ],
+  "investigations": [
+    "Chest X-ray (first-line, except in tension pneumothorax where immediate treatment is priority)",
+    "Ultrasound (can quickly detect absence of lung sliding)",
+    "ABG: May show hypoxia"
+  ],
+  "diagnosis": [
+    "Clinical diagnosis in suspected tension pneumothorax (do not delay for imaging)",
+    "Confirm with imaging in stable cases"
+   
+  ],
+  "management_emergency": [
+    {
+      "step": "Immediate needle decompression if tension pneumothorax:",
+      "details": [
+        "Insert large bore needle into 2nd intercostal space, midclavicular line"
+        
+      ]
+    },
+    "Then insert chest drain into 5th intercostal space, midaxillary line",
+    {
+      "step": "For small, stable pneumothoraces:",
+      "details": [
+        "Observation and supplemental oxygen"
+      ]
+    },
+    {
+      "step": "For large or symptomatic pneumothoraces:",
+      "details": [
+        "Chest drain insertion"
+      ]
+    }
+  ],
+  "red_flags": [
+    "Sudden cardiovascular collapse (in tension pneumothorax)",
+    "Severe hypoxia",
+    "Tracheal deviation"
+  ],
+  "prognosis_disposition": [
+    "Good prognosis if treated early",
+    "Risk of recurrence, especially in primary spontaneous pneumothorax",
+    "May need surgical pleurodesis if recurrent"
+  ]
+},
+{
+  "category":"Respiratory Emergencies",
+  "title": "Pulmonary Embolism (PE)",
+  "definition": {
+    "criteria": [
+      "Blockage of a pulmonary artery or its branches by a blood clot (usually from a DVT)",
+      "Can cause life-threatening cardiovascular and respiratory compromise"
+    ]
+  },
+  "symptoms": [
+    "Sudden onset dyspnoea (shortness of breath)",
+    "Pleuritic chest pain",
+    "Hemoptysis (coughing up blood)",
+    "Syncope (if massive PE)",
+    "Anxiety"
+  ],
+  "signs": [
+    "Tachycardia",
+    "Tachypnoea",
+    "Hypoxia",
+    "Hypotension (in massive PE)",
+    "Signs of DVT (swollen, tender leg)"
+  ],
+  "investigations": [
+    "D-dimer (if low/moderate probability)",
+    "CT Pulmonary Angiography (CTPA) - gold standard diagnostic test",
+    "V/Q scan (alternative if CTPA contraindicated)",
+    "ECG: Sinus tachycardia, S1Q3T3 pattern (classic but uncommon)",
+    "ABG: Hypoxia with respiratory alkalosis"
+  ],
+  "diagnosis": [
+    "High clinical suspicion + confirmed by CTPA or V/Q scan"
+  ],
+  "management_emergency": [
+    "Oxygen supplementation",
+    {
+      "step":"Anticoagulation (start immediately if high suspicion)",
+      "details": [
+        "LMWH (e.g., Enoxaparin 1 mg/kg SC BD)",
+        "Or DOACs (e.g., rivaroxaban, apixaban)"
+      ]
+    },
+    "Thrombolysis (e.g., alteplase) if massive PE with shock",
+    "Consider surgical or catheter-directed thrombectomy in selected cases"
+  ],
+  "red_flags": [
+    "Hemodynamic instability (massive PE)",
+    "Right heart strain on echo or ECG",
+    "Hypoxia refractory to oxygen therapy"
+  ],
+  "prognosis_disposition": [
+    "Good if treated promptly with anticoagulation",
+    "Higher mortality in massive PE",
+    "Risk of chronic thromboembolic pulmonary hypertension (CTEPH)"
+  ]
+},
+{
+  "category":"Urological Emergencies",
+  "title": "Acute Urinary Retention",
+  "definition": {
+    "criteria": "Sudden and painful inability to voluntarily pass urine, typically due to outflow obstruction or neurological dysfunction."
+  },
+  "symptoms": [
+    "Lower abdominal pain or discomfort",
+    "Inability to urinate",
+    "Palpable or percussible bladder",
+    "Distended lower abdomen",
+    "Restlessness or agitation"
+  ],
+  "investigations": [
+    "Bladder scan to confirm retention (typically >500 mL)",
+    "Urinalysis (rule out infection/hematuria)",
+    "U&E (check for post-renal AKI)",
+    "PSA if indicated",
+    "Consider pelvic/abdominal ultrasound if masses suspected"
+  ],
+  "management_emergency": [
+    "Immediate urethral catheterization",
+    "If unsuccessful or contraindicated, use suprapubic catheter",
+    "Monitor urine output and post-obstructive diuresis",
+    "Start alpha-blockers (e.g., tamsulosin)",
+    "Treat underlying cause (e.g., BPH, constipation, infection)"
+  ],
+  "red_flags": [
+    "Bilateral lower limb weakness or numbness",
+    "Loss of anal tone or saddle anesthesia (suggesting cauda equina)",
+    "Sepsis signs",
+    "Gross hematuria",
+    "Pain with unsuccessful catheter attempts"
+  ]
+},
+{
+  "category":"Urological Emergencies",
+  "title": "Renal Colic",
+  "definition": {
+    "criteria": "Acute, severe flank or abdominal pain due to obstruction of the urinary tract, most commonly by kidney stones."
+  },
+  "symptoms": [
+    "Sudden onset unilateral flank pain radiating to groin",
+    "Nausea and vomiting",
+    "Hematuria (visible or microscopic)",
+    "Restlessness due to pain",
+    "No peritonism (pain is colicky, not constant)"
+  ],
+  "investigations": [
+    "Urinalysis: hematuria, signs of infection",
+    "U&E; to assess renal function",
+    "Non-contrast CT KUB (gold standard)",
+    "Ultrasound if CT contraindicated (e.g., pregnancy)",
+    "FBC, CRP if infection suspected"
+  ],
+  "management_emergency": [
+    "Analgesia: NSAIDs (e.g., diclofenac), opioids if needed",
+    "IV fluids if dehydrated",
+    "Antiemetics for nausea",
+    "Alpha-blockers (e.g., tamsulosin) to facilitate stone passage",
+    "Outpatient follow-up if stone <5 mm and stable",
+    "Urology referral if stone >6 mm, uncontrolled pain, or infection"
+  ],
+  "red_flags": [
+    "Fever or signs of urosepsis",
+    "Solitary kidney or bilateral obstruction",
+    "AKI or rising creatinine",
+    "Persistent vomiting",
+    "Uncontrolled pain despite analgesia"
+  ]
+},
+{
+  "category":"Urological Emergencies",
+  "title": "Testicular Torsion",
+  "definition": {
+    "criteria": "Twisting of the spermatic cord leading to ischemia of the testis",
+    "notes": [
+      "Urological emergency; testicular viability decreases rapidly with time"
+    ]
+  },
+  "symptoms": [
+    "Sudden onset severe unilateral scrotal pain",
+    "Abdominal pain",
+    "Nausea and vomiting"
+  ],
+  "signs": [
+    "Swollen, tender testicle",
+    "High-riding testicle with transverse lie",
+    "Absent cremasteric reflex (no elevation of testicle with stroking of inner thigh)",
+    "Scrotal erythema and edema"
+  ],
+  "investigations": [
+    "Primarily a clinical diagnosis",
+    "Doppler ultrasound of scrotum (shows reduced or absent blood flow) if diagnosis unclear",
+    "Do not delay surgery for imaging if high clinical suspicion"
+  ],
+  "diagnosis": [
+    "Clinical diagnosis based on sudden onset pain, absent cremasteric reflex, and physical findings"
+  ],
+  "management_emergency": [
+    "Immediate surgical exploration and detorsion (orchiopexy)",
+    "Bilateral orchiopexy usually performed (even if torsion is unilateral)",
+    "If testis non-viable: orchiectomy (removal of testis)"
+  ],
+  "red_flags": [
+    "Delayed presentation (>6 hours) leads to decreased chance of salvage",
+    "Severe scrotal swelling and discoloration",
+    "Signs of sepsis if necrosis occurs"
+  ],
+  "prognosis_disposition": [
+    "Testicular salvage rates are excellent if surgery within 6 hours",
+    "Testicular loss is common if treatment delayed beyond 12 hours"
+  ]
+}
+
+
+]

@@ -1,0 +1,835 @@
+[
+    {
+    "category":"Hypercalcaemia",
+    "title": "Mild to Moderate Hypercalcaemia",
+    "definition": {
+        "serum_corrected_calcium": "2.6-3.4 mmol/L",
+        "notes": [
+            "Risk of progression to severe hypercalcemia if untreated"
+        ]
+    },
+    "symptoms": [
+        "Polyuria and polydipsia",
+        "Mild constipation",
+        "Fatigue",
+        "Abdominal discomfort"
+    ],
+    "signs": [
+        "Mild dehydration",
+        "Reduced reflexes possible",
+        "Normal neurological exam unless higher levels"
+    ],
+    "investigations": [
+        "Serum calcium (corrected for albumin): 2.6-3.4 mmol/L",
+        "Serum PTH (if primary hyperparathyroidism suspected)",
+        "U&E (to check renal function)",
+        "ECG (may show shortened QT interval)"
+    ],
+    "diagnosis": [
+        "Confirmed serum calcium 2.6-3.4 mmol/L",
+        "Identify cause (e.g., malignancy, primary hyperparathyroidism, thiazide use)"
+    ],
+    "management_non_emergency": [
+        "Encourage oral hydration",
+        "Treat underlying cause (e.g., stop thiazides, treat malignancy)",
+        "Consider IV 0.9% saline if oral intake inadequate",
+        "Bisphosphonates (e.g., zoledronic acid) if persistent or symptomatic hypercalcemia",
+        "Monitor calcium levels regularly"
+    ],
+    "red_flags": [
+        "Rising calcium >3.5 mmol/L",
+        "Confusion, dehydration, arrhythmias"
+    ],
+    "prognosis_disposition": [
+        "Good with early hydration and treatment",
+        "Risk of renal impairment or arrhythmias if untreated"
+    ]
+},
+{
+    "category":"Hypercalcaemia",
+    "title": "Severe Hypercalcemia",
+    "definition": {
+        "serum_calcium": ">3.5 mmol/L",
+        "source": "Oxford EM Handbook",
+        "notes": [
+            "Risk of arrhythmias, coma, and renal failure"
+        ]
+    },
+    "symptoms": [
+        "Polyuria and polydipsia",
+        "Nausea and vomiting",
+        "Abdominal pain",
+        "Constipation",
+        "Confusion, lethargy",
+        "Muscle weakness"
+    ],
+    "signs": [
+        "Dehydration (dry mucous membranes, low BP)",
+        "Arrhythmias (rare but serious)",
+        "Reduced consciousness if severe"
+    ],
+    "investigations": [
+        "Serum total and ionized calcium levels (>3.5 mmol/L total calcium)",
+        "U&E: assess renal function",
+        "ECG: short QT interval",
+        "Consider PTH, vitamin D, and malignancy screen (if underlying cause unknown)"
+    ],
+    "diagnosis": [
+        "Confirmed hypercalcemia with compatible clinical symptoms"
+    ],
+    "management_emergency": [
+        "IV 0.9% saline for aggressive rehydration (4-6L/day)",
+        "IV bisphosphonates (e.g., zoledronic acid 4 mg IV over 15 min) once adequately hydrated",
+        "Consider calcitonin for rapid temporary lowering of calcium",
+        "Dialysis if refractory or renal failure present"
+    ],
+    "red_flags": [
+        "Arrhythmias",
+        "Coma",
+        "Acute renal failure"
+    ],
+    "prognosis_disposition": [
+        "Good if treated early with fluids and bisphosphonates",
+        "Poor prognosis if underlying malignancy is the cause"
+    ]
+},
+{
+    "category":"Hyperkalaemia",
+    "title": "Mild to Moderate Hyperkalaemia",
+    "definition": {
+        "serum_potassium": "5.5-6.4 mmol/L",
+        "notes": [
+            "Often asymptomatic but risk of progression to severe hyperkalemia"
+        ]
+    },
+    "symptoms": [
+        "Often asymptomatic",
+        "May have muscle weakness or fatigue"
+    ],
+    "signs": [
+         "Usually normal",
+         " If mnore severe Reduced reflexes, muscle weakness"
+    ],
+    "investigations": [
+        "Serum potassium 5.5-6.4 mmol/L",
+        "Check U&E (renal function), blood glucose",
+        "ECG (may be normal or minor peaked T waves)"
+    ],
+    "diagnosis": [
+        "Confirmed serum potassium 5.5-6.4 mmol/L",
+        "No urgent ECG changes"
+    ],
+    "management_non_emergency": [
+        "Stop potassium-retaining drugs (e.g., ACE inhibitors, ARBs, spironolactone)",
+        "Oral potassium binders if needed (e.g., sodium polystyrene sulfonate)",
+        "Increase potassium excretion: consider loop diuretics (e.g., furosemide)",
+        "Dietary potassium restriction",
+        "Repeat potassium in 6-24 hours depending on clinical status"
+    ],
+    "red_flags": [
+        "Rising potassium >6.5 mmol/L",
+        "ECG changes (peaked T waves, widened QRS)",
+        "Muscle paralysis"
+    ],
+    "prognosis_disposition": [
+        "Good with medication review, dietary advice, and monitoring",
+        "Risk of severe hyperkalemia if untreated"
+    ]
+},
+{
+    "category":"Hyperkalaemia",
+    "title": "Severe Hyperkalemia",
+    "definition": {
+        "serum_potassium": ">6.5 mmol/L",
+        "source": "Oxford EM Handbook",
+        "notes": [
+            "Risk of life-threatening cardiac arrhythmias"
+        ]
+    },
+    "symptoms": [
+        "Often asymptomatic initially",
+        "Muscle weakness",
+        "Fatigue",
+        "Palpitations",
+        "Paresthesia"
+    ],
+    "signs": [
+        "Muscle weakness (ascending)",
+        "Flaccid paralysis (in extreme cases)",
+        "Bradycardia or arrhythmias (on cardiac monitoring)"
+    ],
+    "investigations": [
+        "Serum potassium level (>6.5 mmol/L)",
+        "ECG (Tall peaked T waves, widened QRS, flattened P waves, sine wave pattern)",
+        "U&E to assess renal function",
+        "Blood gas for associated acidosis"
+    ],
+    "diagnosis": [
+        "Hyperkalemia confirmed by serum potassium >6.5 mmol/L",
+        "ECG changes support severity"
+    ],
+    "management_emergency": [
+        "Immediate IV calcium gluconate 10 mL 10% over 5-10 min (cardiac membrane stabilization)",
+        "Insulin + dextrose infusion (e.g., 10 units actrapid in 50 mL of 50% dextrose IV over 15-30 min) to shift K+ intracellularly",
+        "Nebulized salbutamol (10-20 mg) to drive K+ into cells",
+        "Sodium bicarbonate IV if acidosis present",
+        "Stop potassium-sparing drugs (e.g., ACE inhibitors)",
+        "Treat underlying cause",
+        "Consider dialysis if refractory or severe renal failure"
+    ],
+    "red_flags": [
+        "ECG showing sine wave pattern",
+        "Severe bradycardia or cardiac arrest",
+        "Severe muscle weakness affecting breathing"
+    ],
+    "prognosis_disposition": [
+        "Good with prompt recognition and aggressive treatment",
+        "Mortality high if delayed treatment or in cardiac arrest"
+    ]
+},
+{
+    "category":"Hypernatraemia",
+    "title": "Mild to Moderate Hypernatraemia",
+    "definition": {
+        "serum_sodium": "145-159 mmol/L",
+        "notes": [
+            "Risk of progression to severe hypernatremia if untreated"
+        ]
+    },
+    "symptoms": [
+        "Thirst",
+        "Mild confusion",
+        "Lethargy",
+        "Weakness"
+    ],
+    "signs": [
+        "Dry mucous membranes",
+        "Mild tachycardia (if volume depletion)",
+        "Normal neurological examination unless severe"
+    ],
+    "investigations": [
+        "Serum sodium 145-159 mmol/L",
+        "Serum osmolality",
+        "U&E (to assess renal function)",
+        "Urine osmolality (to evaluate concentrating ability)"
+    ],
+    "diagnosis": [
+        "Confirmed serum sodium between 145 and 159 mmol/L",
+        "Clinical assessment of volume status"
+    ],
+    "management_non_emergency": [
+        "Identify and correct underlying cause (dehydration, diabetes insipidus, diuretics)",
+        "Encourage oral fluid intake (preferably hypotonic fluids like water)",
+        "In patients unable to drink: IV 5% dextrose or 0.45% saline slowly",
+        "Avoid rapid correction (>10 mmol/L/day)",
+        "Monitor sodium daily until stable"
+    ],
+    "red_flags": [
+        "Progression to serum sodium >160 mmol/L",
+        "Confusion worsening to seizures or coma"
+    ],
+    "prognosis_disposition": [
+        "Excellent with gradual correction",
+        "Risk of severe neurologic complications if rapid changes"
+    ]
+},
+{
+    "category":"Hypernatraemia",
+    "title": "Severe Hypernatremia",
+    "definition": {
+        "serum_sodium": ">160 mmol/L",
+        "source": "Oxford EM Handbook",
+        "notes": [
+            "Risk of brain shrinkage, intracerebral hemorrhage, and death"
+        ]
+    },
+    "symptoms": [
+        "Thirst (early sign)",
+        "Confusion or altered mental status",
+        "Weakness",
+        "Seizures",
+        "Coma (in severe cases)"
+    ],
+    "signs": [
+        "Dry mucous membranes",
+        "Reduced skin turgor",
+        "Hypotension, tachycardia (if hypovolemic)",
+        "Neurological deficits (in severe cases)"
+    ],
+    "investigations": [
+        "Serum sodium (>160 mmol/L)",
+        "Serum osmolality (elevated)",
+        "Urine osmolality and sodium",
+        "Blood glucose (to rule out hyperglycemia)"
+    ],
+    "diagnosis": [
+        "Confirmed serum sodium >160 mmol/L",
+        "Clinical features consistent with dehydration and neurological symptoms"
+    ],
+    "management_emergency": [
+    {
+        "step": "Correct dehydration slowly",
+        "details": [
+            "Use 5% dextrose or hypotonic saline (0.45% NaCl) IV fluids",
+            "Aim to lower Na+ by no more than 10-12 mmol/L per 24 hours"
+        ]
+    },
+    "Treat underlying cause (e.g., diabetes insipidus, dehydration)",
+    "Monitor sodium levels 4-6 hourly"
+],
+
+    "red_flags": [
+        "Seizures",
+        "Intracranial hemorrhage (due to brain shrinkage)",
+        "Coma",
+        "Death if untreated"
+    ],
+    "prognosis_disposition": [
+        "Good if corrected slowly and carefully",
+        "Rapid correction risks cerebral edema and death"
+    ]
+},
+{
+    "category":"Hypocalcaemia",
+    "title": "Mild to Moderate Hypocalcaemia",
+    "definition": {
+        "serum_corrected_calcium": "1.9-2.1 mmol/L",
+        "notes": [
+            "Risk of progression to severe hypocalcemia if untreated"
+        ]
+    },
+    "symptoms": [
+        "Mild perioral or fingertip numbness/tingling",
+        "Muscle cramps",
+        "Fatigue"
+    ],
+    "signs": [
+        "Chvostek's sign (facial twitching) may be positive",
+        "Mild muscle irritability (rare in mild cases)"
+    ],
+    "investigations": [
+        "Serum calcium (corrected for albumin): 1.9-2.1 mmol/L",
+        "Serum magnesium (often low alongside calcium)",
+        "PTH levels if hypoparathyroidism suspected",
+        "Vitamin D levels"
+    ],
+    "diagnosis": [
+        "Confirmed serum calcium between 1.9 and 2.1 mmol/L",
+        "Identify underlying cause (e.g., vitamin D deficiency, post-thyroidectomy)"
+    ],
+    "management_non_emergency": [
+        "Oral calcium supplementation (e.g., calcium carbonate or calcium citrate)",
+        "Vitamin D supplementation if deficient",
+        "Correct associated magnesium deficiency",
+        "Monitor calcium every 24-48 hours until stable"
+    ],
+    "red_flags": [
+        "Progression to calcium <1.9 mmol/L",
+        "Seizures",
+        "Laryngospasm",
+        "Cardiac arrhythmias (prolonged QT)"
+    ],
+    "prognosis_disposition": [
+        "Excellent with oral replacement and monitoring",
+        "Risk of life-threatening symptoms if untreated"
+    ]
+},
+{
+    "category":"Hypocalcaemia",
+    "title": "Severe Hypocalcemia",
+    "definition": {
+        "serum_corrected_calcium": "<1.9 mmol/L",
+        "source": "Oxford EM Handbook",
+        "notes": [
+            "Risk of tetany, seizures, and cardiac arrhythmias"
+        ]
+    },
+    "symptoms": [
+        "Perioral or fingertip tingling",
+        "Muscle cramps",
+        "Laryngospasm (stridor)",
+        "Seizures",
+        "Confusion or irritability"
+    ],
+    "signs": [
+        "Chvostek's sign (facial twitch with tapping facial nerve)",
+        "Trousseau's sign (carpopedal spasm with BP cuff inflation)",
+        "Tetany",
+        "Prolonged QT interval on ECG"
+    ],
+    "investigations": [
+        "Serum calcium (<1.9 mmol/L corrected)",
+        "Magnesium and phosphate levels",
+        "ECG: prolonged QT interval",
+        "PTH level if underlying cause uncertain"
+    ],
+    "diagnosis": [
+        "Confirmed severe hypocalcemia with or without symptoms"
+    ],
+    "management_emergency": [
+        "IV calcium gluconate 10% 10-20 mL diluted in 50-100 mL 5% dextrose over 10 minutes",
+        "Continuous infusion if necessary",
+        "Correct associated magnesium deficiency",
+        "Treat underlying cause (e.g., hypoparathyroidism, vitamin D deficiency)"
+    ],
+    "red_flags": [
+        "Seizures",
+        "Laryngospasm causing airway obstruction",
+        "Cardiac arrhythmias (torsades de pointes)"
+    ],
+    "prognosis_disposition": [
+        "Excellent with early IV calcium replacement",
+        "Risk of cardiac arrest if untreated"
+    ]
+},
+    {
+    "category":"Hypokalaemia",
+    "title": "Mild to Moderate Hypokalaemia",
+    "definition": {
+        "serum_potassium": "2.5-3.4 mmol/L",
+        "notes": [
+            "Risk of arrhythmias if not corrected"
+        ]
+    },
+    "symptoms": [
+        "Often asymptomatic",
+        "Mild muscle weakness",
+        "Cramps",
+        "Fatigue"
+    ],
+    "signs": [
+         "Normal in mildcases",
+         "Reduced muscle strength if potassium <3.0 mmol/L"
+    ],
+    "investigations": [
+        "Serum potassium 2.5-3.4 mmol/L",
+        "U&E (to assess magnesium, renal function)",
+        "ECG (may be normal or show mild ST depression or U waves)"
+    ],
+    "diagnosis": [
+        "Confirmed potassium between 2.5 and 3.4 mmol/L",
+        "No severe symptoms"
+    ],
+    "management_non_emergency": [
+        "Oral potassium replacement (e.g., Sando-K or potassium chloride tablets)",
+        "Correct associated magnesium deficiency",
+        "Review and adjust diuretics or other causative medications",
+        "Dietary potassium increase (e.g., bananas, orange juice)",
+        "Monitor serum potassium within 24-48 hours"
+    ],
+    "red_flags": [
+        "Severe hypokalemia (<2.5 mmol/L)",
+        "ECG changes (prolonged QT, arrhythmias)",
+        "Severe muscle weakness or paralysis"
+    ],
+    "prognosis_disposition": [
+        "Good with oral supplementation and monitoring",
+        "Risk of severe hypokalemia if not treated"
+    ]
+},
+{
+    "category":"Hypokalaemia",
+    "title": "Severe Hypokalemia",
+    "definition": {
+        "serum_potassium": "<2.5 mmol/L",
+        "source": "Oxford EM Handbook",
+        "notes": [
+            "Risk of life-threatening arrhythmias and muscle weakness"
+        ]
+    },
+    "symptoms": [
+        "Muscle weakness",
+        "Cramps",
+        "Fatigue",
+        "Constipation",
+        "Palpitations (if arrhythmias develop)"
+    ],
+    "signs": [
+        "Muscle weakness, especially proximal",
+        "Hyporeflexia",
+        "Ileus (reduced bowel sounds)",
+        "Cardiac arrhythmias (may cause palpitations or collapse)"
+    ],
+    "investigations": [
+        "Serum potassium (<2.5 mmol/L)",
+        "ECG: flattened T waves, U waves, ST depression, prolonged QT",
+        "U&E to assess magnesium, renal function",
+        "Blood gas (metabolic alkalosis common)"
+    ],
+    "diagnosis": [
+        "Confirmed serum potassium <2.5 mmol/L",
+        "ECG changes supportive"
+    ],
+   "management_emergency": [
+    {
+        "step": "Urgent potassium replacement:",
+        "details": [
+            "IV potassium chloride infusion (e.g., 20-40 mmol KCl in 1L 0.9% saline over 4-6 hours)",
+            "ECG monitoring required"
+        ]
+    },
+    "Correct associated magnesium deficiency",
+    "Stop potassium-losing drugs (e.g., diuretics)",
+    "Treat underlying cause (e.g., diarrhea, vomiting, diuretics)"
+],
+    "red_flags": [
+        "Severe arrhythmias (ventricular fibrillation, asystole)",
+        "Respiratory muscle weakness (leading to respiratory failure)",
+        "Paralytic ileus"
+    ],
+    "prognosis_disposition": [
+        "Good with early recognition and careful potassium replacement",
+        "Mortality high if severe arrhythmia or delayed treatment"
+    ]
+},
+    {
+    "category":"Hyponatraemia",
+    "title": "Mild to Moderate Hyponatraemia",
+    "definition": {
+        "serum_sodium": "125-134 mmol/L",
+        "notes": [
+            "Risk of cerebral edema if sodium falls rapidly"
+        ]
+    },
+    "symptoms": [
+        "Nausea",
+        "Headache",
+        "Mild confusion",
+        "Fatigue or lethargy"
+    ],
+    "signs": [
+        "Often normal examination",
+        "Mild neurological signs if sodium closer to 125 mmol/L (e.g., confusion)"
+    ],
+    "investigations": [
+        "Serum sodium 125-134 mmol/L",
+        "Serum osmolality",
+        "Urine sodium and osmolality",
+        "Blood glucose (exclude hyperglycemia-related pseudohyponatremia)",
+        "Thyroid and cortisol tests if necessary"
+    ],
+    "diagnosis": [
+        "Confirmed sodium 125-134 mmol/L",
+        "Differentiate between hypovolemic, euvolemic, and hypervolemic causes"
+    ],
+    "management_non_emergency": [
+        "Treat underlying cause (e.g., fluid restriction for SIADH, volume replacement if hypovolemic)",
+        "Fluid restriction (if SIADH): typically 800-1000 mL/day",
+        "Oral salt supplementation in some cases",
+        "Slow correction to avoid osmotic demyelination (<8 mmol/L/24 hours)",
+        "Monitor sodium daily"
+    ],
+    "red_flags": [
+        "Sodium <120 mmol/L",
+        "Rapid deterioration in consciousness",
+        "Seizures"
+    ],
+    "prognosis_disposition": [
+        "Excellent with gradual correction",
+        "Poor outcome if overcorrected rapidly (osmotic demyelination)"
+    ]
+},
+{
+    "category":"Hyponatraemia",
+    "title": "Severe Hyponatremia",
+    "definition": {
+        "serum_sodium": "<120 mmol/L",
+        "source": "Oxford EM Handbook",
+        "notes": [
+            "Risk of cerebral edema and seizures"
+        ]
+    },
+    "symptoms": [
+        "Nausea and vomiting",
+        "Headache",
+        "Confusion or altered mental state",
+        "Seizures",
+        "Coma (in severe cases)"
+    ],
+    "signs": [
+        "Reduced level of consciousness",
+        "Focal neurological deficits (if cerebral edema)",
+        "Seizures",
+        "Signs of volume status (hypovolemia, euvolemia, hypervolemia)"
+    ],
+    "investigations": [
+        "Serum sodium (<120 mmol/L)",
+        "Serum osmolality",
+        "Urine sodium and osmolality",
+        "Blood glucose (exclude pseudohyponatremia)",
+        "U&E, thyroid function, cortisol (to assess causes)"
+    ],
+    "diagnosis": [
+        "Confirmed serum sodium <120 mmol/L",
+        "Clinical features of neurological compromise"
+    ],
+    "management_emergency": [
+        {
+        "step":"If severe symptoms (seizures, coma):",
+        
+        "details":["Hypertonic saline (3% NaCl) cautiously: 100 mL over 10 min, repeat if needed",
+        "Aim to raise Na+ by 4-6 mmol/L in first 6 hours"]
+    },
+        "Treat underlying cause (e.g., SIADH, fluid overload, adrenal insufficiency)",
+        "Avoid rapid correction (>8 mmol/L/24h) to prevent osmotic demyelination syndrome"
+    ],
+    "red_flags": [
+        "Seizures",
+        "Cerebral edema",
+        "Respiratory arrest",
+        "Osmotic demyelination syndrome from overly rapid correction"
+    ],
+    "prognosis_disposition": [
+        "Good with controlled correction",
+        "Poor outcomes if seizures, brain herniation, or demyelination occur"
+    ]
+},
+{
+    "title": "Acute Severe Anemia",
+    "definition": {
+        "criteria": "Sudden significant drop in hemoglobin (Hb <70 g/L or symptomatic)",
+        "notes": [
+            "Risk of hypoxia, heart failure, and death"
+        ]
+    },
+    "symptoms": [
+        "Fatigue",
+        "Dizziness or syncope",
+        "Dyspnea (shortness of breath)",
+        "Chest pain (angina)",
+        "Palpitations"
+    ],
+    "signs": [
+        "Pallor (especially conjunctival)",
+        "Tachycardia",
+        "Hypotension",
+        "Signs of heart failure (raised JVP, pulmonary edema)"
+    ],
+    "investigations": [
+        "Full blood count (low Hb)",
+        "Reticulocyte count (response assessment)",
+        "Blood group and crossmatch (for transfusion)",
+        "U&E, LFTs",
+        "Investigations to find cause (e.g., GI bleed, hemolysis)"
+    ],
+    "diagnosis": [
+        "Confirmed low hemoglobin with symptoms",
+        "Clinical urgency determined by severity and signs of hypoxia"
+    ],
+    "management_emergency": [
+        "Oxygen therapy",
+        "Blood transfusion (if Hb <70 g/L or symptomatic)",
+        "Monitor vitals and cardiac status",
+        "Treat underlying cause (e.g., GI bleed, hemolysis, bone marrow failure)"
+    ],
+    "red_flags": [
+        "Acute decompensated heart failure",
+        "Myocardial ischemia (demand ischemia)",
+        "Hypoxic organ failure"
+    ],
+    "prognosis_disposition": [
+        "Good with prompt transfusion and stabilization",
+        "Prognosis depends on underlying cause"
+    ]
+},
+{
+    "title": "Severe Hypoglycemia",
+    "definition": {
+        "criteria": "Blood glucose <2.5 mmol/L (Oxford EM Handbook) or <3.0 mmol/L in diabetics",
+        "notes": [
+            "Immediate risk of coma, seizures, and death"
+        ]
+    },
+    "symptoms": [
+        "Sweating",
+        "Tremor",
+        "Palpitations",
+        "Hunger",
+        "Confusion",
+        "Irritability or aggression",
+        "Drowsiness",
+        "Seizures"
+    ],
+    "signs": [
+        "Tachycardia",
+        "Pallor",
+        "Altered level of consciousness",
+        "Seizures or focal neurological signs (in severe cases)"
+    ],
+    "investigations": [
+        "Capillary blood glucose measurement (finger-prick test)",
+        "Blood glucose laboratory confirmation",
+        "Consider insulin level, C-peptide if insulin overdose suspected"
+    ],
+    "diagnosis": [
+        "Confirmed low blood glucose + clinical symptoms"
+    ],
+    "management_emergency": [
+    {
+        "step": "If conscious and able to swallow:",
+        "details": [
+            "Give 15-20g quick-acting carbohydrate (e.g., glucose tablets, sugary drink)"
+        ]
+    },
+    {
+        "step": "If unconscious or unable to swallow:",
+        "details": [
+            "IV 20% dextrose 75-100 mL bolus",
+            "OR IM glucagon 1 mg if no IV access"
+        ]
+    },
+    "Recheck glucose after 10-15 min and repeat if necessary",
+    "Treat underlying cause (e.g., missed meal, insulin overdose, sepsis)"
+],
+
+    "red_flags": [
+        "Seizures",
+        "Coma",
+        "Prolonged hypoglycemia causing irreversible brain damage"
+    ],
+    "prognosis_disposition": [
+        "Excellent if treated early",
+        "Risk of recurrence if underlying cause not corrected"
+    ]
+},
+{
+    "title": "Severe Metabolic Acidosis",
+    "definition": {
+        "criteria": "Arterial or venous blood pH <7.2 with low bicarbonate",
+        "cause": "Increased acid production or loss of bicarbonate"
+    },
+    "symptoms": [
+        "Rapid breathing (Kussmaul respiration)",
+        "Confusion or drowsiness",
+        "Nausea and vomiting",
+        "Chest pain (if severe hypoperfusion)",
+        "Palpitations"
+    ],
+    "signs": [
+        "Deep, labored breathing (Kussmaul)",
+        "Hypotension",
+        "Dehydration",
+        "Signs of underlying cause (e.g., sepsis, DKA, renal failure)"
+    ],
+    "investigations": [
+        "Arterial blood gas (pH <7.2, low bicarbonate)",
+        "Serum lactate (lactic acidosis)",
+        "Blood glucose (diabetic ketoacidosis)",
+        "U&E, creatinine (renal failure)",
+        "Sepsis screen if infection suspected"
+    ],
+    "diagnosis": [
+        "Low pH (<7.2) and low bicarbonate",
+        "Identify cause (high anion gap vs normal anion gap)"
+    ],
+    "management_emergency": [
+        "Treat underlying cause (e.g., fluids and insulin for DKA, antibiotics for sepsis)",
+        "IV bicarbonate only if pH <6.9 or life-threatening hyperkalemia",
+        "Oxygen therapy if hypoxic",
+        "Dialysis if severe renal failure or refractory acidosis"
+    ],
+    "red_flags": [
+        "Cardiac arrhythmias",
+        "Hypotension and shock",
+        "Coma",
+        "Death if untreated"
+    ],
+    "prognosis_disposition": [
+        "Good with early identification and treatment of cause",
+        "Poor if cause untreated or in multi-organ failure"
+    ]
+},
+{
+    "title": "Severe Metabolic Alkalosis",
+    "definition": {
+        "criteria": "Arterial blood pH >7.6 with elevated bicarbonate",
+        "cause": "Loss of hydrogen ions or gain of bicarbonate"
+    },
+    "symptoms": [
+        "Muscle cramps",
+        "Weakness",
+        "Confusion or irritability",
+        "Paresthesia",
+        "Tetany (rare)"
+    ],
+    "signs": [
+        "Hypoventilation (compensatory)",
+        "Hypotension (if severe dehydration)",
+        "Arrhythmias (prolonged QT interval)"
+    ],
+    "investigations": [
+        "Arterial blood gas (pH >7.6, elevated bicarbonate)",
+        "Serum electrolytes (hypokalemia, hypochloremia common)",
+        "Urinary chloride (helps classify causes)",
+        "ECG (prolonged QT interval)"
+    ],
+    "diagnosis": [
+        "pH >7.6 with elevated bicarbonate",
+        "Clinical context (vomiting, diuretic use, etc.)"
+    ],
+    "management_emergency": [
+        "Correct underlying cause",
+        "IV 0.9% saline to correct volume depletion (chloride-responsive alkalosis)",
+        "Potassium replacement if needed",
+        "Acetazolamide may help increase bicarbonate excretion if saline-resistant",
+        "Dialysis in severe or refractory cases"
+    ],
+    "red_flags": [
+        "Seizures",
+        "Arrhythmias (ventricular tachycardia, torsades de pointes)",
+        "Respiratory failure (due to hypoventilation)"
+    ],
+    "prognosis_disposition": [
+        "Good if underlying cause corrected",
+        "Risk of life-threatening arrhythmias if untreated"
+    ]
+},
+    {
+    "title": "Severe Thrombocytopenia",
+    "definition": {
+        "platelet_count": "<30 x 10^9/L",
+        "source": "Oxford EM Handbook",
+        "notes": [
+            "Risk of spontaneous bleeding, including intracranial hemorrhage"
+        ]
+    },
+    "symptoms": [
+        "Easy bruising",
+        "Petechiae (small red spots)",
+        "Bleeding gums",
+        "Nosebleeds (epistaxis)",
+        "Hematuria (blood in urine)"
+    ],
+    "signs": [
+        "Petechiae, purpura",
+        "Mucosal bleeding (e.g., oral, nasal)",
+        "Signs of anemia if significant blood loss",
+        "Signs of underlying cause (e.g., splenomegaly in hematologic disorders)"
+    ],
+    "investigations": [
+        "Full blood count (isolated low platelet count)",
+        "Blood film (to exclude pseudothrombocytopenia or malignancy)",
+        "Coagulation screen (PT, APTT)",
+        "Viral serologies (e.g., HIV, hepatitis)",
+        "Bone marrow biopsy if cause unclear"
+    ],
+    "diagnosis": [
+        "Platelet count <30 x 10^9/L with or without bleeding symptoms"
+    ],
+    "management_emergency": [
+        "Urgent hematology consultation",
+        "Platelet transfusion if active bleeding or very low count (<10 x 10^9/L even without bleeding)",
+        "Treat underlying cause (e.g., stop offending drugs, treat infection)",
+        "IV immunoglobulin (IVIG) or steroids if immune-mediated (e.g., ITP)"
+    ],
+    "red_flags": [
+        "Intracranial hemorrhage",
+        "Massive gastrointestinal bleeding",
+        "Life-threatening mucosal bleeding"
+    ],
+    "prognosis_disposition": [
+        "Good if underlying cause is reversible and managed promptly",
+        "Poor prognosis if associated with bone marrow failure or advanced malignancy"
+    ]
+}
+]

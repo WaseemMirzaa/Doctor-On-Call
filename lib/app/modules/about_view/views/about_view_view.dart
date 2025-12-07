@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
+import '../../../../config/AppImages.dart';
 import '../controllers/about_view_controller.dart';
 import 'mini_widgets/subscription_card.dart';
 

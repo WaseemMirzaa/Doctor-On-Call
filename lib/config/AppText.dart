@@ -111,7 +111,7 @@ class AppText {
 
   // about view texts
   static const String aboutDesc =
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud ';
+      "Dr OnCall is a clinical decision support tool built to guide healthcare professionals through the rapid assessment and safe management of emergency presentations. Designed by practicing clinicians, it delivers structured, evidence-based summaries grounded in trusted sources such as NICE CKS. Whether you’re on call, on a ward round, or handling urgent cases in primary or secondary care, Dr OnCall helps you think clearly under pressure. It is not a substitute for clinical judgment, but a focused companion in acute care decision-making.";
   static const String subscription = 'Subscription';
   static const String trial = 'Free Trial';
   static const String plan = 'Basic Plan';
@@ -135,4 +135,12 @@ class AppText {
   static const String accessToCoreFeatures = 'Access to core features/content.';
   static const String accessToEmergencyCondition =
       'Access to 2–3 emergency conditions';
+
+  static const String disclaimer = 'Disclaimer';
+  static const String disclaimerContent =
+      'Dr OnCall is intended solely for use by qualified healthcare professionals.\nThe content provided is for informational and support purposes only. While it aligns with national guidelines, it does not constitute definitive medical advice or replace clinical judgment. Users are responsible for verifying decisions with local policies, current evidence, and senior clinical guidance. The creators of Dr OnCall accept no liability for any medical outcomes, errors, or adverse events resulting from use of the app. When in doubt, escalate care immediately.';
+
+  static const String copyRight = 'Copyright';
+  static const String copyRightContent =
+      '© 2025 Dr OnCall / med4u.app. All rights reserved.\nAll content, including clinical pathways, structure, and design elements, is the intellectual property of the creators of Dr OnCall. No part of this application may be reproduced, distributed, or modified without written permission. Unauthorized use may result in legal action.';
 }

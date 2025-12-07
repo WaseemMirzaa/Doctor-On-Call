@@ -2,6 +2,7 @@ import 'package:dr_on_call/app/widgets/filter_items.dart';
 import 'package:dr_on_call/config/AppColors.dart';
 import 'package:dr_on_call/config/AppIcons.dart';
 import 'package:dr_on_call/config/AppTextStyle.dart';
+import 'package:dr_on_call/app/utils/text_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -13,7 +14,10 @@ class SymptomSelectionWidget extends StatefulWidget {
   final double spacing;
   final bool showHeartIcon;
   final bool showRecentIcon;
+  final bool showSearch;
   final bool showFilter;
+  final Map<String, bool>? favoriteStates; // External favorite states
+  final Function(String)? onFavoriteToggle; // Callback for favorite toggle
 
   const SymptomSelectionWidget({
     Key? key,
@@ -25,6 +29,9 @@ class SymptomSelectionWidget extends StatefulWidget {
     this.showHeartIcon = false,
     this.showRecentIcon = false,
     this.showFilter = false,
+    this.favoriteStates,
+    this.onFavoriteToggle,
+    this.showSearch = true,
   }) : super(key: key);
 
   @override
@@ -58,44 +65,46 @@ class _SymptomSelectionWidgetState extends State<SymptomSelectionWidget> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           // Search field
-          Row(
-            children: [
-              Expanded(
-                child: Container(
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Center(
-                    child: TextField(
-                      onChanged: (value) {
-                        setState(() {
-                          _searchQuery = value;
-                        });
-                      },
-                      decoration: InputDecoration(
-                        hintText: 'Search',
-                        hintStyle: AppTextStyles.regular
-                            .copyWith(fontSize: 14, color: AppColors.darkBlue),
-                        prefixIcon: const Icon(Icons.search_rounded,
-                            color: Colors.black),
-                        border: InputBorder.none,
-                        contentPadding:
-                            const EdgeInsets.symmetric(vertical: 12),
+
+          if (widget.showSearch)
+            Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Center(
+                      child: TextField(
+                        onChanged: (value) {
+                          setState(() {
+                            _searchQuery = value;
+                          });
+                        },
+                        decoration: InputDecoration(
+                          hintText: 'Search',
+                          hintStyle: AppTextStyles.regular.copyWith(
+                              fontSize: 14, color: AppColors.darkBlue),
+                          prefixIcon: const Icon(Icons.search_rounded,
+                              color: Colors.black),
+                          border: InputBorder.none,
+                          contentPadding:
+                              const EdgeInsets.symmetric(vertical: 12),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              if (widget.showFilter)
-                SizedBox(
-                  height: 50,
-                  width: 60,
-                  child: FilterItems(),
-                ),
-            ],
-          ),
+                if (widget.showFilter)
+                  SizedBox(
+                    height: 50,
+                    width: 60,
+                    child: FilterItems(),
+                  ),
+              ],
+            ),
           const SizedBox(height: 16),
           if (filteredSymptoms.isEmpty)
             const Center(
@@ -115,101 +124,120 @@ class _SymptomSelectionWidgetState extends State<SymptomSelectionWidget> {
             // Symptom list
             ...filteredSymptoms.map((symptom) {
               final isSelected = _selectedSymptom == symptom;
-              final isHeartActive = _heartStates[symptom] ?? false;
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
-                child: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      _selectedSymptom = symptom;
-                      widget.onSymptomTap(symptom);
-                    });
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 10.0),
-                    child: Container(
-                      height: 60,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(
-                          color: const Color(0xFFEEC643), // Yellow border
-                          width: 1,
-                        ),
-                        gradient: isSelected
-                            ? LinearGradient(
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                                colors: [
-                                  const Color(0xFF0A1A2F).withOpacity(0.7),
-                                  const Color(0xFF0A1A3F),
-                                ],
-                              )
-                            : null,
-                      ),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                            right: 10.0,
-                            left: 10,
+              final isHeartActive = widget.favoriteStates?[symptom] ??
+                  _heartStates[symptom] ??
+                  false;
+              return Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _selectedSymptom = symptom;
+                          widget.onSymptomTap(symptom);
+                        });
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 10.0),
+                        child: Container(
+                          height: 60,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                              color: const Color(0xFFEEC643), // Yellow border
+                              width: 1,
+                            ),
+                            gradient: isSelected
+                                ? LinearGradient(
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
+                                    colors: [
+                                      const Color(0xFF0A1A2F).withOpacity(0.7),
+                                      const Color(0xFF0A1A3F),
+                                    ],
+                                  )
+                                : null,
                           ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  symptom,
-                                  style: AppTextStyles.bold.copyWith(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w500,
-                                      color: AppColors.txtWhiteColor),
-                                ),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                right: 10.0,
+                                left: 10,
                               ),
-                              // Heart icon with separate tap handler
-                              if (widget.showHeartIcon)
-                                GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      _heartStates[symptom] =
-                                          !(_heartStates[symptom] ?? false);
-                                      // Notify parent of selection change
-                                      widget.onSelectionChanged(_heartStates
-                                          .entries
-                                          .where((entry) => entry.value)
-                                          .map((entry) => entry.key)
-                                          .toList());
-                                    });
-                                  },
-                                  child: Image.asset(
-                                    isHeartActive
-                                        ? AppIcons.like
-                                        : AppIcons.heart,
-                                    width: 25,
-                                    height: 25,
-                                    color: isHeartActive
-                                        ? Colors.grey
-                                        : AppColors.txtRedColor,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      symptom.formatTitleCase,
+                                      style: AppTextStyles.bold.copyWith(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w500,
+                                          color: AppColors.txtWhiteColor),
+                                    ),
                                   ),
-                                ),
-                              // Recent icon
-                              if (widget.showRecentIcon)
-                                Image.asset(
-                                  AppIcons.recent,
-                                  width: 25,
-                                  height: 25,
-                                  color: isSelected
-                                      ? AppColors.txtOrangeColor
-                                      : AppColors.txtWhiteColor,
-                                ),
-                            ],
+                                  // Heart icon with separate tap handler
+                                  if (widget.showHeartIcon)
+                                    GestureDetector(
+                                      onTap: () {
+                                        if (widget.onFavoriteToggle != null) {
+                                          // Use external callback if provided
+                                          widget.onFavoriteToggle!(symptom);
+                                        } else {
+                                          // Fallback to internal state management
+                                          setState(() {
+                                            _heartStates[symptom] =
+                                                !(_heartStates[symptom] ??
+                                                    false);
+                                            // Notify parent of selection change
+                                            widget.onSelectionChanged(
+                                                _heartStates
+                                                    .entries
+                                                    .where(
+                                                        (entry) => entry.value)
+                                                    .map((entry) => entry.key)
+                                                    .toList());
+                                          });
+                                        }
+                                      },
+                                      child: Image.asset(
+                                        !isHeartActive
+                                            ? AppIcons.like
+                                            : AppIcons.heart,
+                                        width: 25,
+                                        height: 25,
+                                        color: !isHeartActive
+                                            ? Colors.grey
+                                            : AppColors.txtRedColor,
+                                      ),
+                                    ),
+                                  // Recent icon
+                                  if (widget.showRecentIcon)
+                                    Image.asset(
+                                      AppIcons.recent,
+                                      width: 25,
+                                      height: 25,
+                                      color: isSelected
+                                          ? AppColors.txtOrangeColor
+                                          : AppColors.txtWhiteColor,
+                                    ),
+                                ],
+                              ),
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                ],
               );
-            }).toList(),
+            }).toList()
         ],
       ),
     );

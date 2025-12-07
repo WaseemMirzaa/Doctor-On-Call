@@ -1,23 +1,62 @@
 import 'package:get/get.dart';
 
 import '../../../routes/app_pages.dart';
+import '../../../services/subscription_manager_service.dart';
 
 class HomeController extends GetxController {
   final selectedBottomNavIndex = 0.obs;
+  final isPremiumUser = false.obs;
+  final currentPlan = 'Free Trial'.obs;
+  final subscriptionStatusMessage = ''.obs;
 
   @override
   void onInit() {
     super.onInit();
+    _initializeSubscription();
   }
 
   @override
   void onReady() {
     super.onReady();
+    _loadSubscriptionStatus();
   }
 
   @override
   void onClose() {
     super.onClose();
+  }
+
+  /// Initialize subscription (trial start date, etc.)
+  Future<void> _initializeSubscription() async {
+    await SubscriptionManagerService.initializeTrialIfNeeded();
+  }
+
+  /// Load subscription status from local storage
+  Future<void> _loadSubscriptionStatus() async {
+    try {
+      isPremiumUser.value = await SubscriptionManagerService.isPremiumUser();
+      currentPlan.value = await SubscriptionManagerService.getCurrentPlan();
+      subscriptionStatusMessage.value =
+          await SubscriptionManagerService.getAccessStatusMessage();
+
+      // Get view count and trial status
+      final viewCount = await SubscriptionManagerService.getContentViewCount();
+      final isInTrial = await SubscriptionManagerService.isInFreeTrial();
+      final remainingViews =
+          await SubscriptionManagerService.getRemainingFreeViews();
+
+      print(
+          '📱 Home: Premium=${isPremiumUser.value}, Plan=${currentPlan.value}');
+      print(
+          '👁️ View Count: $viewCount | InTrial: $isInTrial | Remaining: $remainingViews');
+    } catch (e) {
+      print('❌ Error loading subscription status: $e');
+    }
+  }
+
+  /// Refresh subscription status (call this when returning to home)
+  Future<void> refreshSubscriptionStatus() async {
+    await _loadSubscriptionStatus();
   }
 
   void changeBottomNavIndex(int index) {

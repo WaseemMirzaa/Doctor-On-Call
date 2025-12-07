@@ -5,31 +5,30 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-import '../../../../config/AppText.dart';
-import '../../../widgets/symptom_selection_widget.dart';
 import '../controllers/clinical_presentations_controller.dart';
 
 class ClinicalPresentationsView
     extends GetView<ClinicalPresentationsController> {
   const ClinicalPresentationsView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BackgroundContainer(
-          child: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 15.0, top: 5),
-              child: ClinicalHeader(),
-            ),
-            SizedBox(
-              height: 50,
-            ),
-            ClinicalList(),
-          ],
+        child: RefreshIndicator(
+          onRefresh: () => controller.refreshPresentations(),
+          color: Colors.white,
+          backgroundColor: Colors.blue,
+          child: Column(
+            children: [
+              const ClinicalHeader(),
+              const SizedBox(height: 20),
+              Expanded(
+                  child: SingleChildScrollView(child: const ClinicalList())),
+            ],
+          ),
         ),
-      )),
+      ),
     );
   }
 }

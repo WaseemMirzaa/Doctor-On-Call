@@ -29,7 +29,6 @@ class PlanCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(right: 30.0, left: 30),
       child: Container(
-        height: 213,
         margin: const EdgeInsets.symmetric(vertical: 10),
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
@@ -43,6 +42,7 @@ class PlanCard extends StatelessWidget {
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
           children: [
             Row(
               children: [
@@ -71,19 +71,23 @@ class PlanCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 12),
-            ...features.map((feature) => Row(
-                  children: [
-                    const Icon(Icons.check_box, color: Colors.white, size: 20),
-                    const SizedBox(width: 8),
-                    const SizedBox(height: 25),
-                    Expanded(
-                      child: Text(feature,
-                          style: AppTextStyles.regular.copyWith(fontSize: 12)),
-                    )
-                  ],
+            ...features.map((feature) => Padding(
+                  padding: const EdgeInsets.only(bottom: 8.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Icon(Icons.check_box,
+                          color: Colors.white, size: 20),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(feature,
+                            style:
+                                AppTextStyles.regular.copyWith(fontSize: 12)),
+                      )
+                    ],
+                  ),
                 )),
-            // const SizedBox(height: 10),
-            Spacer(),
+            const SizedBox(height: 10),
             SizedBox(
               width: double.infinity,
               height: 43,
