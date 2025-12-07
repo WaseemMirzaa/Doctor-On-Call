@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 
 import '../../../routes/app_pages.dart';
+import '../../../services/revenuecat_service.dart';
 import '../../../services/subscription_manager_service.dart';
 
 class HomeController extends GetxController {
@@ -31,9 +32,17 @@ class HomeController extends GetxController {
     await SubscriptionManagerService.initializeTrialIfNeeded();
   }
 
-  /// Load subscription status from local storage
+  /// Load subscription status from RevenueCat and local storage
   Future<void> _loadSubscriptionStatus() async {
     try {
+      // First, sync with RevenueCat to get latest status
+      print('🔄 Home: Syncing with RevenueCat...');
+      final hasPremium = await RevenueCatService.isPremiumUser();
+
+      // Update local cache
+      await SubscriptionManagerService.setPremiumStatus(hasPremium);
+
+      // Load from local cache
       isPremiumUser.value = await SubscriptionManagerService.isPremiumUser();
       currentPlan.value = await SubscriptionManagerService.getCurrentPlan();
       subscriptionStatusMessage.value =
@@ -46,11 +55,14 @@ class HomeController extends GetxController {
           await SubscriptionManagerService.getRemainingFreeViews();
 
       print(
-          '📱 Home: Premium=${isPremiumUser.value}, Plan=${currentPlan.value}');
+          '✅ Home: Premium=${isPremiumUser.value}, Plan=${currentPlan.value}');
       print(
           '👁️ View Count: $viewCount | InTrial: $isInTrial | Remaining: $remainingViews');
     } catch (e) {
       print('❌ Error loading subscription status: $e');
+      // Fallback to local cache only
+      isPremiumUser.value = await SubscriptionManagerService.isPremiumUser();
+      currentPlan.value = await SubscriptionManagerService.getCurrentPlan();
     }
   }
 

@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../routes/app_pages.dart';
 import '../../../widgets/custom_snack_bar.dart';
+import '../../../services/revenuecat_service.dart';
 
 class LoginController extends GetxController {
   final emailController = TextEditingController();
@@ -31,7 +32,8 @@ class LoginController extends GetxController {
     isLoading.value = true;
 
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
+      final userCredential =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -39,6 +41,13 @@ class LoginController extends GetxController {
       // ✅ Set isLoggedIn flag in SharedPreferences
       final prefs = await SharedPreferences.getInstance();
       await prefs.setBool('isLoggedIn', true);
+
+      // ✅ Link RevenueCat user ID with Firebase UID
+      final uid = userCredential.user?.uid;
+      if (uid != null) {
+        await RevenueCatService.setUserId(uid);
+        print('✅ RevenueCat user ID set: $uid (handles cross-device sync)');
+      }
 
       CustomSnackBar.success("Logged in successfully!");
       emailController.clear();

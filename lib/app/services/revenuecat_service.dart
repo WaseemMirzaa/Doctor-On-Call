@@ -17,7 +17,7 @@ class RevenueCatService {
   static const String oneTimePurchaseId = 'one_time_fee';
 
   // Entitlement identifier (configured in RevenueCat Dashboard)
-  static const String premiumEntitlementId = 'premium';
+  static const String premiumEntitlementId = 'Pro';
 
   /// Initialize RevenueCat SDK
   static Future<void> initialize() async {
@@ -197,10 +197,27 @@ class RevenueCatService {
   static Future<bool> isPremiumUser() async {
     try {
       final customerInfo = await Purchases.getCustomerInfo();
+
+      // Debug: Print all entitlements
+      print('🔍 Checking entitlements...');
+      print(
+          '   All entitlements: ${customerInfo.entitlements.all.keys.toList()}');
+
+      for (var entry in customerInfo.entitlements.all.entries) {
+        print(
+            '   - ${entry.key}: isActive=${entry.value.isActive}, willRenew=${entry.value.willRenew}');
+      }
+
+      // Debug: Print all active purchases
+      print('🔍 Active purchases:');
+      for (var entry in customerInfo.allPurchasedProductIdentifiers) {
+        print('   - Product: $entry');
+      }
+
       final hasPremium =
           customerInfo.entitlements.all[premiumEntitlementId]?.isActive ??
               false;
-      print('Premium status: $hasPremium');
+      print('✅ Premium status for "$premiumEntitlementId": $hasPremium');
       return hasPremium;
     } catch (e) {
       print('❌ Error checking premium status: $e');
@@ -215,6 +232,21 @@ class RevenueCatService {
       return customerInfo;
     } catch (e) {
       print('❌ Error getting customer info: $e');
+      return null;
+    }
+  }
+
+  /// Force sync customer info from RevenueCat servers
+  /// Use this when you suspect the local cache is out of sync
+  static Future<CustomerInfo?> syncCustomerInfo() async {
+    try {
+      print('🔄 Syncing customer info from RevenueCat servers...');
+      // Calling getCustomerInfo will fetch latest from server
+      final customerInfo = await Purchases.getCustomerInfo();
+      print('✅ Customer info synced');
+      return customerInfo;
+    } catch (e) {
+      print('❌ Error syncing customer info: $e');
       return null;
     }
   }

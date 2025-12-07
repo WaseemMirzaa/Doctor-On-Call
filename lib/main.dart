@@ -1,5 +1,6 @@
 import 'package:dr_on_call/config/AppImages.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -38,6 +39,16 @@ void main() async {
 
     // Initialize trial if needed
     await SubscriptionManagerService.initializeTrialIfNeeded();
+
+    // If user is logged in, link RevenueCat (it handles cross-device sync)
+    if (isLoggedIn) {
+      final user = await FirebaseAuth.instance.authStateChanges().first;
+      if (user != null) {
+        await RevenueCatService.setUserId(user.uid);
+        print(
+            '✅ User authenticated - RevenueCat linked (cross-device sync enabled)');
+      }
+    }
 
     // Optional: Precache image if needed later
     final bindingContext = WidgetsBinding.instance;

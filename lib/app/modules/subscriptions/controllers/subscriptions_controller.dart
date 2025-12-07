@@ -118,6 +118,10 @@ class SubscriptionsController extends GetxController {
   /// Check if user has premium access
   Future<void> checkPremiumStatus() async {
     try {
+      // Force sync from RevenueCat servers to get latest status
+      print('🔄 Syncing with RevenueCat...');
+      await RevenueCatService.syncCustomerInfo();
+
       final hasPremium = await RevenueCatService.isPremiumUser();
       isPremiumUser.value = hasPremium;
 
@@ -131,7 +135,8 @@ class SubscriptionsController extends GetxController {
       // Update current plan display
       currentPlan.value = await SubscriptionManagerService.getCurrentPlan();
 
-      print('Premium status: $hasPremium');
+      print('✅ Final premium status: $hasPremium');
+      print('✅ Current plan: ${currentPlan.value}');
     } catch (e) {
       print('❌ Error checking premium status: $e');
 
@@ -258,6 +263,38 @@ class SubscriptionsController extends GetxController {
   /// Refresh offerings and status
   Future<void> refresh() async {
     await _initializeRevenueCat();
+  }
+
+  /// Force sync with RevenueCat (for debugging/manual refresh)
+  Future<void> forceSyncWithRevenueCat() async {
+    try {
+      isLoading.value = true;
+
+      Get.snackbar(
+        'Syncing',
+        'Refreshing subscription status...',
+        snackPosition: SnackPosition.BOTTOM,
+        duration: const Duration(seconds: 2),
+      );
+
+      await checkPremiumStatus();
+
+      if (isPremiumUser.value) {
+        Get.snackbar(
+          'Success',
+          'You have premium access!',
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      } else {
+        Get.snackbar(
+          'Status',
+          'No premium subscription found',
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      }
+    } finally {
+      isLoading.value = false;
+    }
   }
 
   /// Get platform-specific product information

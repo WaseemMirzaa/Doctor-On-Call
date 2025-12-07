@@ -1,6 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// Service to manage subscription status, free trial, and content access limits
+/// Uses SharedPreferences for local caching - RevenueCat handles cloud sync
 class SubscriptionManagerService {
   // SharedPreferences keys
   static const String _keyIsPremium = 'is_premium_user';
@@ -21,7 +22,7 @@ class SubscriptionManagerService {
     return prefs.getBool(_keyIsPremium) ?? false;
   }
 
-  /// Set premium status
+  /// Set premium status (local cache only - RevenueCat is source of truth)
   static Future<void> setPremiumStatus(bool isPremium) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool(_keyIsPremium, isPremium);
@@ -34,7 +35,8 @@ class SubscriptionManagerService {
       await prefs.setString(_keyCurrentPlan, 'Free Trial');
     }
 
-    print('✅ Premium status set to: $isPremium');
+    print(
+        '✅ Premium status set to: $isPremium (RevenueCat syncs across devices)');
   }
 
   /// Get current plan name

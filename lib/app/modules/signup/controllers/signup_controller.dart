@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../routes/app_pages.dart';
+import '../../../services/revenuecat_service.dart';
 import '../../../widgets/custom_snack_bar.dart';
 
 class SignupController extends GetxController {
@@ -67,7 +68,11 @@ class SignupController extends GetxController {
         'createdAt': FieldValue.serverTimestamp(),
       });
 
-      // // ✅ Step 3: Sign out AFTER saving
+      // ✅ Step 3: Link RevenueCat user ID (handles subscription sync)
+      await RevenueCatService.setUserId(uid);
+      print('✅ RevenueCat user ID set for new user: $uid');
+
+      // // ✅ Step 4: Sign out AFTER saving
       // await FirebaseAuth.instance.signOut();
 
       CustomSnackBar.success("Account created. Please log in.");
