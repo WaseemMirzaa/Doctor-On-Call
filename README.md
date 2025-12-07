@@ -64,7 +64,7 @@ Whether you're **on call**, **on a ward round**, or handling urgent cases in **p
 * Android Studio or Xcode
 * Emulator or physical device
 
-# Project Structure (Example)
+# Project Structure
 
 ```
 lib/
