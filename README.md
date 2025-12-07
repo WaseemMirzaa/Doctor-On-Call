@@ -50,7 +50,7 @@ Whether you're **on call**, **on a ward round**, or handling urgent cases in **p
 * **Framework:** Flutter 3.x
 * **Language:** Dart
 * **State Management:** GetX
-* **Database/Storage:** Firebase *(update based on app)*
+* **Database/Storage:** Firebase
 * **Platforms:** Android & iOS
 
 ---
