@@ -1,16 +1,120 @@
-# dr_on_call
+# Dr OnCall
 
-A new Flutter project.
+*A Flutter-based clinical decision support tool for rapid emergency assessment.*
 
-## Getting Started
+![Status](https://img.shields.io/badge/status-active-brightgreen)
+![Flutter](https://img.shields.io/badge/flutter-3.x-blue)
+![Platform](https://img.shields.io/badge/platform-ios%20%7C%20android-lightgrey)
+![License](https://img.shields.io/badge/license-MIT-blue)
 
-This project is a starting point for a Flutter application.
+---
 
-A few resources to get you started if this is your first Flutter project:
+# Overview
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+**Dr OnCall** is a Flutter-powered clinical decision support app that helps healthcare professionals rapidly assess and safely manage emergency presentations.
+Designed by practicing clinicians, the app provides **structured, evidence-based summaries** grounded in trusted sources such as **NICE CKS**.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Whether you're **on call**, **on a ward round**, or handling urgent cases in **primary or secondary care**, Dr OnCall delivers clarity and structure when decisions need to be made fast.
+
+> ⚠️ *Dr OnCall is not a substitute for clinical judgment, but a focused companion for real-world acute care.*
+
+---
+
+# Features
+
+## 🩺 Rapid Clinical Assessment
+
+* Streamlined pathways for emergency and urgent care
+* Red flags, investigations, and acute management steps
+
+## 📚 Evidence-Based Summaries
+
+* Based on established clinical resources (e.g., NICE CKS)
+* Presented in structured, actionable sections
+
+## 📱 Cross-Platform Flutter App
+
+* Works seamlessly on **iOS** and **Android**
+* Clean, responsive UI for use under pressure
+
+## ⚡ Built for On-Call Use
+
+* Minimal taps
+* Fast access
+* Intuitive design
+
+---
+
+# Tech Stack
+
+* **Framework:** Flutter 3.x
+* **Language:** Dart
+* **State Management:** GetX
+* **Database/Storage:** Firebase *(update based on app)*
+* **Platforms:** Android & iOS
+
+---
+
+# Getting Started
+
+## Prerequisites
+
+* Flutter SDK 3.x
+* Dart SDK
+* Android Studio or Xcode
+* Emulator or physical device
+
+# Project Structure (Example)
+
+```
+lib/
+  ├── models/
+  ├── screens/
+  ├── widgets/
+  ├── services/
+  ├── data/
+  ├── utils/
+  └── main.dart
+assets/
+  └── screenshots/
+```
+
+---
+
+# Roadmap
+
+* [ ] Offline caching of clinical content
+* [ ] Expanded topics and algorithms
+* [ ] Bookmarks & favourites
+* [ ] Dark mode
+* [ ] In-app search enhancements
+* [ ] Feedback module
+* [ ] Publish to Play Store & App Store
+
+---
+
+# License
+
+Licensed under the **MIT License**.
+See the `LICENSE` file for details.
+
+---
+
+# Clinical Disclaimer
+
+Dr OnCall provides **supporting information only**.
+It does **not** replace:
+
+* Clinical expertise
+* Local or hospital guidelines
+* Emergency services
+
+Always apply professional judgment and verify using official sources.
+
+---
+
+# Contact
+
+📧 **[m.waseemmirzaa@gmail.com](mailto:m.waseemmirzaa@gmail.com)**
+
+---
