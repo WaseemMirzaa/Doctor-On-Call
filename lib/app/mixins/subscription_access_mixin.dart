@@ -10,8 +10,14 @@ mixin SubscriptionAccessMixin {
     bool showDialogOnDenied = true,
   }) async {
     if (await SubscriptionManagerService.canAccessContent()) {
-      // Increment access count for trial users
-      await SubscriptionManagerService.incrementDailyAccessCount();
+      // Increment access count ONLY for non-premium users AFTER trial expires
+      // During trial (first 7 days): unlimited access, no counting needed
+      final isPremium = await SubscriptionManagerService.isPremiumUser();
+      final isInTrial = await SubscriptionManagerService.isInFreeTrial();
+
+      if (!isPremium && !isInTrial) {
+        await SubscriptionManagerService.incrementDailyAccessCount();
+      }
 
       // Execute the callback
       await onAccessGranted();

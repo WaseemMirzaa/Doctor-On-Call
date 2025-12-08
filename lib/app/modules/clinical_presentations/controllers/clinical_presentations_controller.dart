@@ -98,12 +98,7 @@ class ClinicalPresentationsController extends GetxController {
 
       // Load favorite states for the main list items
       await loadFavoriteStates();
-
-      print('Loaded ${presentations.length} presentations');
-      print('Found ${mainCategories.length} main categories');
-      print('Grouped presentations: ${groupedPresentations.length}');
     } catch (e) {
-      print('Error loading presentations: $e');
       Get.snackbar(
         'Error',
         'Failed to load clinical presentations: ${e.toString()}',
@@ -237,9 +232,7 @@ class ClinicalPresentationsController extends GetxController {
         await SubscriptionAccessHelper.showRemainingViewsWarning();
         await SubscriptionAccessHelper.showTrialExpiryWarning();
       }
-    } catch (e) {
-      print('Error handling presentation tap: $e');
-    }
+    } catch (e) {}
   }
 
   /// Handle main category tap
@@ -330,9 +323,7 @@ class ClinicalPresentationsController extends GetxController {
   Future<void> testConnection() async {
     try {
       await ClinicalPresentationsService.testConnection();
-    } catch (e) {
-      print('Connection test failed: $e');
-    }
+    } catch (e) {}
   }
 
   Future<void> loadPresentationByTitle(String title) async {
@@ -345,12 +336,8 @@ class ClinicalPresentationsController extends GetxController {
         currentPresentation.value = presentation;
         // Store recent activity when presentation is loaded
         await _storeRecentActivity(title);
-      } else {
-        print('Presentation not found');
-      }
-    } catch (e) {
-      print('Error loading presentation: $e');
-    }
+      } else {}
+    } catch (e) {}
   }
 
   Future<void> _storeRecentActivity(String title) async {
@@ -365,7 +352,6 @@ class ClinicalPresentationsController extends GetxController {
         type: 'clinical_presentation',
       );
     } catch (e) {
-      print('Error storing recent activity: $e');
       // Don't throw error here as it shouldn't affect the main functionality
     }
   }
@@ -404,9 +390,7 @@ class ClinicalPresentationsController extends GetxController {
 
       // print('Total favorite states loaded: ${favoriteStates.length}');
       // print('=== End loadFavoriteStates ===');
-    } catch (e) {
-      print('Error loading favorite states: $e');
-    }
+    } catch (e) {}
   }
 
   /// Toggle favorite status for an item
@@ -416,12 +400,6 @@ class ClinicalPresentationsController extends GetxController {
           selectedCategory.value.isEmpty ? 'General' : selectedCategory.value;
       final itemId = FavoritesService.generateItemId(
           item, category, FavoriteType.clinicalPresentations);
-
-      print('=== Clinical Presentations toggleFavorite ===');
-      print('Item: "$item"');
-      print('Category: "$category"');
-      print('Item ID: "$itemId"');
-      print('Current view: ${currentView.value}');
 
       final success = await FavoritesService.toggleFavorite(
         itemId: itemId,
@@ -435,13 +413,8 @@ class ClinicalPresentationsController extends GetxController {
         final newStates = Map<String, bool>.from(favoriteStates);
         newStates[item] = !(favoriteStates[item] ?? false);
         favoriteStates.assignAll(newStates);
-        print('Successfully toggled favorite. New state: ${newStates[item]}');
-      } else {
-        print('Failed to toggle favorite');
-      }
-    } catch (e) {
-      print('Error toggling favorite: $e');
-    }
+      } else {}
+    } catch (e) {}
   }
 
   /// Check if an item is favorite

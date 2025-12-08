@@ -73,7 +73,6 @@ class ClinicalDiagnosisController extends GetxController {
       await loadFavoriteStates();
     } catch (e) {
       errorMessage.value = 'Failed to load items: $e';
-      print('Error loading main list items: $e');
     } finally {
       isLoadingMainList.value = false;
     }
@@ -82,33 +81,23 @@ class ClinicalDiagnosisController extends GetxController {
   /// Handle item tap from main list
   Future<void> onMainListItemTap(String item) async {
     try {
-      print('=== DEBUG Clinical: Item tapped: $item ===');
-
       // Check if this item is a category or standalone title
       final bool isCategory = await ClinicalDiagnosisServices.isCategory(item);
 
-      print('DEBUG Clinical: Is category: $isCategory');
-
       if (isCategory) {
         // It's a category - load titles within this category
-        print('DEBUG Clinical: Loading titles for category: $item');
         selectedCategory.value = item;
         isInCategoryView.value = true;
         await loadTitlesInCategory(item);
         // Reload favorite states for category titles
         await loadFavoriteStates();
-        print(
-            'DEBUG Clinical: Category titles loaded: ${categoryTitles.length}');
-        print('DEBUG Clinical: Category titles: ${categoryTitles.toList()}');
       } else {
         // It's a standalone title - load the diagnosis data directly
-        print('DEBUG Clinical: Loading diagnosis for standalone title: $item');
         selectedTitle.value = item;
         await loadDiagnosisByTitle(item);
       }
     } catch (e) {
       errorMessage.value = 'Failed to process item: $e';
-      print('Error handling main list item tap: $e');
     }
   }
 
@@ -123,7 +112,6 @@ class ClinicalDiagnosisController extends GetxController {
       categoryTitles.assignAll(titles);
     } catch (e) {
       errorMessage.value = 'Failed to load titles: $e';
-      print('Error loading titles in category: $e');
     } finally {
       isLoadingTitles.value = false;
     }
@@ -149,7 +137,6 @@ class ClinicalDiagnosisController extends GetxController {
       }
     } catch (e) {
       errorMessage.value = 'Failed to load diagnosis: $e';
-      print('Error loading diagnosis by title: $e');
     } finally {
       isLoadingDiagnoses.value = false;
     }
@@ -188,7 +175,6 @@ class ClinicalDiagnosisController extends GetxController {
         type: 'clinical',
       );
     } catch (e) {
-      print('Error storing recent activity: $e');
       // Don't throw error here as it shouldn't affect the main functionality
     }
   }
@@ -213,9 +199,7 @@ class ClinicalDiagnosisController extends GetxController {
   Future<void> testConnection() async {
     try {
       await ClinicalDiagnosisServices.testConnection();
-    } catch (e) {
-      print('Connection test failed: $e');
-    }
+    } catch (e) {}
   }
 
   /// Load favorite states for all items
@@ -232,9 +216,7 @@ class ClinicalDiagnosisController extends GetxController {
         final isFav = await FavoritesService.isFavorite(itemId);
         favoriteStates[item] = isFav;
       }
-    } catch (e) {
-      print('Error loading favorite states: $e');
-    }
+    } catch (e) {}
   }
 
   /// Toggle favorite status for an item
@@ -259,9 +241,7 @@ class ClinicalDiagnosisController extends GetxController {
         newStates[item] = !(favoriteStates[item] ?? false);
         favoriteStates.assignAll(newStates);
       }
-    } catch (e) {
-      print('Error toggling favorite: $e');
-    }
+    } catch (e) {}
   }
 
   /// Check if an item is favorite

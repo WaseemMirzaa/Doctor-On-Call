@@ -36,7 +36,6 @@ class HomeController extends GetxController {
   Future<void> _loadSubscriptionStatus() async {
     try {
       // First, sync with RevenueCat to get latest status
-      print('🔄 Home: Syncing with RevenueCat...');
       final hasPremium = await RevenueCatService.isPremiumUser();
 
       // Update local cache
@@ -51,15 +50,10 @@ class HomeController extends GetxController {
       // Get view count and trial status
       final viewCount = await SubscriptionManagerService.getContentViewCount();
       final isInTrial = await SubscriptionManagerService.isInFreeTrial();
-      final remainingViews =
-          await SubscriptionManagerService.getRemainingFreeViews();
-
-      print(
-          '✅ Home: Premium=${isPremiumUser.value}, Plan=${currentPlan.value}');
-      print(
-          '👁️ View Count: $viewCount | InTrial: $isInTrial | Remaining: $remainingViews');
+      final dailyCount = await SubscriptionManagerService.getDailyAccessCount();
+      final remainingToday =
+          await SubscriptionManagerService.getRemainingDailyAccesses();
     } catch (e) {
-      print('❌ Error loading subscription status: $e');
       // Fallback to local cache only
       isPremiumUser.value = await SubscriptionManagerService.isPremiumUser();
       currentPlan.value = await SubscriptionManagerService.getCurrentPlan();

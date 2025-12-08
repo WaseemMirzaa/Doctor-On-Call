@@ -51,7 +51,6 @@ class RecentController extends GetxController {
         activities.map((e) => e['title'] as String).toList(),
       );
     } catch (e) {
-      print("⚠️ Error fetching recent symptoms: $e");
     } finally {
       isLoading.value = false;
     }
@@ -66,8 +65,6 @@ class RecentController extends GetxController {
     try {
       await RecentsService.updateActivityTimestamp(title, type);
       fetchRecents();
-    } catch (e) {
-      print('⚠️ Failed to update recent timestamp: $e');
-    }
+    } catch (e) {}
   }
 }

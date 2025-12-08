@@ -20,9 +20,7 @@ class ChestPainList extends StatelessWidget {
         AppText.psychological,
         AppText.headache,
       ],
-      onSelectionChanged: (selectedSymptoms) {
-        print('Selected symptoms: $selectedSymptoms');
-      },
+      onSelectionChanged: (selectedSymptoms) {},
       padding: const EdgeInsets.all(16.0),
       spacing: 8.0,
       onSymptomTap: (symptom) {
@@ -31,22 +29,16 @@ class ChestPainList extends StatelessWidget {
             Get.toNamed(Routes.MEDICAL_DETAILS);
             break;
           case 'Shortness of Breath':
-            print('Shortness of Breath Tapped!');
             break;
           case 'Palpitations':
-            print('Palpitations Tapped!');
             break;
           case 'Syncope':
-            print('Syncope Tapped!');
             break;
           case 'Abdominal Pain':
-            print('Abdominal Pain Tapped!');
             break;
           case 'Headache':
-            print('Headache Tapped!');
             break;
           default:
-            print('No route defined for: $symptom');
         }
       },
     );

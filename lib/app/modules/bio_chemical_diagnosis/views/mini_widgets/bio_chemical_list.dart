@@ -146,12 +146,6 @@ class BioChemicalList extends StatelessWidget {
   }
 
   Widget _buildCategoryTitlesView(BioChemicalDiagnosisController controller) {
-    print(
-        'DEBUG UI: Building category titles view for: ${controller.selectedCategory.value}');
-    print(
-        'DEBUG UI: Category titles count: ${controller.categoryTitles.length}');
-    print('DEBUG UI: Is loading titles: ${controller.isLoadingTitles.value}');
-
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [

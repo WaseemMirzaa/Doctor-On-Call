@@ -12,9 +12,9 @@ class SubscriptionManagerService {
   static const String _keyDailyAccessCount = 'daily_access_count';
 
   // Constants
-  static const int freeTrialDays = 7;
-  static const int maxFreeViews = 3; // Legacy - kept for compatibility
-  static const int dailyAccessLimit = 3; // New: 3 items per day during trial
+  static const int freeTrialDays = 7; // Full unlimited access for 7 days
+  static const int dailyAccessLimitAfterTrial =
+      3; // 3 items per day AFTER trial expires
 
   /// Check if user is a premium subscriber
   static Future<bool> isPremiumUser() async {
@@ -34,9 +34,6 @@ class SubscriptionManagerService {
       // Set current plan to "Free Trial"
       await prefs.setString(_keyCurrentPlan, 'Free Trial');
     }
-
-    print(
-        '✅ Premium status set to: $isPremium (RevenueCat syncs across devices)');
   }
 
   /// Get current plan name
@@ -52,7 +49,6 @@ class SubscriptionManagerService {
     final expiredDate =
         DateTime.now().subtract(Duration(days: freeTrialDays + 1));
     await prefs.setString(_keyTrialStartDate, expiredDate.toIso8601String());
-    print('⚠️ Trial expired manually for testing');
   }
 
   /// Initialize trial start date (call this on first app launch or login)
@@ -66,7 +62,6 @@ class SubscriptionManagerService {
       await prefs.setString(_keyTrialStartDate, now);
       await prefs.setInt(_keyContentViewCount, 0);
       await prefs.setString(_keyCurrentPlan, 'Free Trial');
-      print('✅ Free trial started: $now');
     }
   }
 
@@ -77,7 +72,6 @@ class SubscriptionManagerService {
 
     if (trialStartDateStr == null) {
       // No trial started yet
-      print('⚠️ No trial start date found');
       return false;
     }
 
@@ -86,8 +80,6 @@ class SubscriptionManagerService {
     final daysSinceStart = now.difference(trialStartDate).inDays;
     final inTrial = daysSinceStart < freeTrialDays;
 
-    print(
-        '📅 Trial check: Started=$trialStartDateStr, DaysSince=$daysSinceStart, InTrial=$inTrial');
     return inTrial;
   }
 
@@ -114,28 +106,6 @@ class SubscriptionManagerService {
     return prefs.getInt(_keyContentViewCount) ?? 0;
   }
 
-  /// Increment content view count
-  static Future<void> incrementViewCount() async {
-    final prefs = await SharedPreferences.getInstance();
-    final currentCount = prefs.getInt(_keyContentViewCount) ?? 0;
-    final newCount = currentCount + 1;
-    await prefs.setInt(_keyContentViewCount, newCount);
-
-    // Show different emoji based on remaining views
-    final remaining = maxFreeViews - newCount;
-    String emoji = '📊';
-    if (remaining == 0) {
-      emoji = '🚫'; // No views left
-    } else if (remaining == 1) {
-      emoji = '⚠️'; // Last view warning
-    } else if (remaining == 2) {
-      emoji = '⏰'; // Running low
-    }
-
-    print(
-        '$emoji View count updated: $currentCount → $newCount (Remaining: $remaining)');
-  }
-
   /// Reset daily access count if it's a new day
   static Future<void> _resetDailyAccessIfNeeded() async {
     final prefs = await SharedPreferences.getInstance();
@@ -157,7 +127,6 @@ class SubscriptionManagerService {
         now.day != lastAccessDate.day) {
       await prefs.setString(_keyLastAccessDate, now.toIso8601String());
       await prefs.setInt(_keyDailyAccessCount, 0);
-      print('🔄 Daily access count reset for new day');
     }
   }
 
@@ -176,9 +145,7 @@ class SubscriptionManagerService {
     final newCount = currentCount + 1;
     await prefs.setInt(_keyDailyAccessCount, newCount);
 
-    final remaining = dailyAccessLimit - newCount;
-    print(
-        '📊 Daily access: $currentCount → $newCount (Remaining today: $remaining)');
+    final remaining = dailyAccessLimitAfterTrial - newCount;
   }
 
   /// Get remaining daily accesses
@@ -187,53 +154,38 @@ class SubscriptionManagerService {
       return -1; // Unlimited
     }
 
-    if (!await isInFreeTrial()) {
-      return 0; // Trial expired, no access
+    // During 7-day trial: unlimited access
+    if (await isInFreeTrial()) {
+      return -1; // Unlimited during trial
     }
 
+    // After trial: 3 per day limit
     final dailyCount = await getDailyAccessCount();
-    final remaining = dailyAccessLimit - dailyCount;
+    final remaining = dailyAccessLimitAfterTrial - dailyCount;
     return remaining > 0 ? remaining : 0;
   }
 
   /// Check if user can access content (detail pages)
   /// Returns true if user can access, false if blocked
+  /// Trial Days 1-7: Unlimited access
+  /// After Day 7: 3 items per day limit
   static Future<bool> canAccessContent() async {
     // Premium users have unlimited access
     final premium = await isPremiumUser();
     if (premium) {
-      print('✅ Access granted: Premium user');
       return true;
     }
 
-    // Check if still in free trial
+    // Check if still in free trial (days 1-7)
     final inTrial = await isInFreeTrial();
-    if (!inTrial) {
-      print('🚫 Access denied: Trial expired');
-      return false;
+    if (inTrial) {
+      return true; // Unlimited during 7-day trial
     }
 
-    // In trial - check daily limit
+    // Trial expired - check daily limit (3 per day)
     final dailyCount = await getDailyAccessCount();
-    final canAccess = dailyCount < dailyAccessLimit;
-    print(
-        '🔍 Trial active. Daily count=$dailyCount, Limit=$dailyAccessLimit, CanAccess=$canAccess');
+    final canAccess = dailyCount < dailyAccessLimitAfterTrial;
     return canAccess;
-  }
-
-  /// Get remaining free views
-  static Future<int> getRemainingFreeViews() async {
-    if (await isPremiumUser()) {
-      return -1; // Unlimited
-    }
-
-    if (await isInFreeTrial()) {
-      return -1; // Unlimited during trial
-    }
-
-    final viewCount = await getContentViewCount();
-    final remaining = maxFreeViews - viewCount;
-    return remaining > 0 ? remaining : 0;
   }
 
   /// Get access status message for UI
@@ -244,11 +196,12 @@ class SubscriptionManagerService {
 
     if (await isInFreeTrial()) {
       final remainingDays = await getRemainingTrialDays();
-      final remainingToday = await getRemainingDailyAccesses();
-      return 'Trial: $remainingDays days • $remainingToday/$dailyAccessLimit items today';
+      return 'Trial: $remainingDays days left • Unlimited Access';
     }
 
-    return 'Trial Expired - Subscribe for Access';
+    // After trial: show daily limit
+    final remainingToday = await getRemainingDailyAccesses();
+    return 'Trial Ended • $remainingToday/$dailyAccessLimitAfterTrial free today';
   }
 
   /// Reset trial and view count (for testing purposes only)
@@ -260,24 +213,10 @@ class SubscriptionManagerService {
     await prefs.remove(_keyCurrentPlan);
     await prefs.remove(_keyLastAccessDate);
     await prefs.remove(_keyDailyAccessCount);
-    print('🔄 Trial and views reset');
   }
 
   /// Debug: Print current subscription status
   static Future<void> printCurrentStatus() async {
     final prefs = await SharedPreferences.getInstance();
-    print('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-    print('📊 SUBSCRIPTION STATUS DEBUG');
-    print('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-    print('Is Premium: ${await isPremiumUser()}');
-    print('Trial Start: ${prefs.getString(_keyTrialStartDate)}');
-    print('In Trial: ${await isInFreeTrial()}');
-    print('Remaining Trial Days: ${await getRemainingTrialDays()}');
-    print('Last Access Date: ${prefs.getString(_keyLastAccessDate)}');
-    print('Daily Access Count: ${await getDailyAccessCount()}');
-    print('Remaining Today: ${await getRemainingDailyAccesses()}');
-    print('Can Access: ${await canAccessContent()}');
-    print('Status Message: ${await getAccessStatusMessage()}');
-    print('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
   }
 }

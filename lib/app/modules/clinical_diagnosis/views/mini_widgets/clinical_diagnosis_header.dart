@@ -28,12 +28,6 @@ class ClinicalDiagnosisHeader extends StatelessWidget {
           title = controller.selectedCategory.value;
         }
 
-        print(
-            'DEBUG Clinical Header: isInCategoryView: ${controller.isInCategoryView.value}');
-        print(
-            'DEBUG Clinical Header: selectedCategory: ${controller.selectedCategory.value}');
-        print('DEBUG Clinical Header: Using title: $title');
-
         return CommonTitleSection(
           title: title,
           onBackTap: () {

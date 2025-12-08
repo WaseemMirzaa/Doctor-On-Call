@@ -126,9 +126,7 @@ class SearchController extends GetxController {
       // Sort by last searched date
       searchHistory.sort((a, b) => (b.lastSearched ?? DateTime(0))
           .compareTo(a.lastSearched ?? DateTime(0)));
-    } catch (e) {
-      print('Error loading search history: $e');
-    }
+    } catch (e) {}
   }
 
   /// Save search history to SharedPreferences
@@ -139,9 +137,7 @@ class SearchController extends GetxController {
           searchHistory.map((item) => jsonEncode(item.toJson())).toList();
 
       await prefs.setStringList('search_history', historyJson);
-    } catch (e) {
-      print('Error saving search history: $e');
-    }
+    } catch (e) {}
   }
 
   /// Perform search across clinical diagnosis and biochemical emergencies
@@ -178,7 +174,6 @@ class SearchController extends GetxController {
       }
       searchResults.value = results;
     } catch (e) {
-      print('Error performing search: $e');
     } finally {
       isLoading.value = false;
     }
@@ -218,7 +213,6 @@ class SearchController extends GetxController {
 
       return results;
     } catch (e) {
-      print('Error searching clinical diagnosis: $e');
       return [];
     }
   }
@@ -258,7 +252,6 @@ class SearchController extends GetxController {
 
       return results;
     } catch (e) {
-      print('Error searching biochemical emergencies: $e');
       return [];
     }
   }
@@ -301,7 +294,6 @@ class SearchController extends GetxController {
 
       return results;
     } catch (e) {
-      print('Error searching clinical presentations: $e');
       return [];
     }
   }

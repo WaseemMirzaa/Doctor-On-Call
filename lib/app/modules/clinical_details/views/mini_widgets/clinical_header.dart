@@ -21,18 +21,11 @@ class ClinicalHeader extends StatelessWidget {
         // Get the current diagnosis data
         final diagnosis = controller.currentDiagnosis;
 
-        print(
-            'DEBUG Clinical Header: Diagnosis data: ${diagnosis?.title ?? 'null'}');
-        print(
-            'DEBUG Clinical Header: Diagnoses count: ${controller.diagnoses.length}');
-
         // Use the diagnosis title if available, otherwise show a default
         String title = 'Clinical Diagnosis';
         if (diagnosis != null && diagnosis.title.isNotEmpty) {
           title = diagnosis.title;
         }
-
-        print('DEBUG Clinical Header: Using title: $title');
 
         return CommonTitleSection(
           title: title,

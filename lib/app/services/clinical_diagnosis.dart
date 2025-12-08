@@ -11,33 +11,24 @@ class ClinicalDiagnosisServices {
   /// Fetch all clinical diagnosis from the specific Firestore document
   static Future<List<ClinicalDiagnosis>> getAllClinicalDiagnosis() async {
     try {
-      print(
-          'Fetching data from Firestore document: $_collectionName/$_documentId');
-
       // Fetch the specific document instead of querying all documents
       final DocumentSnapshot docSnapshot =
           await _firestore.collection(_collectionName).doc(_documentId).get();
 
       if (!docSnapshot.exists) {
-        print('Document $_documentId does not exist');
         return [];
       }
 
       final data = docSnapshot.data() as Map<String, dynamic>?;
       if (data == null) {
-        print('Document data is null');
         return [];
       }
-
-      print('Document data keys: ${data.keys.toList()}');
 
       List<ClinicalDiagnosis> diagnosis = [];
 
       // Check if the document has an 'diagnosis' array field
       if (data.containsKey('diagnosis') && data['diagnosis'] is List) {
         final List<dynamic> diagnosisArray = data['diagnosis'];
-        print(
-            'Found clinical diagnosis array with ${diagnosisArray.length} items');
 
         int successCount = 0;
         int errorCount = 0;
@@ -45,8 +36,6 @@ class ClinicalDiagnosisServices {
 
         for (int i = 0; i < diagnosisArray.length; i++) {
           var diagnosisData = diagnosisArray[i];
-          print(
-              'Processing entry $i/${diagnosisArray.length - 1}: ${diagnosisData.runtimeType}');
 
           try {
             if (diagnosisData is String) {
@@ -55,63 +44,37 @@ class ClinicalDiagnosisServices {
               final clinicalDiagnosis = ClinicalDiagnosis.fromJson(parsedData);
               diagnosis.add(clinicalDiagnosis);
               successCount++;
-              print(
-                  '✅ Entry $i: ${clinicalDiagnosis.category} - ${clinicalDiagnosis.title}');
             } else if (diagnosisData is Map<String, dynamic>) {
               // If it's already a map, create ClinicalDiagnosis directly
               final clinicalDiagnosis =
                   ClinicalDiagnosis.fromJson(diagnosisData);
               diagnosis.add(clinicalDiagnosis);
               successCount++;
-              print(
-                  '✅ Entry $i: ${clinicalDiagnosis.category} - ${clinicalDiagnosis.title}');
             } else {
               errorCount++;
               failedEntries.add(
                   'Entry $i: Unknown data type ${diagnosisData.runtimeType}');
-              print(
-                  '❌ Entry $i: Skipping unknown data type: ${diagnosisData.runtimeType}');
             }
           } catch (e) {
             errorCount++;
             failedEntries.add('Entry $i: Parse error - $e');
-            print('❌ Entry $i: Error parsing diagnosis data: $e');
 
             // Show more detailed error info
             if (diagnosisData is String) {
               if (diagnosisData.length > 200) {
-                print('   Data preview: ${diagnosisData.substring(0, 200)}...');
-              } else {
-                print('   Full data: $diagnosisData');
-              }
-            } else {
-              print('   Data: $diagnosisData');
-            }
+              } else {}
+            } else {}
             continue;
           }
         }
 
-        print('=== PARSING SUMMARY ===');
-        print('Total entries in Firestore: ${diagnosisArray.length}');
-        print('Successfully parsed: $successCount');
-        print('Failed to parse: $errorCount');
         if (failedEntries.isNotEmpty) {
-          print('Failed entries:');
-          for (String failure in failedEntries) {
-            print('  - $failure');
-          }
+          for (String failure in failedEntries) {}
         }
-        print('=== END SUMMARY ===');
-      } else {
-        print('Document does not contain diagnosis array or it is not a List');
-        print('Available fields: ${data.keys.toList()}');
-      }
-
-      print('Total diagnosis parsed: ${diagnosis.length}');
+      } else {}
 
       // Print categories found for debugging
       final categories = diagnosis.map((e) => e.category).toSet().toList();
-      print('Categories found: $categories');
 
       // Debug: Print all loaded titles by category
       Map<String, List<String>> categorizedTitles = {};
@@ -123,18 +86,12 @@ class ClinicalDiagnosisServices {
             .add(clinicalDiagnosis.title);
       }
 
-      print('=== DEBUG: All loaded clinical diagnoses by category ===');
       categorizedTitles.forEach((category, titles) {
-        print('$category (${titles.length} titles):');
-        for (int i = 0; i < titles.length; i++) {
-          print('  ${i + 1}. ${titles[i]}');
-        }
+        for (int i = 0; i < titles.length; i++) {}
       });
-      print('=== End debug info ===');
 
       return diagnosis;
     } catch (e) {
-      print('Error fetching biochemical diagnosis: $e');
       throw Exception('Failed to fetch biochemical diagnosis: $e');
     }
   }
@@ -151,11 +108,9 @@ class ClinicalDiagnosisServices {
           .toSet();
 
       final List<String> sortedCategories = uniqueCategories.toList()..sort();
-      print('Unique categories: $sortedCategories');
 
       return sortedCategories;
     } catch (e) {
-      print('Error fetching categories: $e');
       throw Exception('Failed to fetch categories: $e');
     }
   }
@@ -181,13 +136,8 @@ class ClinicalDiagnosisServices {
       final List<String> allItems = [...categories, ...standaloneTitles];
       allItems.sort();
 
-      print('Main list items: $allItems');
-      print(
-          'Categories: ${categories.length}, Standalone titles: ${standaloneTitles.length}');
-
       return allItems;
     } catch (e) {
-      print('Error fetching main list items: $e');
       throw Exception('Failed to fetch main list items: $e');
     }
   }
@@ -203,7 +153,6 @@ class ClinicalDiagnosisServices {
 
       return hasCategory;
     } catch (e) {
-      print('Error checking if item is category: $e');
       return false;
     }
   }
@@ -218,11 +167,8 @@ class ClinicalDiagnosisServices {
           .map((clinicalDiagnosis) => clinicalDiagnosis.title)
           .toList();
 
-      print('Found ${titles.length} titles in category: $category');
-
       return titles;
     } catch (e) {
-      print('Error fetching titles in category: $e');
       throw Exception('Failed to fetch titles in category: $e');
     }
   }
@@ -237,14 +183,10 @@ class ClinicalDiagnosisServices {
           .firstOrNull;
 
       if (clinicalDiagnosis != null) {
-        print('Found diagnosis: ${clinicalDiagnosis.title}');
-      } else {
-        print('No diagnosis found with title: $title');
-      }
+      } else {}
 
       return clinicalDiagnosis;
     } catch (e) {
-      print('Error fetching diagnosis by title: $e');
       return null;
     }
   }
@@ -261,12 +203,8 @@ class ClinicalDiagnosisServices {
               emergency.category.toLowerCase() == category.toLowerCase())
           .toList();
 
-      print(
-          'Found ${filtereddiagnosis.length} diagnosis for category: $category');
-
       return filtereddiagnosis;
     } catch (e) {
-      print('Error fetching diagnosis by category: $e');
       throw Exception('Failed to fetch diagnosis by category: $e');
     }
   }
@@ -284,11 +222,8 @@ class ClinicalDiagnosisServices {
             emergency.category.toLowerCase().contains(lowerQuery);
       }).toList();
 
-      print('Found ${searchResults.length} diagnosis matching query: $query');
-
       return searchResults;
     } catch (e) {
-      print('Error searching diagnosis: $e');
       throw Exception('Failed to search diagnosis: $e');
     }
   }
@@ -296,32 +231,21 @@ class ClinicalDiagnosisServices {
   /// Test connection to Firestore and verify document structure
   static Future<void> testConnection() async {
     try {
-      print('Testing connection to Firestore...');
-
       final DocumentSnapshot docSnapshot =
           await _firestore.collection(_collectionName).doc(_documentId).get();
 
       if (docSnapshot.exists) {
         final data = docSnapshot.data() as Map<String, dynamic>?;
-        print('Document exists with keys: ${data?.keys.toList()}');
 
         if (data?.containsKey('diagnosis') == true) {
           final diagnosisArray = data!['diagnosis'] as List?;
-          print('diagnosis array length: ${diagnosisArray?.length}');
 
           if (diagnosisArray != null && diagnosisArray.isNotEmpty) {
             final firstItem = diagnosisArray.first;
-            print('First item type: ${firstItem.runtimeType}');
-            if (firstItem is String) {
-              print('First item preview: ${firstItem.substring(0, 50)}...');
-            }
+            if (firstItem is String) {}
           }
         }
-      } else {
-        print('Document does not exist!');
-      }
-    } catch (e) {
-      print('Connection test failed: $e');
-    }
+      } else {}
+    } catch (e) {}
   }
 }

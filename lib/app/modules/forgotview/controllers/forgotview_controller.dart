@@ -22,8 +22,6 @@ class ForgotviewController extends GetxController {
     isLoading.value = true;
 
     try {
-      print("Sending password reset email to: $email");
-
       // Directly send password reset email without checking sign-in methods
       // as fetchSignInMethodsForEmail is deprecated for security reasons
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
@@ -39,7 +37,6 @@ class ForgotviewController extends GetxController {
       }
     } catch (e) {
       CustomSnackBar.error("Something went wrong.");
-      print("Reset error: $e");
     } finally {
       isLoading.value = false;
     }

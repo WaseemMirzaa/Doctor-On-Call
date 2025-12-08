@@ -70,7 +70,6 @@ class SignupController extends GetxController {
 
       // ✅ Step 3: Link RevenueCat user ID (handles subscription sync)
       await RevenueCatService.setUserId(uid);
-      print('✅ RevenueCat user ID set for new user: $uid');
 
       // // ✅ Step 4: Sign out AFTER saving
       // await FirebaseAuth.instance.signOut();
@@ -102,7 +101,7 @@ class SignupController extends GetxController {
       CustomSnackBar.error(errorMessage);
     } catch (e) {
       CustomSnackBar.error("Something went wrong. Please try again.");
-      print("SignUp Error: $e"); // good for debugging
+      // good for debugging
     } finally {
       isLoading.value = false;
     }

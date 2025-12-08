@@ -11,8 +11,6 @@ class ClinicalPresentationsService {
   static Future<List<Map<String, dynamic>>>
       getAllClinicalPresentations() async {
     try {
-      print('Fetching clinical presentations from Firestore...');
-
       // Fetch the specific document that contains all presentations
       final DocumentSnapshot docSnapshot =
           await _firestore.collection(_collectionName).doc(_documentId).get();
@@ -22,28 +20,18 @@ class ClinicalPresentationsService {
       if (docSnapshot.exists) {
         final data = docSnapshot.data() as Map<String, dynamic>?;
         if (data != null) {
-          print('Document data keys: ${data.keys.toList()}');
-
           // Check if the document has a 'presentations' field
           if (data.containsKey('presentations')) {
             final presentationsData = data['presentations'];
-            print('presentations field type: ${presentationsData.runtimeType}');
-            print(
-                'presentations data: ${presentationsData.toString().substring(0, 100)}...');
 
             if (presentationsData is List) {
               // Presentations is already a parsed List
-              print(
-                  'Presentations is already a List with ${presentationsData.length} items');
 
               for (int i = 0; i < presentationsData.length; i++) {
                 dynamic item = presentationsData[i];
 
                 if (item is Map<String, dynamic>) {
                   // Item is already a Map
-                  print('Processing presentation $i: ${item.keys.toList()}');
-                  print(
-                      'Title: "${item['title']}", Category: "${item['category']}"');
 
                   presentations.add({
                     'id': '${docSnapshot.id}_$i',
@@ -59,21 +47,13 @@ class ClinicalPresentationsService {
 
                     final parsedItem =
                         jsonDecode(cleanedJson) as Map<String, dynamic>;
-                    print(
-                        'Processing parsed presentation $i: ${parsedItem.keys.toList()}');
-                    print(
-                        'Title: "${parsedItem['title']}", Category: "${parsedItem['category']}"');
 
                     presentations.add({
                       'id': '${docSnapshot.id}_$i',
                       ...parsedItem,
                     });
-                  } catch (e) {
-                    print('Error parsing presentation item $i: $e');
-                  }
-                } else {
-                  print('Unknown presentation item type: ${item.runtimeType}');
-                }
+                  } catch (e) {}
+                } else {}
               }
             } else if (presentationsData is String) {
               // Presentations is a JSON string, need to parse it
@@ -85,37 +65,22 @@ class ClinicalPresentationsService {
                 jsonString =
                     jsonString.replaceAll(RegExp(r'\[cite_start\]"'), '"');
 
-                print('Cleaned JSON string length: ${jsonString.length}');
                 final List<dynamic> parsedPresentations =
                     jsonDecode(jsonString);
-                print(
-                    'Parsed presentations count: ${parsedPresentations.length}');
 
                 // Add each presentation with an ID
                 for (int i = 0; i < parsedPresentations.length; i++) {
                   final presentation =
                       parsedPresentations[i] as Map<String, dynamic>;
-                  print(
-                      'Processing presentation $i: ${presentation.keys.toList()}');
-                  print(
-                      'Title: "${presentation['title']}", Category: "${presentation['category']}"');
 
                   presentations.add({
                     'id': '${docSnapshot.id}_$i', // Create unique ID
                     ...presentation,
                   });
-                  print(
-                      'Found presentation: ${presentation['title'] ?? 'Unknown Title'} - Category: ${presentation['category'] ?? 'Unknown Category'}');
                 }
-              } catch (e) {
-                print('Error parsing presentations JSON: $e');
-                print(
-                    'JSON content preview: ${presentationsData.toString().substring(0, 500)}...');
-              }
+              } catch (e) {}
             } else if (presentationsData is Map<String, dynamic>) {
               // Presentations is a Map with numeric string keys (like "0", "1", "2", etc.)
-              print(
-                  'Presentations is a Map with keys: ${presentationsData.keys.toList()}');
 
               // Sort keys numerically to maintain order
               final sortedKeys = presentationsData.keys.toList()
@@ -125,8 +90,6 @@ class ClinicalPresentationsService {
                   return aNum.compareTo(bNum);
                 });
 
-              print('Sorted keys: $sortedKeys');
-
               for (String key in sortedKeys) {
                 dynamic item = presentationsData[key];
 
@@ -134,50 +97,28 @@ class ClinicalPresentationsService {
                   // Item is a JSON string, need to parse it
                   try {
                     final parsedItem = jsonDecode(item) as Map<String, dynamic>;
-                    print(
-                        'Processing parsed presentation $key: ${parsedItem.keys.toList()}');
-                    print(
-                        'Title: "${parsedItem['title']}", Category: "${parsedItem['category']}"');
 
                     presentations.add({
                       'id': '${docSnapshot.id}_$key',
                       ...parsedItem,
                     });
-                  } catch (e) {
-                    print('Error parsing presentation item $key: $e');
-                  }
+                  } catch (e) {}
                 } else if (item is Map<String, dynamic>) {
                   // Item is already a Map
-                  print('Processing presentation $key: ${item.keys.toList()}');
-                  print(
-                      'Title: "${item['title']}", Category: "${item['category']}"');
 
                   presentations.add({
                     'id': '${docSnapshot.id}_$key',
                     ...item,
                   });
-                } else {
-                  print(
-                      'Unknown presentation item type for key $key: ${item.runtimeType}');
-                }
+                } else {}
               }
-            } else {
-              print(
-                  'presentations field is neither List, String, nor Map. Type: ${presentationsData.runtimeType}');
-            }
-          } else {
-            print(
-                'No presentations field found. Available fields: ${data.keys.toList()}');
-          }
+            } else {}
+          } else {}
         }
-      } else {
-        print('Document icpSWM9Unsgx7esHSB4x does not exist');
-      }
+      } else {}
 
-      print('Total presentations loaded: ${presentations.length}');
       return presentations;
     } catch (e) {
-      print('Error fetching clinical presentations: $e');
       throw Exception('Failed to fetch clinical presentations: $e');
     }
   }
@@ -222,7 +163,6 @@ class ClinicalPresentationsService {
           try {
             presentations = jsonDecode(presentationsData) as List<dynamic>;
           } catch (e) {
-            print('Could not parse presentations string, starting fresh: $e');
             presentations = [];
           }
         }
@@ -239,10 +179,7 @@ class ClinicalPresentationsService {
       // Write back (merge to preserve other top-level keys if present)
       await docRef
           .set({'presentations': presentations}, SetOptions(merge: true));
-
-      print('Upserted ${titles.length} titles into category: $category');
     } catch (e) {
-      print('Error upserting dropdown category: $e');
       rethrow;
     }
   }
@@ -265,7 +202,6 @@ class ClinicalPresentationsService {
       }
       return null;
     } catch (e) {
-      print('Error fetching presentation by ID: $e');
       return null;
     }
   }
@@ -284,10 +220,8 @@ class ClinicalPresentationsService {
       }
 
       final sortedCategories = categories.toList()..sort();
-      print('Found categories: $sortedCategories');
       return sortedCategories;
     } catch (e) {
-      print('Error fetching categories: $e');
       throw Exception('Failed to fetch categories: $e');
     }
   }
@@ -307,11 +241,8 @@ class ClinicalPresentationsService {
         return category.contains(lowerQuery) || title.contains(lowerQuery);
       }).toList();
 
-      print(
-          'Found ${searchResults.length} presentations matching query: $query');
       return searchResults;
     } catch (e) {
-      print('Error searching presentations: $e');
       throw Exception('Failed to search presentations: $e');
     }
   }
@@ -355,9 +286,7 @@ class ClinicalPresentationsService {
           }
         }
       }
-    } catch (e) {
-      print('Error extracting red flags: $e');
-    }
+    } catch (e) {}
 
     return redFlags;
   }
@@ -377,22 +306,14 @@ class ClinicalPresentationsService {
   /// Test connection to Firestore
   static Future<void> testConnection() async {
     try {
-      print('Testing connection to clinical presentations...');
-
       final QuerySnapshot snapshot =
           await _firestore.collection(_collectionName).limit(1).get();
-
-      print(
-          'Connection successful. Documents available: ${snapshot.docs.length}');
 
       if (snapshot.docs.isNotEmpty) {
         final firstDoc = snapshot.docs.first;
         final data = firstDoc.data() as Map<String, dynamic>?;
-        print('Sample document structure: ${data?.keys.toList()}');
       }
-    } catch (e) {
-      print('Connection test failed: $e');
-    }
+    } catch (e) {}
   }
 
   static Future<Map<String, dynamic>?> getPresentationByTitle(
@@ -406,14 +327,10 @@ class ClinicalPresentationsService {
           .firstOrNull;
 
       if (presentation != null) {
-        print('Found presentation: ${presentation['title']}');
-      } else {
-        print('No presentation found with title: $title');
-      }
+      } else {}
 
       return presentation;
     } catch (e) {
-      print('Error fetching presentation by title: $e');
       return null;
     }
   }

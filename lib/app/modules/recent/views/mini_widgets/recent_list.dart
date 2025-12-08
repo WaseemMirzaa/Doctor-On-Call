@@ -27,9 +27,7 @@ class RecentList extends StatelessWidget {
 
       return SymptomSelectionWidget(
           symptoms: recentController.recentSymptoms,
-          onSelectionChanged: (selected) {
-            print('Selected: $selected');
-          },
+          onSelectionChanged: (selected) {},
           showRecentIcon: true,
           padding: const EdgeInsets.all(16.0),
           spacing: 8.0,
@@ -113,9 +111,6 @@ class RecentList extends StatelessWidget {
 
             // ✅ Update Firestore timestamp
             recentController.updateRecentTimestamp(title, type);
-
-            print(
-                '🟡 Tapped recent: $title | Category: $category | Type: $type');
 
             if (type == 'biochemical') {
               await bioController.loadEmergencyByTitle(title);

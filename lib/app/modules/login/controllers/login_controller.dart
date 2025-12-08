@@ -46,7 +46,6 @@ class LoginController extends GetxController {
       final uid = userCredential.user?.uid;
       if (uid != null) {
         await RevenueCatService.setUserId(uid);
-        print('✅ RevenueCat user ID set: $uid (handles cross-device sync)');
       }
 
       CustomSnackBar.success("Logged in successfully!");

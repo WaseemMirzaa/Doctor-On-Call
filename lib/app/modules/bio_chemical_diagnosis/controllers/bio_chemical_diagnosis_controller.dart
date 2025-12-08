@@ -73,7 +73,6 @@ class BioChemicalDiagnosisController extends GetxController {
       await loadFavoriteStates();
     } catch (e) {
       errorMessage.value = 'Failed to load items: $e';
-      print('Error loading main list items: $e');
     } finally {
       isLoadingMainList.value = false;
     }
@@ -82,33 +81,24 @@ class BioChemicalDiagnosisController extends GetxController {
   /// Handle item tap from main list
   Future<void> onMainListItemTap(String item) async {
     try {
-      print('=== DEBUG: Item tapped: $item ===');
-
       // Check if this item is a category or standalone title
       final bool isCategory =
           await BiochemicalEmergencyService.isCategory(item);
 
-      print('DEBUG: Is category: $isCategory');
-
       if (isCategory) {
         // It's a category - load titles within this category
-        print('DEBUG: Loading titles for category: $item');
         selectedCategory.value = item;
         isInCategoryView.value = true;
         await loadTitlesInCategory(item);
         // Reload favorite states for category titles
         await loadFavoriteStates();
-        print('DEBUG: Category titles loaded: ${categoryTitles.length}');
-        print('DEBUG: Category titles: ${categoryTitles.toList()}');
       } else {
         // It's a standalone title - load the emergency data directly
-        print('DEBUG: Loading emergency for standalone title: $item');
         selectedTitle.value = item;
         await loadEmergencyByTitle(item);
       }
     } catch (e) {
       errorMessage.value = 'Failed to process item: $e';
-      print('Error handling main list item tap: $e');
     }
   }
 
@@ -123,7 +113,6 @@ class BioChemicalDiagnosisController extends GetxController {
       categoryTitles.assignAll(titles);
     } catch (e) {
       errorMessage.value = 'Failed to load titles: $e';
-      print('Error loading titles in category: $e');
     } finally {
       isLoadingTitles.value = false;
     }
@@ -149,7 +138,6 @@ class BioChemicalDiagnosisController extends GetxController {
       }
     } catch (e) {
       errorMessage.value = 'Failed to load emergency: $e';
-      print('Error loading emergency by title: $e');
     } finally {
       isLoadingEmergencies.value = false;
     }
@@ -187,9 +175,7 @@ class BioChemicalDiagnosisController extends GetxController {
         category: category,
         type: 'biochemical',
       );
-    } catch (e) {
-      print('Error storing recent activity: $e');
-    }
+    } catch (e) {}
   }
 
   /// Go back to main list from category view
@@ -212,9 +198,7 @@ class BioChemicalDiagnosisController extends GetxController {
   Future<void> testConnection() async {
     try {
       await BiochemicalEmergencyService.testConnection();
-    } catch (e) {
-      print('Connection test failed: $e');
-    }
+    } catch (e) {}
   }
 
   /// Load favorite states for all items
@@ -231,9 +215,7 @@ class BioChemicalDiagnosisController extends GetxController {
         final isFav = await FavoritesService.isFavorite(itemId);
         favoriteStates[item] = isFav;
       }
-    } catch (e) {
-      print('Error loading favorite states: $e');
-    }
+    } catch (e) {}
   }
 
   /// Toggle favorite status for an item
@@ -258,9 +240,7 @@ class BioChemicalDiagnosisController extends GetxController {
         newStates[item] = !(favoriteStates[item] ?? false);
         favoriteStates.assignAll(newStates);
       }
-    } catch (e) {
-      print('Error toggling favorite: $e');
-    }
+    } catch (e) {}
   }
 
   /// Check if an item is favorite

@@ -50,7 +50,6 @@ class SubscriptionsController extends GetxController {
         lifetimePrice.value = '\$9.99';
       }
     } catch (e) {
-      print('❌ Error initializing RevenueCat: $e');
       // Fallback to default price on error
       lifetimePrice.value = '\$0';
       isPremiumUser.value = false;
@@ -65,13 +64,8 @@ class SubscriptionsController extends GetxController {
       final availableOfferings = await RevenueCatService.getOfferings();
       offerings.value = availableOfferings;
 
-      if (availableOfferings != null) {
-        print(
-            '✅ Loaded ${availableOfferings.current?.availablePackages.length ?? 0} packages');
-      }
-    } catch (e) {
-      print('❌ Error loading offerings: $e');
-    }
+      if (availableOfferings != null) {}
+    } catch (e) {}
   }
 
   /// Load lifetime package from offerings
@@ -84,15 +78,11 @@ class SubscriptionsController extends GetxController {
         lifetimePackage.value = package;
         lifetimeProduct.value = package.storeProduct;
         lifetimePrice.value = package.storeProduct.priceString;
-        print('✅ Loaded lifetime package: ${package.storeProduct.priceString}');
-        print('   Product ID: ${package.storeProduct.identifier}');
       } else {
-        print('⚠️ Could not load lifetime package, trying fallback...');
         // Fallback to direct product loading if offering not configured
         await loadLifetimeProductFallback();
       }
     } catch (e) {
-      print('❌ Error loading lifetime package: $e');
       // Try fallback method
       await loadLifetimeProductFallback();
     }
@@ -108,18 +98,14 @@ class SubscriptionsController extends GetxController {
       if (product != null) {
         lifetimeProduct.value = product;
         lifetimePrice.value = product.priceString;
-        print('✅ Loaded lifetime product (fallback): ${product.priceString}');
       }
-    } catch (e) {
-      print('❌ Error loading lifetime product (fallback): $e');
-    }
+    } catch (e) {}
   }
 
   /// Check if user has premium access
   Future<void> checkPremiumStatus() async {
     try {
       // Force sync from RevenueCat servers to get latest status
-      print('🔄 Syncing with RevenueCat...');
       await RevenueCatService.syncCustomerInfo();
 
       final hasPremium = await RevenueCatService.isPremiumUser();
@@ -134,12 +120,7 @@ class SubscriptionsController extends GetxController {
 
       // Update current plan display
       currentPlan.value = await SubscriptionManagerService.getCurrentPlan();
-
-      print('✅ Final premium status: $hasPremium');
-      print('✅ Current plan: ${currentPlan.value}');
     } catch (e) {
-      print('❌ Error checking premium status: $e');
-
       // Fallback to local storage
       final localPremiumStatus =
           await SubscriptionManagerService.isPremiumUser();
@@ -164,17 +145,13 @@ class SubscriptionsController extends GetxController {
 
       // Try package-based purchase first (recommended approach)
       if (lifetimePackage.value != null) {
-        print(
-            '🛒 Purchasing via package: ${lifetimePackage.value!.identifier}');
         info = await RevenueCatService.purchasePackage(lifetimePackage.value!);
       } else {
         // Fallback to new offering-based method
-        print('🛒 Purchasing via offering method');
         info = await RevenueCatService.purchaseLifetime();
 
         // If that fails, try legacy direct product purchase
         if (info == null && lifetimeProduct.value != null) {
-          print('🛒 Fallback to direct product purchase');
           info = await RevenueCatService.purchaseProduct(
             RevenueCatService.oneTimePurchaseId,
           );
@@ -199,7 +176,6 @@ class SubscriptionsController extends GetxController {
         );
       }
     } catch (e) {
-      print('❌ Purchase error: $e');
       Get.snackbar(
         'Error',
         'An error occurred during purchase. Please try again.',
@@ -249,7 +225,6 @@ class SubscriptionsController extends GetxController {
         );
       }
     } catch (e) {
-      print('❌ Restore error: $e');
       Get.snackbar(
         'Error',
         'An error occurred while restoring purchases.',
@@ -316,22 +291,19 @@ class SubscriptionsController extends GetxController {
       currentPlan.value = await SubscriptionManagerService.getCurrentPlan();
 
       // Get current status
-      final viewCount = await SubscriptionManagerService.getContentViewCount();
-      final isInTrial = await SubscriptionManagerService.isInFreeTrial();
-      final remainingViews =
-          await SubscriptionManagerService.getRemainingFreeViews();
-
-      print(
-          '🧪 Trial expired! InTrial=$isInTrial, ViewCount=$viewCount, RemainingViews=$remainingViews');
+      // final viewCount = await SubscriptionManagerService.getContentViewCount();
+      // final isInTrial = await SubscriptionManagerService.isInFreeTrial();
+      // final dailyCount = await SubscriptionManagerService.getDailyAccessCount();
+      final remainingToday =
+          await SubscriptionManagerService.getRemainingDailyAccesses();
 
       Get.snackbar(
         'Trial Expired',
-        'Your free trial has been expired for testing. You now have $remainingViews free views remaining.',
+        'Your free trial has been expired for testing. You now have ${remainingToday >= 0 ? "$remainingToday/3" : "unlimited"} accesses today.',
         snackPosition: SnackPosition.BOTTOM,
         duration: Duration(seconds: 4),
       );
     } catch (e) {
-      print('❌ Error expiring trial: $e');
       Get.snackbar(
         'Error',
         'Failed to expire trial',

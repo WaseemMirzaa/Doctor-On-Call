@@ -22,19 +22,15 @@ class SubscriptionAccessHelper {
     final isInTrial = await SubscriptionManagerService.isInFreeTrial();
     final dailyCount = await SubscriptionManagerService.getDailyAccessCount();
 
-    print(
-        '🔍 Access Check: Premium=$isPremium, InTrial=$isInTrial, DailyCount=$dailyCount');
-
     // Check if user can access content
     final canAccess = await SubscriptionManagerService.canAccessContent();
-    print('🔍 Can Access: $canAccess');
 
     if (canAccess) {
-      // Increment daily access count for trial users BEFORE navigation
-      if (!isPremium && isInTrial) {
+      // Increment daily access count ONLY for non-premium users AFTER trial expires
+      // During trial (first 7 days): unlimited access, no counting needed
+      if (!isPremium && !isInTrial) {
         await SubscriptionManagerService.incrementDailyAccessCount();
         final newCount = await SubscriptionManagerService.getDailyAccessCount();
-        print('✅ Daily access count incremented: $dailyCount → $newCount');
       }
 
       // Navigate to the detail page
@@ -43,7 +39,6 @@ class SubscriptionAccessHelper {
       return true;
     } else {
       // Access denied - show subscription prompt
-      print('🚫 Access DENIED - showing subscription prompt');
       _showSubscriptionPrompt(contentType);
       return false;
     }

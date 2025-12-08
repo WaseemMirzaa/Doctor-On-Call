@@ -17,8 +17,6 @@ void main() async {
   // Add error handling for Samsung devices
   FlutterError.onError = (FlutterErrorDetails details) {
     FlutterError.presentError(details);
-    print('Flutter Error: ${details.exception}');
-    print('Stack trace: ${details.stack}');
   };
 
   try {
@@ -45,8 +43,6 @@ void main() async {
       final user = await FirebaseAuth.instance.authStateChanges().first;
       if (user != null) {
         await RevenueCatService.setUserId(user.uid);
-        print(
-            '✅ User authenticated - RevenueCat linked (cross-device sync enabled)');
       }
     }
 
@@ -58,10 +54,6 @@ void main() async {
         precacheImage(const AssetImage(AppImages.bg2Copy), context);
       }
     });
-
-    print("App starting...");
-    print('FIREBASE APP: ${Firebase.app().options.projectId}');
-    print('User isLoggedIn: $isLoggedIn');
 
     runApp(
       GetMaterialApp(
@@ -75,9 +67,6 @@ void main() async {
       ),
     );
   } catch (e, stackTrace) {
-    print('Error during app initialization: $e');
-    print('Stack trace: $stackTrace');
-
     // Fallback app in case of initialization failure
     runApp(
       MaterialApp(

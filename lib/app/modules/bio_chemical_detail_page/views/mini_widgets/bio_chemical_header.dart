@@ -21,17 +21,11 @@ class BioChemicalHeader extends StatelessWidget {
         // Get the current emergency data
         final emergency = controller.currentEmergency;
 
-        print('DEBUG Header: Emergency data: ${emergency?.title ?? 'null'}');
-        print(
-            'DEBUG Header: Emergencies count: ${controller.emergencies.length}');
-
         // Use the emergency title if available, otherwise show a default
         String title = 'Biochemical Emergency';
         if (emergency != null && emergency.title.isNotEmpty) {
           title = emergency.title;
         }
-
-        print('DEBUG Header: Using title: $title');
 
         return CommonTitleSection(
           title: title,

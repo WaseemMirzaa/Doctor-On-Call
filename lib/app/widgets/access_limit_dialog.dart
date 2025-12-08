@@ -15,7 +15,6 @@ class AccessLimitDialog extends StatefulWidget {
 
 class _AccessLimitDialogState extends State<AccessLimitDialog> {
   bool _isTrialExpired = false;
-  int _remainingDays = 0;
   bool _isLoading = true;
 
   @override
@@ -26,10 +25,8 @@ class _AccessLimitDialogState extends State<AccessLimitDialog> {
 
   Future<void> _loadData() async {
     final expired = !await SubscriptionManagerService.isInFreeTrial();
-    final remaining = await SubscriptionManagerService.getRemainingTrialDays();
     setState(() {
       _isTrialExpired = expired;
-      _remainingDays = remaining;
       _isLoading = false;
     });
   }
@@ -100,7 +97,7 @@ class _AccessLimitDialogState extends State<AccessLimitDialog> {
                 Text(
                   _isTrialExpired
                       ? 'Your 7-day trial has expired. Subscribe now to continue accessing all features.'
-                      : 'You\'ve reached your daily limit of ${SubscriptionManagerService.dailyAccessLimit} items.\n\n${_remainingDays > 0 ? "$_remainingDays days left in your trial." : ""}\n\nSubscribe for unlimited access!',
+                      : 'You\'ve reached your daily limit of ${SubscriptionManagerService.dailyAccessLimitAfterTrial} items.\n\nSubscribe for unlimited access!',
                   style: AppTextStyles.regular.copyWith(fontSize: 16),
                   textAlign: TextAlign.center,
                 ),

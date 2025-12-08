@@ -19,36 +19,18 @@ class ClinicalDetailsController extends GetxController {
   /// Load data passed from the previous screen
   void _loadArgumentsData() {
     final arguments = Get.arguments;
-    print('DEBUG Clinical Details Controller: Arguments received: $arguments');
 
     if (arguments != null && arguments is Map<String, dynamic>) {
       selectedCategory.value = arguments['category'] ?? '';
       final String title = arguments['title'] ?? '';
 
-      print(
-          'DEBUG Clinical Details Controller: Category: ${selectedCategory.value}');
-      print('DEBUG Clinical Details Controller: Title: $title');
-
       if (arguments['diagnoses'] != null &&
           arguments['diagnoses'] is List<ClinicalDiagnosis>) {
         diagnoses.assignAll(arguments['diagnoses']);
-        print(
-            'DEBUG Clinical Details Controller: Loaded ${diagnoses.length} diagnoses');
 
-        if (diagnoses.isNotEmpty) {
-          print(
-              'DEBUG Clinical Details Controller: First diagnosis title: ${diagnoses.first.title}');
-          print(
-              'DEBUG Clinical Details Controller: First diagnosis category: ${diagnoses.first.category}');
-        }
-      } else {
-        print(
-            'DEBUG Clinical Details Controller: No diagnoses found in arguments');
-      }
-    } else {
-      print(
-          'DEBUG Clinical Details Controller: No arguments or invalid format');
-    }
+        if (diagnoses.isNotEmpty) {}
+      } else {}
+    } else {}
   }
 
   /// Get the currently selected diagnosis

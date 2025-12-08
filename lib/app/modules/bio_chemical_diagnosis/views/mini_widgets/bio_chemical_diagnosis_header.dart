@@ -28,12 +28,6 @@ class BioChemicalDiagnosisHeader extends StatelessWidget {
           title = controller.selectedCategory.value;
         }
 
-        print(
-            'DEBUG Diagnosis Header: isInCategoryView: ${controller.isInCategoryView.value}');
-        print(
-            'DEBUG Diagnosis Header: selectedCategory: ${controller.selectedCategory.value}');
-        print('DEBUG Diagnosis Header: Using title: $title');
-
         return CommonTitleSection(
           title: title,
           onBackTap: () {

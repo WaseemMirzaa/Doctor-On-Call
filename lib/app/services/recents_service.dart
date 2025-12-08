@@ -13,7 +13,6 @@ class RecentsService {
     try {
       final User? user = _auth.currentUser;
       if (user == null) {
-        print('User not authenticated, cannot store recent activity');
         return;
       }
 
@@ -33,7 +32,6 @@ class RecentsService {
       if (existing.docs.isNotEmpty) {
         // ✅ Exists — update the timestamp only
         await existing.docs.first.reference.update({'timestamp': timestamp});
-        print('⏱️ Timestamp updated for existing recent: $title');
       } else {
         // ➕ New entry
         final recentActivity = {
@@ -45,10 +43,8 @@ class RecentsService {
         };
 
         await recentCollection.add(recentActivity);
-        print('🆕 Recent activity added: $title');
       }
     } catch (e) {
-      print('Error storing/updating recent activity: $e');
       throw Exception('Failed to store or update recent activity: $e');
     }
   }
@@ -60,7 +56,6 @@ class RecentsService {
     try {
       final User? user = _auth.currentUser;
       if (user == null) {
-        print('User not authenticated, cannot retrieve recent activities');
         return [];
       }
 
@@ -88,10 +83,8 @@ class RecentsService {
         };
       }).toList();
 
-      print('Retrieved ${recentActivities.length} recent activities');
       return recentActivities;
     } catch (e) {
-      print('Error retrieving recent activities: $e');
       throw Exception('Failed to retrieve recent activities: $e');
     }
   }
@@ -112,10 +105,7 @@ class RecentsService {
     if (query.docs.isNotEmpty) {
       final doc = query.docs.first;
       await doc.reference.update({'timestamp': Timestamp.now()});
-      print('⏱️ Updated timestamp for: $title');
-    } else {
-      print('⚠️ No matching recent found for $title ($type)');
-    }
+    } else {}
   }
 
   /// Clear all recent activities for the current user
@@ -123,7 +113,6 @@ class RecentsService {
     try {
       final User? user = _auth.currentUser;
       if (user == null) {
-        print('User not authenticated, cannot clear recent activities');
         return;
       }
 
@@ -143,9 +132,7 @@ class RecentsService {
       }
 
       await batch.commit();
-      print('All recent activities cleared');
     } catch (e) {
-      print('Error clearing recent activities: $e');
       throw Exception('Failed to clear recent activities: $e');
     }
   }
@@ -155,7 +142,6 @@ class RecentsService {
     try {
       final User? user = _auth.currentUser;
       if (user == null) {
-        print('User not authenticated, cannot remove recent activity');
         return;
       }
 
@@ -167,10 +153,7 @@ class RecentsService {
           .collection('recents')
           .doc(activityId)
           .delete();
-
-      print('Recent activity removed: $activityId');
     } catch (e) {
-      print('Error removing recent activity: $e');
       throw Exception('Failed to remove recent activity: $e');
     }
   }

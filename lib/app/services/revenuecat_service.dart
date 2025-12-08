@@ -25,8 +25,6 @@ class RevenueCatService {
       // Check if API keys are configured
       if (_apiKeyAndroid.startsWith('goog_oBJ') ||
           _apiKeyAndroid == 'YOUR_ANDROID_API_KEY_HERE') {
-        print(
-            '⚠️ RevenueCat Android API key not configured - running in limited mode');
         // Continue with iOS if available
         if (GetPlatform.isAndroid) {
           return;
@@ -40,7 +38,6 @@ class RevenueCatService {
       } else if (GetPlatform.isIOS) {
         configuration = PurchasesConfiguration(_apiKeyIOS);
       } else {
-        print('⚠️ Platform not supported for RevenueCat');
         return;
       }
 
@@ -48,31 +45,21 @@ class RevenueCatService {
 
       // Enable debug logs in development
       await Purchases.setLogLevel(LogLevel.debug);
-
-      print('✅ RevenueCat initialized successfully');
-    } catch (e) {
-      print('❌ Error initializing RevenueCat: $e');
-    }
+    } catch (e) {}
   }
 
   /// Set user ID for RevenueCat
   static Future<void> setUserId(String userId) async {
     try {
       await Purchases.logIn(userId);
-      print('✅ User logged in to RevenueCat: $userId');
-    } catch (e) {
-      print('❌ Error logging in user to RevenueCat: $e');
-    }
+    } catch (e) {}
   }
 
   /// Log out user from RevenueCat
   static Future<void> logoutUser() async {
     try {
       await Purchases.logOut();
-      print('✅ User logged out from RevenueCat');
-    } catch (e) {
-      print('❌ Error logging out user from RevenueCat: $e');
-    }
+    } catch (e) {}
   }
 
   /// Get available offerings (products)
@@ -82,15 +69,11 @@ class RevenueCatService {
 
       if (offerings.current != null &&
           offerings.current!.availablePackages.isNotEmpty) {
-        print(
-            '✅ Available offerings: ${offerings.current!.availablePackages.length}');
         return offerings;
       } else {
-        print('⚠️ No offerings available');
         return null;
       }
     } catch (e) {
-      print('❌ Error getting offerings: $e');
       return null;
     }
   }
@@ -107,16 +90,13 @@ class RevenueCatService {
       // Check if there's a specific offering with our identifier
       if (offerings.all.containsKey(lifetimeOfferingId)) {
         lifetimeOffering = offerings.all[lifetimeOfferingId];
-        print('✅ Found lifetime offering by identifier: $lifetimeOfferingId');
       } else if (offerings.current != null) {
         // Fallback to current offering
         lifetimeOffering = offerings.current;
-        print('✅ Using current offering as lifetime offering');
       }
 
       if (lifetimeOffering == null ||
           lifetimeOffering.availablePackages.isEmpty) {
-        print('⚠️ No lifetime offering found');
         return null;
       }
 
@@ -126,9 +106,6 @@ class RevenueCatService {
 
       // Try to find lifetime or annual package
       for (var package in lifetimeOffering.availablePackages) {
-        print(
-            '📦 Available package: ${package.identifier} - ${package.storeProduct.identifier}');
-
         // Look for lifetime package type first
         if (package.packageType == PackageType.lifetime) {
           lifetimePackage = package;
@@ -144,14 +121,8 @@ class RevenueCatService {
       // If no specific match, use the first package
       lifetimePackage ??= lifetimeOffering.availablePackages.first;
 
-      print(
-          '✅ Selected lifetime package: ${lifetimePackage.identifier} - ${lifetimePackage.storeProduct.priceString}');
-      print(
-          '   Platform: ${GetPlatform.isAndroid ? "Android" : "iOS"}, Product ID: ${lifetimePackage.storeProduct.identifier}');
-
       return lifetimePackage;
     } catch (e) {
-      print('❌ Error getting lifetime package: $e');
       return null;
     }
   }
@@ -160,23 +131,16 @@ class RevenueCatService {
   static Future<CustomerInfo?> purchasePackage(Package package) async {
     try {
       final purchaserInfo = await Purchases.purchasePackage(package);
-      print('✅ Purchase successful');
       return purchaserInfo;
     } on PlatformException catch (e) {
       final errorCode = PurchasesErrorHelper.getErrorCode(e);
 
       if (errorCode == PurchasesErrorCode.purchaseCancelledError) {
-        print('⚠️ User cancelled the purchase');
       } else if (errorCode == PurchasesErrorCode.purchaseNotAllowedError) {
-        print('❌ User is not allowed to make purchases');
       } else if (errorCode == PurchasesErrorCode.paymentPendingError) {
-        print('⏳ Payment is pending');
-      } else {
-        print('❌ Purchase error: ${e.message}');
-      }
+      } else {}
       return null;
     } catch (e) {
-      print('❌ Unexpected purchase error: $e');
       return null;
     }
   }
@@ -185,10 +149,8 @@ class RevenueCatService {
   static Future<CustomerInfo?> restorePurchases() async {
     try {
       final customerInfo = await Purchases.restorePurchases();
-      print('✅ Purchases restored successfully');
       return customerInfo;
     } catch (e) {
-      print('❌ Error restoring purchases: $e');
       return null;
     }
   }
@@ -199,28 +161,17 @@ class RevenueCatService {
       final customerInfo = await Purchases.getCustomerInfo();
 
       // Debug: Print all entitlements
-      print('🔍 Checking entitlements...');
-      print(
-          '   All entitlements: ${customerInfo.entitlements.all.keys.toList()}');
 
-      for (var entry in customerInfo.entitlements.all.entries) {
-        print(
-            '   - ${entry.key}: isActive=${entry.value.isActive}, willRenew=${entry.value.willRenew}');
-      }
+      for (var entry in customerInfo.entitlements.all.entries) {}
 
       // Debug: Print all active purchases
-      print('🔍 Active purchases:');
-      for (var entry in customerInfo.allPurchasedProductIdentifiers) {
-        print('   - Product: $entry');
-      }
+      for (var entry in customerInfo.allPurchasedProductIdentifiers) {}
 
       final hasPremium =
           customerInfo.entitlements.all[premiumEntitlementId]?.isActive ??
               false;
-      print('✅ Premium status for "$premiumEntitlementId": $hasPremium');
       return hasPremium;
     } catch (e) {
-      print('❌ Error checking premium status: $e');
       return false;
     }
   }
@@ -231,7 +182,6 @@ class RevenueCatService {
       final customerInfo = await Purchases.getCustomerInfo();
       return customerInfo;
     } catch (e) {
-      print('❌ Error getting customer info: $e');
       return null;
     }
   }
@@ -240,13 +190,10 @@ class RevenueCatService {
   /// Use this when you suspect the local cache is out of sync
   static Future<CustomerInfo?> syncCustomerInfo() async {
     try {
-      print('🔄 Syncing customer info from RevenueCat servers...');
       // Calling getCustomerInfo will fetch latest from server
       final customerInfo = await Purchases.getCustomerInfo();
-      print('✅ Customer info synced');
       return customerInfo;
     } catch (e) {
-      print('❌ Error syncing customer info: $e');
       return null;
     }
   }
@@ -260,7 +207,6 @@ class RevenueCatService {
       }
       return null;
     } catch (e) {
-      print('❌ Error getting product: $e');
       return null;
     }
   }
@@ -271,20 +217,15 @@ class RevenueCatService {
     try {
       final package = await getLifetimePackage();
       if (package == null) {
-        print('❌ Lifetime package not found');
         return null;
       }
 
-      print('🛒 Purchasing lifetime package: ${package.identifier}');
       final purchaserInfo = await purchasePackage(package);
 
-      if (purchaserInfo != null) {
-        print('✅ Lifetime purchase successful');
-      }
+      if (purchaserInfo != null) {}
 
       return purchaserInfo;
     } catch (e) {
-      print('❌ Error purchasing lifetime: $e');
       return null;
     }
   }
@@ -295,26 +236,19 @@ class RevenueCatService {
     try {
       final product = await getProductById(productId);
       if (product == null) {
-        print('❌ Product not found: $productId');
         return null;
       }
 
       final purchaserInfo = await Purchases.purchaseStoreProduct(product);
-      print('✅ Product purchased successfully');
       return purchaserInfo;
     } on PlatformException catch (e) {
       final errorCode = PurchasesErrorHelper.getErrorCode(e);
 
       if (errorCode == PurchasesErrorCode.purchaseCancelledError) {
-        print('⚠️ User cancelled the purchase');
       } else if (errorCode == PurchasesErrorCode.purchaseNotAllowedError) {
-        print('❌ User is not allowed to make purchases');
-      } else {
-        print('❌ Purchase error: ${e.message}');
-      }
+      } else {}
       return null;
     } catch (e) {
-      print('❌ Unexpected purchase error: $e');
       return null;
     }
   }
