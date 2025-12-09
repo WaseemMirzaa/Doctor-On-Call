@@ -143,4 +143,6 @@ class AppText {
   static const String copyRight = 'Copyright';
   static const String copyRightContent =
       '© 2025 Dr OnCall / med4u.app. All rights reserved.\nAll content, including clinical pathways, structure, and design elements, is the intellectual property of the creators of Dr OnCall. No part of this application may be reproduced, distributed, or modified without written permission. Unauthorized use may result in legal action.';
+
+  static const String sevenDayFreeTrial = "7 Days Access to All Features";
 }

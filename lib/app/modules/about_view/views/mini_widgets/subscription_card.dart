@@ -73,36 +73,36 @@ class SubscriptionCard extends StatelessWidget {
                         ],
                       )),
                   Spacer(),
-                  // Only show "Change Plan" button for non-premium users
-                  Obx(() => !homeController.isPremiumUser.value
-                      ? Padding(
-                          padding: const EdgeInsets.only(right: 10),
-                          child: GestureDetector(
-                            onTap: () {
-                              Get.toNamed(Routes.SUBSCRIPTIONS);
-                            },
-                            child: Container(
-                                height: 29,
-                                width: 90,
-                                decoration: BoxDecoration(
-                                    color: AppColors.baseColor,
-                                    borderRadius:
-                                        BorderRadiusDirectional.circular(25),
-                                    border: Border.all(
-                                      color: AppColors.txtWhiteColor,
-                                      width: 0.5,
-                                    )),
-                                child: Center(
-                                  child: Text(
-                                      textAlign: TextAlign.center,
-                                      AppText.changePlan,
-                                      style: AppTextStyles.bold.copyWith(
-                                          fontSize: 10,
-                                          color: AppColors.txtBlackColor)),
-                                )),
-                          ),
-                        )
-                      : SizedBox(width: 10)) // Empty space for premium users
+                  // Show "Manage" for premium users, "Change Plan" for non-premium
+                  Obx(() => Padding(
+                        padding: const EdgeInsets.only(right: 10),
+                        child: GestureDetector(
+                          onTap: () {
+                            Get.toNamed(Routes.SUBSCRIPTIONS);
+                          },
+                          child: Container(
+                              height: 29,
+                              width: 90,
+                              decoration: BoxDecoration(
+                                  color: AppColors.baseColor,
+                                  borderRadius:
+                                      BorderRadiusDirectional.circular(25),
+                                  border: Border.all(
+                                    color: AppColors.txtWhiteColor,
+                                    width: 0.5,
+                                  )),
+                              child: Center(
+                                child: Text(
+                                    textAlign: TextAlign.center,
+                                    homeController.isPremiumUser.value
+                                        ? 'Manage'
+                                        : AppText.changePlan,
+                                    style: AppTextStyles.bold.copyWith(
+                                        fontSize: 10,
+                                        color: AppColors.txtBlackColor)),
+                              )),
+                        ),
+                      ))
                 ],
               ),
             ),

@@ -25,40 +25,78 @@ class SubscriptionsView extends GetView<SubscriptionsController> {
                         SubscriptionsHeader(),
                         const SizedBox(height: 15),
 
-                        // Free Trial Card (Current Plan)
-                        Obx(() => PlanCard(
-                              title: controller.isPremiumUser.value
-                                  ? AppText.trial
-                                  : controller.currentPlan.value,
-                              subtitle: AppText.plan,
-                              features: [
-                                AppText.accessToEmergencyCondition,
-                                AppText.news2Calculator,
+                        // For Premium Users: Only show Pro benefits
+                        // For Non-Premium Users: Show Free Trial as current + Pro plan to purchase
+                        Obx(() {
+                          if (controller.isPremiumUser.value) {
+                            // Premium user: Show only the Pro plan benefits (no button)
+                            return Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 30.0, vertical: 10),
+                                  child: Text(
+                                    'You have Lifetime Access! 🎉',
+                                    style: AppTextStyles.bold.copyWith(
+                                      fontSize: 18,
+                                      color: const Color(0xFFEEC643),
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                                PlanCard(
+                                  title: controller.lifetimePrice.value,
+                                  subtitle: 'Lifetime Access',
+                                  features: [
+                                    'Access to all emergency conditions',
+                                    'All scoring tools',
+                                    'NEWS2 Calculator',
+                                    'One-time fee, no recurring fees',
+                                  ],
+                                  buttonText: 'Active',
+                                  isSelected: true,
+                                  isCurrent: true,
+                                  onPressed: null,
+                                ),
                               ],
-                              buttonText: AppText.currentPlan,
-                              isCurrent: !controller.isPremiumUser.value,
-                              isSelected: !controller.isPremiumUser.value,
-                            )),
-
-                        // Lifetime Plan Card - €9.99 One-Time Fee
-                        Obx(() => PlanCard(
-                              title: controller.lifetimePrice.value,
-                              subtitle: 'Lifetime Access',
-                              features: [
-                                'Access to all emergency conditions',
-                                'All scoring tools',
-                                'NEWS2 Calculator',
-                                'One-time fee, no recurring fees',
+                            );
+                          } else {
+                            // Non-premium user: Show both plans
+                            return Column(
+                              children: [
+                                // Free Trial Card (Current Plan)
+                                PlanCard(
+                                  title: controller.currentPlan.value,
+                                  subtitle: AppText.plan,
+                                  features: [
+                                    AppText.sevenDayFreeTrial,
+                                    AppText.accessToEmergencyCondition,
+                                    AppText.news2Calculator,
+                                  ],
+                                  buttonText: AppText.currentPlan,
+                                  isCurrent: true,
+                                  isSelected: true,
+                                ),
+                                // Lifetime Plan Card
+                                PlanCard(
+                                  title: controller.lifetimePrice.value,
+                                  subtitle: 'Lifetime Access',
+                                  features: [
+                                    'Access to all emergency conditions',
+                                    'All scoring tools',
+                                    'NEWS2 Calculator',
+                                    'One-time fee, no recurring fees',
+                                  ],
+                                  buttonText: AppText.buyPlan,
+                                  isSelected: false,
+                                  isCurrent: false,
+                                  onPressed: () =>
+                                      controller.purchaseLifetime(),
+                                ),
                               ],
-                              buttonText: controller.isPremiumUser.value
-                                  ? 'Purchased'
-                                  : AppText.buyPlan,
-                              isSelected: controller.isPremiumUser.value,
-                              isCurrent: controller.isPremiumUser.value,
-                              onPressed: controller.isPremiumUser.value
-                                  ? null
-                                  : () => controller.purchaseLifetime(),
-                            )),
+                            );
+                          }
+                        }),
 
                         const SizedBox(height: 20),
 
