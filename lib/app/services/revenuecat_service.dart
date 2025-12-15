@@ -130,17 +130,35 @@ class RevenueCatService {
   /// Purchase a package
   static Future<CustomerInfo?> purchasePackage(Package package) async {
     try {
+      // This will show the native App Store/Play Store purchase sheet
       final purchaserInfo = await Purchases.purchasePackage(package);
       return purchaserInfo;
     } on PlatformException catch (e) {
       final errorCode = PurchasesErrorHelper.getErrorCode(e);
 
       if (errorCode == PurchasesErrorCode.purchaseCancelledError) {
+        // User cancelled the purchase - this is normal, don't show error
+        print('RevenueCat: Purchase cancelled by user');
       } else if (errorCode == PurchasesErrorCode.purchaseNotAllowedError) {
+        print(
+            'RevenueCat: Purchase not allowed - user may not be permitted to make payments');
+        throw Exception('Purchases are not allowed on this device');
       } else if (errorCode == PurchasesErrorCode.paymentPendingError) {
-      } else {}
+        print('RevenueCat: Payment pending - waiting for user action');
+        throw Exception(
+            'Payment is pending. Please complete the purchase in the App Store.');
+      } else if (errorCode == PurchasesErrorCode.productAlreadyPurchasedError) {
+        // Critical: User already owns this product
+        print('RevenueCat: Product already purchased');
+        // Try to restore purchases to sync the status
+        final restoredInfo = await Purchases.restorePurchases();
+        return restoredInfo;
+      } else {
+        print('RevenueCat: Purchase error - ${e.code}: ${e.message}');
+      }
       return null;
     } catch (e) {
+      print('RevenueCat: Unexpected purchase error - $e');
       return null;
     }
   }

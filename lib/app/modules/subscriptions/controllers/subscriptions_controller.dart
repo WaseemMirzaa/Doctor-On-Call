@@ -132,14 +132,41 @@ class SubscriptionsController extends GetxController {
   /// Purchase lifetime access
   Future<void> purchaseLifetime() async {
     try {
+      // CRITICAL: Check if user already has premium before attempting purchase
+      // This prevents issues where purchase dialog doesn't show but purchase completes
+      if (isPremiumUser.value) {
+        Get.snackbar(
+          'Already Purchased',
+          'You already have lifetime access!',
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 2),
+        );
+        return;
+      }
+
+      // Verify we have a valid package to purchase
+      if (lifetimePackage.value == null) {
+        Get.snackbar(
+          'Error',
+          'Product not available. Please try refreshing.',
+          snackPosition: SnackPosition.BOTTOM,
+        );
+        await loadLifetimePackage(); // Try to reload
+        return;
+      }
+
       isLoading.value = true;
 
+      // Show explicit message that purchase sheet will appear
       Get.snackbar(
-        'Processing',
-        'Please wait while we process your purchase...',
+        'Opening Purchase',
+        'The App Store purchase window will appear shortly...',
         snackPosition: SnackPosition.BOTTOM,
         duration: const Duration(seconds: 2),
       );
+
+      // Small delay to ensure snackbar is visible before sheet appears
+      await Future.delayed(const Duration(milliseconds: 300));
 
       CustomerInfo? info;
 

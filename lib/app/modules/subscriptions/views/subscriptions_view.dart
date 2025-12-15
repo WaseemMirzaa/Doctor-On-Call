@@ -53,9 +53,10 @@ class SubscriptionsView extends GetView<SubscriptionsController> {
                                     'NEWS2 Calculator',
                                     'One-time fee, no recurring fees',
                                   ],
-                                  buttonText: 'Active',
+                                  buttonText: 'Current Plan',
                                   isSelected: true,
                                   isCurrent: true,
+                                  // Explicitly set to null to prevent any accidental taps
                                   onPressed: null,
                                 ),
                               ],

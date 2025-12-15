@@ -91,22 +91,26 @@ class PlanCard extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               height: 43,
-              child: GestureDetector(
-                onTap: isCurrent ? null : onPressed,
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: isCurrent
-                          ? AppColors.baseColor.withOpacity(0.5)
-                          : AppColors.baseColor,
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(
-                          color: isCurrent
-                              ? AppColors.txtWhiteColor.withOpacity(0.2)
-                              : AppColors.txtWhiteColor)),
-                  alignment: Alignment.center,
-                  child: Text(isCurrent ? 'Current Plan' : buttonText,
-                      style: AppTextStyles.bold.copyWith(
-                          fontSize: 16, color: AppColors.txtBlackColor)),
+              child: AbsorbPointer(
+                // Completely block any touch events if this is the current plan or onPressed is null
+                absorbing: isCurrent || onPressed == null,
+                child: GestureDetector(
+                  onTap: onPressed,
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: isCurrent
+                            ? AppColors.baseColor.withOpacity(0.5)
+                            : AppColors.baseColor,
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(
+                            color: isCurrent
+                                ? AppColors.txtWhiteColor.withOpacity(0.2)
+                                : AppColors.txtWhiteColor)),
+                    alignment: Alignment.center,
+                    child: Text(isCurrent ? 'Current Plan' : buttonText,
+                        style: AppTextStyles.bold.copyWith(
+                            fontSize: 16, color: AppColors.txtBlackColor)),
+                  ),
                 ),
               ),
             )
