@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1068365760229",
+    "project_id": "dr-oncall-c3b6b",
+    "storage_bucket": "dr-oncall-c3b6b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1068365760229:android:9f66fbff61330c9c58b60c",
+        "android_client_info": {
+          "package_name": "com.codetivelab.drOnCall"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDliUNqvyW3cQ-LhyBfVt6181YO00T0WpU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1068365760229:android:1d9b73260503bc1e58b60c",
+        "android_client_info": {
+          "package_name": "com.codetivelab.dr_on_call"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDliUNqvyW3cQ-LhyBfVt6181YO00T0WpU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

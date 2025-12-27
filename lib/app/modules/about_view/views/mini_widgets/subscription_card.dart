@@ -6,12 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../../config/AppTextStyle.dart';
+import '../../../../modules/home/controllers/home_controller.dart';
 
 class SubscriptionCard extends StatelessWidget {
   const SubscriptionCard({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final homeController = Get.find<HomeController>();
     return Padding(
       padding: const EdgeInsets.all(15.0),
       child: Column(
@@ -32,7 +34,7 @@ class SubscriptionCard extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
               border: Border.all(
-                color: AppColors.baseColor.withOpacity(0.8),
+                color: AppColors.baseColor.withValues(alpha: 0.8),
                 width: 1,
               ),
             ),
@@ -53,16 +55,20 @@ class SubscriptionCard extends StatelessWidget {
                   SizedBox(
                     width: 30,
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(AppText.trial,
-                          style: AppTextStyles.bold
-                              .copyWith(color: AppColors.txtWhiteColor)),
-                      Text(AppText.plan,
-                          style: AppTextStyles.regular.copyWith(fontSize: 12)),
-                    ],
-                  ),
+                  Obx(() => Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                              homeController.isPremiumUser.value
+                                  ? 'Lifetime Access'
+                                  : AppText.trial,
+                              style: AppTextStyles.bold
+                                  .copyWith(color: AppColors.txtWhiteColor)),
+                          Text(AppText.plan,
+                              style:
+                                  AppTextStyles.regular.copyWith(fontSize: 12)),
+                        ],
+                      )),
                   Spacer(),
                   Padding(
                     padding: const EdgeInsets.only(right: 10),

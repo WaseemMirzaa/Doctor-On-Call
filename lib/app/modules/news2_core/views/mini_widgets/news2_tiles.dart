@@ -1,9 +1,11 @@
 import 'package:dr_on_call/config/AppColors.dart';
 import 'package:dr_on_call/config/AppTextStyle.dart';
+import 'package:dr_on_call/config/AppText.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../controllers/news2_core_controller.dart';
 
-class News2Tiles extends StatefulWidget {
+class News2Tiles extends StatelessWidget {
   final List<String> symptoms;
   final ValueChanged<List<String>> onSelectionChanged;
   final Function(String) onSymptomTap; // Callback for navigation
@@ -20,34 +22,11 @@ class News2Tiles extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _SymptomSelectionWidgetState createState() => _SymptomSelectionWidgetState();
-}
-
-class _SymptomSelectionWidgetState extends State<News2Tiles> {
-  String? _selectedSymptom;
-  // Map to store text input for each symptom
-  final Map<String, TextEditingController> _controllers = {};
-
-  @override
-  void initState() {
-    super.initState();
-    // Initialize a TextEditingController for each symptom
-    for (var symptom in widget.symptoms) {
-      _controllers[symptom] = TextEditingController();
-    }
-  }
-
-  @override
-  void dispose() {
-    // Dispose all controllers to prevent memory leaks
-    _controllers.values.forEach((controller) => controller.dispose());
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final controller = Get.find<News2CoreController>();
+
     return Padding(
-      padding: widget.padding ??
+      padding: padding ??
           const EdgeInsets.only(
             left: 16.0,
             right: 16.0,
@@ -56,85 +35,317 @@ class _SymptomSelectionWidgetState extends State<News2Tiles> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          ...widget.symptoms.map((symptom) {
-            final isSelected = _selectedSymptom == symptom;
+          ...symptoms.map((symptom) {
             return Padding(
-              padding: EdgeInsets.only(bottom: widget.spacing),
-              child: GestureDetector(
+              padding: EdgeInsets.only(bottom: spacing),
+              child: _buildSymptomField(symptom, controller),
+            );
+          }).toList(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSymptomField(String symptom, News2CoreController controller) {
+    // Handle level of consciousness with checkbox and dropdown
+    if (symptom == AppText.levelOfConsciousness) {
+      return Obx(() => Column(
+            children: [
+              // Checkbox for Level of Consciousness
+              GestureDetector(
                 onTap: () {
-                  setState(() {
-                    _selectedSymptom = symptom;
-                    // Call the navigation callback with the selected symptom
-                    widget.onSymptomTap(symptom);
-                    // Notify selection change with current inputs
-                    widget.onSelectionChanged(
-                      _controllers.entries
-                          .where((entry) => entry.value.text.isNotEmpty)
-                          .map((entry) => entry.value.text)
-                          .toList(),
-                    );
-                  });
+                  controller.toggleLevelOfConsciousness();
+                  onSymptomTap(symptom);
                 },
                 child: Container(
                   height: 60,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(
-                      color: const Color(0xFFEEC643), // Yellow border
+                      color: const Color(0xFFEEC643),
                       width: 1,
                     ),
-                    gradient: isSelected
-                        ? LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                              const Color(0xFF0A1A2F).withOpacity(0.7),
-                              const Color(0xFF0A1A3F),
-                            ],
-                          )
+                    color: controller.isConfusedOrUnresponsive.value
+                        ? const Color(0xFF0A1A3F)
                         : null,
                   ),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                      child: TextFormField(
-                        keyboardType: TextInputType.number,
-                        controller: _controllers[symptom],
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          symptom,
+                          style: AppTextStyles.medium.copyWith(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.txtWhiteColor,
+                          ),
+                        ),
+                        Icon(
+                          controller.isConfusedOrUnresponsive.value
+                              ? Icons.check_box
+                              : Icons.check_box_outline_blank,
+                          color: AppColors.txtOrangeColor,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              // AVPU Dropdown (shown when checkbox is checked)
+              if (controller.isConfusedOrUnresponsive.value) ...[
+                const SizedBox(height: 20),
+                Container(
+                  height: 60,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                      color: const Color(0xFFEEC643),
+                      width: 1,
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        value: controller.selectedConsciousnessLevel.value,
+                        isExpanded: true,
+                        dropdownColor: const Color(0xFF0A1A3F),
                         style: AppTextStyles.medium.copyWith(
-                          fontSize: 18,
+                          fontSize: 16,
                           fontWeight: FontWeight.w500,
                           color: AppColors.txtWhiteColor,
                         ),
-                        decoration: InputDecoration(
-                          hintText: symptom,
-                          hintStyle: AppTextStyles.medium.copyWith(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                            color: AppColors
-                                .txtWhiteColor, // Slightly faded for hint
-                          ),
-                          border: InputBorder.none, // No additional border
-                          contentPadding:
-                              const EdgeInsets.symmetric(vertical: 15.0),
+                        icon: const Icon(
+                          Icons.arrow_drop_down,
+                          color: AppColors.txtOrangeColor,
                         ),
-                        onChanged: (value) {
-                          // Notify selection change with updated inputs
-                          widget.onSelectionChanged(
-                            _controllers.entries
-                                .where((entry) => entry.value.text.isNotEmpty)
-                                .map((entry) => entry.value.text)
-                                .toList(),
+                        items: controller.consciousnessOptions.keys
+                            .map((String level) {
+                          final score = controller.consciousnessOptions[level]!;
+                          return DropdownMenuItem<String>(
+                            value: level,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  level,
+                                  style: AppTextStyles.medium.copyWith(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500,
+                                    color: AppColors.txtWhiteColor,
+                                  ),
+                                ),
+                              ],
+                            ),
                           );
+                        }).toList(),
+                        onChanged: (String? newValue) {
+                          if (newValue != null) {
+                            controller.setConsciousnessLevel(newValue);
+                          }
                         },
                       ),
                     ),
                   ),
                 ),
+              ],
+            ],
+          ));
+    }
+
+    // Handle oxygen requirement with checkbox and dropdown
+    if (symptom == AppText.oxygenRequirement) {
+      return Obx(() => Column(
+            children: [
+              // Checkbox for Oxygen Requirement
+              GestureDetector(
+                onTap: () {
+                  controller.toggleOxygenRequirement();
+                  onSymptomTap(symptom);
+                },
+                child: Container(
+                  height: 60,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                      color: const Color(0xFFEEC643),
+                      width: 1,
+                    ),
+                    color: controller.onSupplementalOxygen.value
+                        ? const Color(0xFF0A1A3F)
+                        : null,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          symptom,
+                          style: AppTextStyles.medium.copyWith(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.txtWhiteColor,
+                          ),
+                        ),
+                        Icon(
+                          controller.onSupplementalOxygen.value
+                              ? Icons.check_box
+                              : Icons.check_box_outline_blank,
+                          color: AppColors.txtOrangeColor,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ),
-            );
-          }).toList(),
-        ],
+              // Oxygen Therapy Type Dropdown (shown when checkbox is checked)
+              if (controller.onSupplementalOxygen.value) ...[
+                const SizedBox(height: 20),
+                Container(
+                  height: 60,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                      color: const Color(0xFFEEC643),
+                      width: 1,
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        value: controller.selectedOxygenType.value,
+                        isExpanded: true,
+                        dropdownColor: const Color(0xFF0A1A3F),
+                        style: AppTextStyles.medium.copyWith(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.txtWhiteColor,
+                        ),
+                        icon: const Icon(
+                          Icons.arrow_drop_down,
+                          color: AppColors.txtOrangeColor,
+                        ),
+                        items: controller.oxygenTypeOptions.keys
+                            .map((String type) {
+                          return DropdownMenuItem<String>(
+                            value: type,
+                            child: Text(
+                              type,
+                              style: AppTextStyles.medium.copyWith(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                                color: AppColors.txtWhiteColor,
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                        onChanged: (String? newValue) {
+                          if (newValue != null) {
+                            controller.setOxygenType(newValue);
+                          }
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ],
+          ));
+    }
+
+    // Handle numeric input fields
+    TextEditingController textController;
+    switch (symptom) {
+      case AppText.respiratoryRate:
+        textController = controller.respiratoryRateController;
+        break;
+      case AppText.oxygenSaturation:
+        textController = controller.oxygenSaturationController;
+        break;
+      case AppText.temperature:
+        textController = controller.temperatureController;
+        break;
+      case AppText.systolicBloodPressure:
+        textController = controller.systolicBPController;
+        break;
+      case AppText.heartRate:
+        textController = controller.heartRateController;
+        break;
+      default:
+        textController = TextEditingController();
+    }
+
+    // Create a focus node for the text field
+    final FocusNode focusNode = FocusNode();
+
+    return GestureDetector(
+      onTap: () {
+        onSymptomTap(symptom);
+        // Focus the text field when the row is tapped
+        focusNode.requestFocus();
+      },
+      child: Container(
+        height: 60,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(
+            color: const Color(0xFFEEC643),
+            width: 1,
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          child: Row(
+            children: [
+              // Symptom label on the left
+              Expanded(
+                flex: 2,
+                child: Text(
+                  symptom,
+                  style: AppTextStyles.medium.copyWith(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.txtWhiteColor,
+                  ),
+                ),
+              ),
+              // Input field on the right
+              Expanded(
+                flex: 1,
+                child: TextFormField(
+                  focusNode: focusNode,
+                  keyboardType: symptom == AppText.temperature
+                      ? TextInputType.numberWithOptions(decimal: true)
+                      : TextInputType.number,
+                  controller: textController,
+                  textAlign: TextAlign.right,
+                  style: AppTextStyles.medium.copyWith(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.txtWhiteColor,
+                  ),
+                  decoration: InputDecoration(
+                    hintText: "Enter value",
+                    hintStyle: AppTextStyles.medium.copyWith(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      color: AppColors.txtWhiteColor.withOpacity(0.6),
+                    ),
+                    border: InputBorder.none,
+                    contentPadding: const EdgeInsets.symmetric(vertical: 15.0),
+                  ),
+                  onChanged: (value) {
+                    onSelectionChanged([value]);
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

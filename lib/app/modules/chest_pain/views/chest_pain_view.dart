@@ -16,10 +16,7 @@ class ChestPainView extends GetView<ChestPainController> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 25.0, top: 5),
-                child: ChestHeader(),
-              ),
+              ChestHeader(),
               SizedBox(
                 height: 50,
               ),

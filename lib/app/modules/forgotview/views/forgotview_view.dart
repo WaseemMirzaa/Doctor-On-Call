@@ -19,19 +19,15 @@ class ForgotviewView extends GetView<ForgotviewController> {
         padding: const EdgeInsets.all(20.0),
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 10.0),
-              child: ForgotHeaderSection(),
-            ),
-            const SizedBox(height: 100),
+            ForgotHeaderSection(),
             ForgotForm(
-              onSendTap: () {
-                Get.toNamed(Routes.LOGIN);
-              },
-            ),
+                // onSendTap: () {
+                //   Get.toNamed(Routes.LOGIN);
+                // },
+                ),
             Spacer(),
             ForgotBottomText(onLoginTap: () {
-              Get.toNamed(Routes.LOGIN);
+              Get.offAndToNamed(Routes.LOGIN);
             }),
           ],
         ),

@@ -20,11 +20,7 @@ class SignupView extends GetView<SignupController> {
               padding: const EdgeInsets.all(20.0),
               sliver: SliverList(
                 delegate: SliverChildListDelegate([
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10.0),
-                    child: SignupHeaderSection(),
-                  ),
-                  const SizedBox(height: 100),
+                  SignupHeaderSection(),
                   SignUpForm(
                     onLoginTap: () {
                       Get.toNamed(Routes.LOGIN);
@@ -41,7 +37,7 @@ class SignupView extends GetView<SignupController> {
                   padding: const EdgeInsets.only(bottom: 20.0),
                   child: SignupBottomText(
                     onLogInTap: () {
-                      Get.toNamed(Routes.LOGIN);
+                      Get.offAndToNamed(Routes.LOGIN);
                     },
                   ),
                 ),

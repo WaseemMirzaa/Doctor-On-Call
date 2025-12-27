@@ -16,12 +16,16 @@ class BackIconButton extends StatelessWidget {
       onTap: onTap,
       child: Align(
         alignment: Alignment.topLeft,
-        child: Padding(
-          padding: const EdgeInsets.only(top: 8.0),
-          child: Image.asset(
-            AppIcons.back,
-            width: 15,
-            color: AppColors.txtWhiteColor,
+        child: Container(
+          height: 65,
+          color: Colors.transparent,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 10, left: 5),
+            child: Image.asset(
+              AppIcons.back,
+              width: 15,
+              color: AppColors.txtWhiteColor,
+            ),
           ),
         ),
       ),

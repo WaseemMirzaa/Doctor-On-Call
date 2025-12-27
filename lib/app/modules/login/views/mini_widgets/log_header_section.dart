@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import '../../../../../config/AppColors.dart';
 import '../../../../../config/AppText.dart';
 import '../../../../widgets/back_icon_button.dart';
+import '../../../../widgets/custom_header.dart';
 
 class LoginHeaderSection extends StatelessWidget {
   final VoidCallback? onBackTap;
@@ -15,30 +16,10 @@ class LoginHeaderSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      // crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        GestureDetector(
-          onTap: () {
-            Get.back();
-          },
-          child: Padding(
-            padding: const EdgeInsets.only(top: 25.0),
-            child: BackIconButton(
-              onTap: onBackTap ?? () => Get.back(),
-            ),
-          ),
-        ),
-        const SizedBox(height: 15),
-        Text(AppText.loginWelcome,
-            style: AppTextStyles.bold.copyWith(fontSize: 25)),
-        const SizedBox(height: 4),
-        Text(
-          AppText.plzlogIn,
-          style: AppTextStyles.regular.copyWith(fontSize: 13.5),
-        ),
-      ],
+    return CommonTitleSection(
+      title: AppText.loginWelcome,
+      description: AppText.plzlogIn,
+      spacing: true,
     );
   }
 }

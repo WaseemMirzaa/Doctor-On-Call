@@ -1,23 +1,89 @@
 import 'package:get/get.dart';
+import '../../clinical_diagnosis/model/clinical_diagnosis.dart';
 
 class ClinicalDetailsController extends GetxController {
-  //TODO: Implement ClinicalDetailsController
+  // Observable data
+  final RxString selectedCategory = ''.obs;
+  final RxList<ClinicalDiagnosis> diagnoses = <ClinicalDiagnosis>[].obs;
+  final RxInt selectedDiagnosisIndex = 0.obs;
 
-  final count = 0.obs;
+  // Loading state
+  final RxBool isLoading = false.obs;
+
   @override
   void onInit() {
     super.onInit();
+    _loadArgumentsData();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
+  /// Load data passed from the previous screen
+  void _loadArgumentsData() {
+    final arguments = Get.arguments;
+    print('DEBUG Clinical Details Controller: Arguments received: $arguments');
+
+    if (arguments != null && arguments is Map<String, dynamic>) {
+      selectedCategory.value = arguments['category'] ?? '';
+      final String title = arguments['title'] ?? '';
+
+      print(
+          'DEBUG Clinical Details Controller: Category: ${selectedCategory.value}');
+      print('DEBUG Clinical Details Controller: Title: $title');
+
+      if (arguments['diagnoses'] != null &&
+          arguments['diagnoses'] is List<ClinicalDiagnosis>) {
+        diagnoses.assignAll(arguments['diagnoses']);
+        print(
+            'DEBUG Clinical Details Controller: Loaded ${diagnoses.length} diagnoses');
+
+        if (diagnoses.isNotEmpty) {
+          print(
+              'DEBUG Clinical Details Controller: First diagnosis title: ${diagnoses.first.title}');
+          print(
+              'DEBUG Clinical Details Controller: First diagnosis category: ${diagnoses.first.category}');
+        }
+      } else {
+        print(
+            'DEBUG Clinical Details Controller: No diagnoses found in arguments');
+      }
+    } else {
+      print(
+          'DEBUG Clinical Details Controller: No arguments or invalid format');
+    }
   }
 
-  @override
-  void onClose() {
-    super.onClose();
+  /// Get the currently selected diagnosis
+  ClinicalDiagnosis? get currentDiagnosis {
+    if (diagnoses.isNotEmpty &&
+        selectedDiagnosisIndex.value < diagnoses.length) {
+      return diagnoses[selectedDiagnosisIndex.value];
+    }
+    return null;
   }
 
-  void increment() => count.value++;
+  /// Select a specific diagnosis by index
+  void selectDiagnosis(int index) {
+    if (index >= 0 && index < diagnoses.length) {
+      selectedDiagnosisIndex.value = index;
+    }
+  }
+
+  /// Navigate to next diagnosis
+  void nextDiagnosis() {
+    if (selectedDiagnosisIndex.value < diagnoses.length - 1) {
+      selectedDiagnosisIndex.value++;
+    }
+  }
+
+  /// Navigate to previous diagnosis
+  void previousDiagnosis() {
+    if (selectedDiagnosisIndex.value > 0) {
+      selectedDiagnosisIndex.value--;
+    }
+  }
+
+  /// Check if there's a next diagnosis
+  bool get hasNext => selectedDiagnosisIndex.value < diagnoses.length - 1;
+
+  /// Check if there's a previous diagnosis
+  bool get hasPrevious => selectedDiagnosisIndex.value > 0;
 }

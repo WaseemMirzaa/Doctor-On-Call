@@ -13,19 +13,18 @@ class BioChemicalDiagnosisView extends GetView<BioChemicalDiagnosisController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BackgroundContainer(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 20.0),
-                child: BioChemicalDiagnosisHeader(),
-              ),
-              SizedBox(
-                height: 50,
-              ),
-              BioChemicalList(),
-            ],
-          ),
+        child: Column(
+          children: [
+            BioChemicalDiagnosisHeader(),
+            SizedBox(
+              height: 50,
+            ),
+            Expanded(
+                child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: BioChemicalList(),
+            )),
+          ],
         ),
       ),
     );

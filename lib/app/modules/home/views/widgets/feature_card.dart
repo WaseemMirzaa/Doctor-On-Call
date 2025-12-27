@@ -48,7 +48,8 @@ class FeatureCard extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 5.0),
               child: Text(title,
                   textAlign: TextAlign.center,
-                  style: AppTextStyles.bold.copyWith(fontSize: 14)),
+                  style: AppTextStyles.bold
+                      .copyWith(fontSize: 15, fontWeight: FontWeight.bold)),
             ),
           ],
         ),
