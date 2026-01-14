@@ -17,7 +17,6 @@
   <img src="assets/images/screenshot main.webp" width="220" />
   <img src="assets/images/screenshot%20(1).webp" width="220" />
   <img src="assets/images/screenshot%20(2).webp" width="220" />
-  <img src="assets/images/screenshot%20(3).webp" width="220" />
 </p>
 
 <p align="left">
