@@ -26,6 +26,10 @@
   <img src="assets/images/screenshot%20(6).webp" width="220" />
 </p>
 
+<p align="left">
+  <img src="assets/images/screenshot%20(3).webp" width="220" />
+</p>
+
 # Overview
 
 **Dr OnCall** is a Flutter-powered clinical decision support app that helps healthcare professionals rapidly assess and safely manage emergency presentations.
